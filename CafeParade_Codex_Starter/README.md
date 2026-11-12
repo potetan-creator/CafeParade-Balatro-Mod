@@ -83,6 +83,14 @@ python tests/run.py
 - `art/source/{kamiya,shinonome,aslan,makio,saki,satan}.png`: 原稿6枚
 - `previews/{kamiya,shinonome,aslan,makio,saki,satan}_71x95.png`, `previews/cafeparade_card_preview.png`: プレビュー7枚
 
+## お題開始時に `rescale` エラーが出る場合
+
+Steamodded 26.1002.0とMalverk 1.1.3aの組み合わせでは、ブラインド画像の初期化に互換性の問題があります。`blind.lua:754: attempt to call method 'rescale' (a nil value)` が出る場合は、[Malverk公式 v1.1.5](https://github.com/Eremel/Malverk/releases/tag/v1.1.5)以降の対応版へ更新してください。
+
+ゲームを終了し、既存のMalverkフォルダをModsの外へ退避してから、新版を1つだけ配置します。旧版と新版を同時にMods内へ置かないでください。再起動後、Mods一覧のMalverkバージョンを確認し、お題を新しく開始します。
+
+Malverk 1.1.3aは `SMODS.Atlas.pre_inject_class` を無効化しており、ブラインド画像の種別情報が未設定になる場合があります。1.1.5には画像種別と寸法情報を設定する修正があります。Steamoddedの実際の画像生成関数とMalverk各版の初期化処理を使った限定的なテストでは、旧版のエラーを再現し、1.1.5の処理で呼び出しが通ることを確認しました。ユーザー環境での起動と全MODの組み合わせは未検証です。CafeParadeの能力コードに例外を握りつぶす処理は追加していません。
+
 ## 既知の制約・権利
 
 バニラカードと Steamodded 標準APIを対象にしています。追加手役・特殊ランク・独自スート・独自セーブ処理を持つ他MODとの完全互換は未検証です。長い日本語名・説明の画面収まりも実ゲームで確認が必要です。神谷の確率失敗でもブラインド使用枠を消費し、咲は対象なしなら消費しません。破壊・消滅済みカードは咲の対象から除きます。

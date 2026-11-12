@@ -36,3 +36,13 @@
 - ユーザーから旧版のゲーム内認識を確認したとの報告あり。能力の挙動および今回のお題の実ゲーム起動・UI表示は引き続き未検証。
 
 実ゲームでは `PRACTICE_GUIDE.md` に沿って、お題一覧への表示・初期6枚・手札8枚・補足表示・各カードの効果を確認してください。通常ランでお題の初期設定が適用されないことも確認が必要です。
+
+## ユーザー報告: ブラインド表示のrescaleエラー
+
+報告構成: Balatro 1.0.1o-FULL、Steamodded 26.1002.0、Lovely 0.10.0、Malverk 1.1.3aほか。お題開始時の `Blind:change_dim` → `animatedSprite:rescale()` でnil呼び出し。
+
+Malverk公式タグ `v1.1.3a` (`02cdf66b4d3b7752a6b84afa6eb6ef35514963db`) と `v1.1.5` (`90e448c2f8fed58a4952aee42acbfa25898fcb1c`) のアトラス初期化フックを比較。Steamodded 26.1002.0の `get_atlas`・`get_atlas_sprite_class`・`create_sprite` の実コードに対し、画像寸法とスプライトクラスを模した限定的なLua 5.1テストを実行。
+
+- 1.1.3aのフック無効化: アニメーションアトラスの種別未設定でSpriteが選ばれ、rescaleのnil呼び出しを再現。
+- 1.1.5の初期化: ANIMATION_ATLASが設定され、AnimatedSpriteが選ばれてrescaleが呼べることを確認。
+- 実際のLÖVE描画とユーザー環境の起動は未検証。Malverkの更新を案内し、CafeParadeの能力・表示処理には回避パッチを加えていない。
