@@ -15,7 +15,7 @@ G = {GAME={round_resets={ante=1},round=1,hands_played=1,
     consumeables={cards={},config={card_limit=2}}, P_CENTERS={m_wild={key='m_wild'}}, C={MULT={}}}
 SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}},
     load_file=function(path) return loadfile(ROOT..'/'..path) end,
-    Atlas=function() end, Joker=function(d) defs[d.key]=d end,
+    Atlas=function() end, DeckSkin=function() end, Joker=function(d) defs[d.key]=d end,
     Challenge=function(d) challenges[d.key]=d end,
     has_no_rank=function(c) return c.stone end, has_no_suit=function(c) return c.stone end,
     get_enhancements=function(c) return c.enhanced and {[c.enhanced]=true} or {} end,

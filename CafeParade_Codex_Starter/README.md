@@ -1,8 +1,15 @@
-# Café Parade × Balatro — CafeParade v0.1.1
+# Café Parade × Balatro — CafeParade v0.2.0
 
 5人のアイドルとサタンの6枚を追加する、Lovely + Steamodded 用の非公式ファンMODです。仮カード画像をそのまま使用しています。ゲーム本体を書き換える独自パッチはありません。
 
 **実ゲーム起動は未検証です。** このリポジトリに Balatro 本体・Lovely・Steamodded の実行環境はありません。Lua 5.1 の構文とモックによる能力ロジック、画像生成は検証済みですが、実際のスコア処理・表示・セーブ復帰を保証するものではありません。詳細は `TEST_PLAN.md`。
+
+## v0.2.0 の変更
+
+- 水嶋咲のトランプスキンを統合。標準の「デッキのカスタマイズ」に、各スーツの **水嶋咲** を追加。
+- 通常色とハイコントラストの2種類、各1x／2xに対応。2〜Aの13ランク、4スーツすべてが対象です。
+- 旧MODのPNGは加工せずそのまま使用。標準の `cards_1`・`cards_2` を上書きしません。ジョーカーの能力・数値も変更していません。
+- 元の利用案内・作者表記は `SAKI_CARDS_NOTICE.txt` に収録。
 
 ## v0.1.1 の変更
 
@@ -20,6 +27,18 @@
 5. ゲームを再起動し Mods メニューの CafeParade、コレクションの6枚、日英の説明を確認します。サタンはレジェンダリーとして登録し、通常の The Soul 経路を使用します。通常ショップ向けの独自出現処理はありません。
 
 API 参照対象は Steamodded **26.1002.0**（commit `af0fdb1eb2c9e191262c128bc88bbc4da991e12d`）。公式 `src/utils.lua`、`lovely/center.toml`、`lovely/better_calc.toml`、`lovely/card_limit.toml` の context・enhancement・確率・ライフサイクル処理を確認しました。実際にインストールされたゲーム側のバージョンは確認できていません。最新版で挙動が変わる場合はログとバージョンを記録してください。
+
+## 水嶋咲のトランプを選ぶ
+
+1. ゲームを終了し、**旧MOD「SakiCards」（Saki Mizushima Cards 1.0）を無効化するか、フォルダをModsの外へ移動**します。旧版は標準トランプを上書きするため、同時に読み込むと標準の外見に戻せません。
+2. 更新版の `CafeParade_Codex_Starter` の中身を、現在のCafeParadeフォルダへ上書きします。GitHubのZIPには資料用の `Saki Mizushima Cards 1.0` もありますが、**Modsへ入れるのは統合版のフォルダ1つだけ**です。
+3. 再起動後、設定の **デッキのカスタマイズ（Customize Deck）** を開きます。
+4. ハート／クラブ／ダイヤ／スペードで、それぞれ **水嶋咲** を選びます。変えたいスーツだけ選ぶこともできます。
+5. Steamodded標準の配色選択で、通常色・ハイコントラストを切り替えられます。標準デザインへ戻したいスーツは、標準の選択肢へ戻してください。
+
+Steamodded標準の `SMODS.DeckSkin` を使用しており、スキンの選択・設定保存はSteamoddedに委ねています。この機能自体にMalverkは不要です。スキンの変更でカードのランク・スーツ・能力は変わりません。
+
+実ゲームでの新しい選択肢の表示、配色変更、選択状態の保存・再起動、他の着せ替えMODとの併用は未検証です。今回の自動検証では登録内容と元画像の保持を確認しています。
 
 ## 実装内容
 
@@ -70,16 +89,19 @@ python tests/run.py
 - `main.lua`: アトラス、アイコン、6種の登録
 - `config.lua`: 能力数値・価格・レアリティ
 - `common.lua`: 有効メンバー数、ペア選択、スート割り当て、使用済み識別
+- `deck_skins.lua`: 4スーツ、通常色／ハイコントラストの選択式スキン登録
+- `SAKI_CARDS_NOTICE.txt`: 旧トランプMODの利用案内・作者表記
 - `jokers/{kamiya,shinonome,aslan,makio,saki,satan}.lua`: 各能力
 - `localization/{ja,en-us}.lua`: 日英カード名・説明・現在値
-- `tests/run.py`, `tests/contracts.lua`, `tests/requirements.txt`: 構文・ロジック・画像検証
+- `tests/run.py`, `tests/contracts.lua`, `tests/deck_skins.lua`, `tests/requirements.txt`: 構文・ロジック・画像・スキン登録検証
 - `TEST_PLAN.md`: 結果と実ゲーム手順
 - `PRACTICE_GUIDE.md`: お題の開始方法・確認用ハンド
 - `challenges/practice.lua`: 効果確認用のお題
 - `README.md`: 本書
 - `CODEX_PROMPT.md`, `CARD_SPEC.md`, `ASSET_GUIDE.md`, `COLOR_PALETTE.json`: 制作仕様・画像資料
 - `tools/build_atlas.py`: 画像再生成ツール
-- `assets/{1x,2x}/{cafeparade_jokers,cafeparade_icon}.png`: 仮画像4枚
+- `assets/{1x,2x}/{cafeparade_jokers,cafeparade_icon}.png`: ジョーカー仮画像4枚
+- `assets/{1x,2x}/saki_cards_{lc,hc}.png`: トランプ画像4枚（元画像をそのまま収録）
 - `art/source/{kamiya,shinonome,aslan,makio,saki,satan}.png`: 原稿6枚
 - `previews/{kamiya,shinonome,aslan,makio,saki,satan}_71x95.png`, `previews/cafeparade_card_preview.png`: プレビュー7枚
 
@@ -95,4 +117,4 @@ Malverk 1.1.3aは `SMODS.Atlas.pre_inject_class` を無効化しており、ブ�
 
 バニラカードと Steamodded 標準APIを対象にしています。追加手役・特殊ランク・独自スート・独自セーブ処理を持つ他MODとの完全互換は未検証です。長い日本語名・説明の画面収まりも実ゲームで確認が必要です。神谷の確率失敗でもブラインド使用枠を消費し、咲は対象なしなら消費しません。破壊・消滅済みカードは咲の対象から除きます。
 
-非公式ファン制作です。原作・ゲームの商標・設定は各権利者に帰属します。付属画像は元スターターの仮図形です。配布時には各種ガイドラインを確認してください。
+非公式ファン制作です。原作・ゲームの商標・設定は各権利者に帰属します。ジョーカー画像は元スターターの仮図形です。トランプ画像の作者・元の利用案内は `SAKI_CARDS_NOTICE.txt` を参照してください。配布時には各種ガイドラインを確認してください。

@@ -39,3 +39,29 @@ with tempfile.TemporaryDirectory(prefix='cafeparade-assets-') as directory:
         with Image.open(target / f'assets/{scale}x/cafeparade_icon.png') as icon:
             assert icon.size == (34 * scale, 34 * scale)
 print('Metadata, six atlas positions, both resamplers, 1x/2x frame pixels and icons: passed')
+
+# Separate VM: the registration test deliberately removes G to catch writes to defaults.
+skin_lua = LuaRuntime(unpack_returned_tuples=True)
+skin_lua.globals().ROOT = str(root)
+skin_lua.execute((root / 'tests/deck_skins.lua').read_text())
+for scale in (1, 2):
+    images = {}
+    for palette in ('lc', 'hc'):
+        path = root / f'assets/{scale}x/saki_cards_{palette}.png'
+        with Image.open(path) as image:
+            image.load()
+            assert image.size == (923 * scale, 380 * scale)
+            assert image.mode == 'RGBA'
+            assert image.getchannel('A').getextrema() == (0, 255)
+            for row in range(4):
+                for column in range(13):
+                    cell = image.crop((column * 71 * scale, row * 95 * scale,
+                                       (column + 1) * 71 * scale, (row + 1) * 95 * scale))
+                    assert cell.size == (71 * scale, 95 * scale)
+                    assert cell.getchannel('A').getextrema()[1] == 255
+            images[palette] = image.tobytes()
+        source = root.parent / 'Saki Mizushima Cards 1.0' / f'assets/{scale}x/MizushimaSakiCards_{palette}.png'
+        if source.is_file():
+            assert path.read_bytes() == source.read_bytes(), 'original PNG must be preserved byte-for-byte'
+    assert images['lc'] != images['hc'], 'normal and high contrast must use their respective source files'
+print('Playing cards: two palettes, 1x/2x, alpha, all 52 cells and source integrity passed')

@@ -1,6 +1,6 @@
 {
   "id": "CafeParade", "name": "CafeParade", "author": ["potetan-creator"],
   "description": "Café Paradeの5人とサタンを追加する非公式ファンMOD。",
-  "prefix": "cp", "main_file": "main.lua", "version": "0.1.1",
+  "prefix": "cp", "main_file": "main.lua", "version": "0.2.0",
   "dependencies": ["Steamodded (>=26.1002.0)"], "priority": 0
 }
