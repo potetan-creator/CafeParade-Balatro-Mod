@@ -1,0 +1,85 @@
+{
+  "unit": "Café Parade",
+  "unit_color": "#CC66CC",
+  "provenance": "Color values based on imas-db.jp compilation from ASOBISTAGE; Satan gray is chosen for this mod, not an official color.",
+  "jokers": [
+    {
+      "id": "kamiya",
+      "display_name_ja": "神谷幸広",
+      "name_short": "KAMIYA",
+      "color_hex": "#D88B83",
+      "rarity": "Uncommon",
+      "cost": 6,
+      "atlas_pos": {
+        "x": 0,
+        "y": 0
+      },
+      "role": "economy"
+    },
+    {
+      "id": "shinonome",
+      "display_name_ja": "東雲荘一郎",
+      "name_short": "SHINONOME",
+      "color_hex": "#008E74",
+      "rarity": "Uncommon",
+      "cost": 6,
+      "atlas_pos": {
+        "x": 1,
+        "y": 0
+      },
+      "role": "growth"
+    },
+    {
+      "id": "aslan",
+      "display_name_ja": "アスラン＝BBⅡ世",
+      "name_short": "ASLAN",
+      "color_hex": "#6967AB",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 2,
+        "y": 0
+      },
+      "role": "enhancement"
+    },
+    {
+      "id": "makio",
+      "display_name_ja": "卯月巻緒",
+      "name_short": "MAKIO",
+      "color_hex": "#EEC362",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 3,
+        "y": 0
+      },
+      "role": "retrigger"
+    },
+    {
+      "id": "saki",
+      "display_name_ja": "水嶋咲",
+      "name_short": "SAKI",
+      "color_hex": "#EB6EA5",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 4,
+        "y": 0
+      },
+      "role": "wild"
+    },
+    {
+      "id": "satan",
+      "display_name_ja": "サタン",
+      "name_short": "SATAN",
+      "color_hex": "#777B85",
+      "rarity": "Legendary",
+      "cost": 0,
+      "atlas_pos": {
+        "x": 5,
+        "y": 0
+      },
+      "role": "legendary"
+    }
+  ]
+}
