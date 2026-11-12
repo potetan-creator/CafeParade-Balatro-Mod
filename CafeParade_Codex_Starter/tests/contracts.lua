@@ -8,7 +8,7 @@ local function clone(t)
     if type(t)~='table' then return t end
     local r={} for k,v in pairs(t) do r[k]=clone(v) end return r
 end
-local defs, events = {}, {}
+local defs, events, challenges = {}, {}, {}
 G = {GAME={round_resets={ante=1},round=1,hands_played=1,
     blind={config={blind={key='bl_small'}}},consumeable_buffer=0},
     jokers={cards={},config={card_limit=5}}, play={}, hand={},
@@ -16,6 +16,7 @@ G = {GAME={round_resets={ante=1},round=1,hands_played=1,
 SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}},
     load_file=function(path) return loadfile(ROOT..'/'..path) end,
     Atlas=function() end, Joker=function(d) defs[d.key]=d end,
+    Challenge=function(d) challenges[d.key]=d end,
     has_no_rank=function(c) return c.stone end, has_no_suit=function(c) return c.stone end,
     get_enhancements=function(c) return c.enhanced and {[c.enhanced]=true} or {} end,
     has_enhancement=function(c,k) return c.enhanced==k end,
@@ -120,6 +121,44 @@ near(calc('satan',satan,{joker_main=true,blueprint=1}).xmult,5)
 G.jokers.cards={satan}; near(calc('satan',satan,{joker_main=true}).xmult,4.25)
 local restored=joker('satan'); restored.ability=clone(satan.ability)
 calc('satan',restored,ctx); near(restored.ability.extra.growth,2.25)
+-- お題のカード構成と通常の能力との接続を確認。
+local practice = assert(challenges.practice)
+eq(practice:unlocked(),true)
+eq(#practice.jokers,6)
+local seen = {}
+for _,j in ipairs(practice.jokers) do
+    assert(j.id:match('^j_cp_') and defs[j.id:sub(6)])
+    assert(not seen[j.id]); seen[j.id]=true
+    eq(j.eternal,nil,'selling allowed in practice')
+end
+eq(#practice.deck.cards,8)
+local modifiers = {}
+for _,rule in ipairs(practice.rules.modifiers) do modifiers[rule.id]=rule.value end
+eq(modifiers.hand_size,#practice.deck.cards,'all cards fit in opening hand')
+eq(modifiers.joker_slots,8)
+eq(#practice.consumeables,0,'Tarot slots start empty')
+local opening = {}
+local suit_names={H='Hearts',D='Diamonds',C='Clubs',S='Spades'}
+for i,control in ipairs(practice.deck.cards) do
+    local suits=control.e=='m_wild' and SMODS.Suit.obj_buffer or {assert(suit_names[control.s])}
+    opening[i]=play(assert(tonumber(control.r)),suits,control.e)
+    opening[i].seal=control.g
+end
+local fullhouse={opening[1],opening[2],opening[3],opening[4],opening[5]}
+eq(cp.suits(fullhouse,3),true)
+eq(#cp.pair_cards(fullhouse),3)
+eq(cp.pair_cards(fullhouse)[1],opening[1])
+eq(cp.pair_cards(fullhouse)[2],opening[2])
+eq(opening[5].seal,'Red')
+for _,i in ipairs({3,4,5}) do eq(cp.enhanced(opening[i]),true) end
+eq(opening[8].enhanced,'m_steel')
+-- 8枚以外のカードが必須にならないこと、全メンバーが実際に登録済みであること。
+G.jokers.cards={}
+for _,j in ipairs(practice.jokers) do table.insert(G.jokers.cards,joker(j.id:sub(6))) end
+eq(cp.members(),5)
+local practice_satan=G.jokers.cards[6]
+near(calc('satan',practice_satan,{joker_main=true}).xmult,3.25)
+
 -- Collection/menu tooltips must work without an active run.
 G.GAME={}
 for id,def in pairs(defs) do
@@ -127,6 +166,19 @@ for id,def in pairs(defs) do
 end
 for _,lang in ipairs({'ja','en-us'}) do
     local loc=dofile(ROOT..'/localization/'..lang..'.lua')
-    for id,_ in pairs(defs) do assert(loc.descriptions.Joker['j_cp_'..id]); count=count+1 end
+    for id,def in pairs(defs) do
+        local entry=assert(loc.descriptions.Joker['j_cp_'..id])
+        local queue={}
+        local variables=def:loc_vars(queue,joker(id)).vars
+        for _,line in ipairs(entry.text) do
+            for index in line:gmatch('#(%d+)#') do assert(variables[tonumber(index)]~=nil) end
+        end
+        for _,info in ipairs(queue) do
+            if info.set=='Other' then assert(loc.descriptions.Other[info.key]) end
+        end
+        count=count+1
+    end
+    assert(loc.misc.challenge_names.c_cp_practice)
+    assert(loc.misc.v_text.ch_c_cp_practice)
 end
 print('Contract assertions passed: '..count)

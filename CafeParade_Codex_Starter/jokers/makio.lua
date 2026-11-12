@@ -1,7 +1,11 @@
 return function(cp)
     local c = cp.config.makio
     return {
-        loc_vars = function() return {vars = {c.targets, c.repetitions}} end,
+        loc_vars = function(self, queue)
+            queue[#queue + 1] = {set = 'Other', key = 'cp_pair'}
+            queue[#queue + 1] = {set = 'Other', key = 'cp_makio'}
+            return {vars = {c.targets, c.repetitions}}
+        end,
         calculate = function(self, card, context)
             if context.repetition and context.cardarea == G.play then
                 local targets = cp.pair_cards(context.scoring_hand)

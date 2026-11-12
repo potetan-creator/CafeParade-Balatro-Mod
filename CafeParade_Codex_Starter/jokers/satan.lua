@@ -3,6 +3,7 @@ return function(cp)
     return {
         config = {extra = {growth = 0}},
         loc_vars = function(self, queue, card)
+            queue[#queue + 1] = {set = 'Other', key = 'cp_members'}
             local members = cp.members()
             return {vars = {c.slots, c.base, c.per_member, c.growth, members,
                 card.ability.extra.growth, c.base + c.per_member * members + card.ability.extra.growth}}

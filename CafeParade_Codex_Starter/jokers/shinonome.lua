@@ -3,6 +3,8 @@ return function(cp)
     return {
         config = {extra = {xmult = c.initial}},
         loc_vars = function(self, queue, card)
+            queue[#queue + 1] = {set = 'Other', key = 'cp_pair'}
+            queue[#queue + 1] = {set = 'Other', key = 'cp_shinonome'}
             return {vars = {c.mult, c.growth, card.ability.extra.xmult}}
         end,
         calculate = function(self, card, context)

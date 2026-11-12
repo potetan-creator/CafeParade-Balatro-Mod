@@ -3,10 +3,12 @@ return function(cp)
     return {
         config = {extra = {used = {}, blind = ''}},
         loc_vars = function(self, queue, card)
+            queue[#queue + 1] = {set = 'Other', key = 'cp_suits'}
             local n, d = SMODS.get_probability_vars(card, 1, c.odds, 'cp_kamiya')
             local e = card.ability.extra
             return {vars = {c.suits, c.dollars, n, d,
-                e.blind == cp.blind_id() and e.used.original and 1 or 0}}
+                e.blind == cp.blind_id() and e.used.original and 1 or 0,
+                localize(e.blind == cp.blind_id() and e.used.original and 'k_cp_used' or 'k_cp_unused')}}
         end,
         calculate = function(self, card, context)
             if context.after and not context.retrigger_joker and cp.suits(context.scoring_hand, c.suits) then

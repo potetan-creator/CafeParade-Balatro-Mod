@@ -1,8 +1,15 @@
-# Café Parade × Balatro — CafeParade v0.1.0
+# Café Parade × Balatro — CafeParade v0.1.1
 
 5人のアイドルとサタンの6枚を追加する、Lovely + Steamodded 用の非公式ファンMODです。仮カード画像をそのまま使用しています。ゲーム本体を書き換える独自パッチはありません。
 
 **実ゲーム起動は未検証です。** このリポジトリに Balatro 本体・Lovely・Steamodded の実行環境はありません。Lua 5.1 の構文とモックによる能力ロジック、画像生成は検証済みですが、実際のスコア処理・表示・セーブ復帰を保証するものではありません。詳細は `TEST_PLAN.md`。
+
+## v0.1.1 の変更
+
+- 能力・数値は変更せず、ゲーム内説明を「倍率 +8」「倍率 X1.25」などの純正に沿った表記に整理。
+- 細かな判定は補足ツールチップへ分離。神谷・咲の使用状態は「未使用／使用済み」で表示。
+- お題 **「Café Parade：お試しライブ」** を追加。6枚を所持し、全8枚が初手にそろうデッキで開始します。
+- 試すハンドと確認ポイントは `PRACTICE_GUIDE.md`。お題のゲーム内開始・表示・挙動は未検証です。
 
 ## Windows への導入
 
@@ -67,6 +74,8 @@ python tests/run.py
 - `localization/{ja,en-us}.lua`: 日英カード名・説明・現在値
 - `tests/run.py`, `tests/contracts.lua`, `tests/requirements.txt`: 構文・ロジック・画像検証
 - `TEST_PLAN.md`: 結果と実ゲーム手順
+- `PRACTICE_GUIDE.md`: お題の開始方法・確認用ハンド
+- `challenges/practice.lua`: 効果確認用のお題
 - `README.md`: 本書
 - `CODEX_PROMPT.md`, `CARD_SPEC.md`, `ASSET_GUIDE.md`, `COLOR_PALETTE.json`: 制作仕様・画像資料
 - `tools/build_atlas.py`: 画像再生成ツール

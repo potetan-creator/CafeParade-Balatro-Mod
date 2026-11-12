@@ -13,3 +13,4 @@ for i, id in ipairs({'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan'}) 
     def.eternal_compat, def.perishable_compat = true, true
     SMODS.Joker(def)
 end
+load('challenges/practice.lua')
