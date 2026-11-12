@@ -22,7 +22,16 @@ return function(cp)
                         and not target.destroyed then
                         target:set_ability(G.P_CENTERS.m_wild)
                         e.changed_blind = blind
-                        return {message = localize('k_cp_wild'), colour = G.C.MULT}
+                        -- 標準の効果表示に任せ、変化したカードへ文字と動きを出す。
+                        -- カードの変化自体は演出のイベント待ちにしない。
+                        return {
+                            message = localize('k_cp_wild'),
+                            colour = c.makeup_colour,
+                            sound = c.makeup_sound,
+                            message_card = target,
+                            juice_card = target,
+                            card = card,
+                        }
                     end
                 end
             end

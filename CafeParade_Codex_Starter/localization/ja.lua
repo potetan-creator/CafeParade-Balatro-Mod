@@ -53,7 +53,7 @@ return {
   },
   misc = {
     dictionary = {
-      k_cp_wild = "ワイルド化！",
+      k_cp_wild = "Makeup!",
       k_cp_unused = "未使用",
       k_cp_used = "使用済み",
     },

@@ -49,7 +49,7 @@ return {
   },
   misc = {
     dictionary = {
-      k_cp_wild = "Wild!",
+      k_cp_wild = "Makeup!",
       k_cp_unused = "Ready",
       k_cp_used = "Used",
     },

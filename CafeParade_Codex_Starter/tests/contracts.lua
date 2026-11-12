@@ -23,7 +23,8 @@ SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}
     get_probability_vars=function(_,n,d) return n,d end,
     pseudorandom_probability=function() return true end,
     add_card=function() table.insert(G.consumeables.cards,{}) end}
-function localize(key) return key end
+local dictionary = dofile(ROOT .. '/localization/ja.lua').misc.dictionary
+function localize(key) return dictionary[key] or key end
 function Event(e) return e end
 G.E_MANAGER={add_event=function(_,e) events[#events+1]=e end}
 local function flush() for _,e in ipairs(events) do assert(e.func()) end events={} end
@@ -94,11 +95,22 @@ eq(calc('makio',joker('makio'),{individual=true,cardarea=G.play,scoring_hand=pai
 local saki=joker('saki')
 eq(calc('saki',saki,{after=true,scoring_hand={wild}}),nil)
 eq(saki.ability.extra.changed_blind,nil,'no target preserves chance')
-calc('saki',saki,{after=true,scoring_hand=pair,blueprint=1}); eq(a.enhanced,nil)
+eq(calc('saki',saki,{after=true,scoring_hand=pair,blueprint=1}),nil); eq(a.enhanced,nil)
 a.seal='Red'; a.edition='foil'
-calc('saki',saki,{after=true,scoring_hand=pair}); eq(a.enhanced,'m_wild'); eq(a.seal,'Red'); eq(a.edition,'foil')
-calc('saki',saki,{after=true,scoring_hand={d}}); eq(d.enhanced,nil)
+local makeup = calc('saki',saki,{after=true,scoring_hand=pair})
+eq(a.enhanced,'m_wild'); eq(a.seal,'Red'); eq(a.edition,'foil')
+eq(makeup.message,'Makeup!')
+eq(makeup.message_card,a,'popup follows transformed playing card')
+eq(makeup.juice_card,a,'animate the transformed playing card')
+eq(makeup.card,saki,'retain the source Joker')
+eq(makeup.colour,cp.config.saki.makeup_colour)
+eq(makeup.sound,'tarot1')
+eq(#events,0,'transformation does not depend on animation events')
+eq(calc('saki',saki,{after=true,scoring_hand={d}}),nil,'no second Makeup in the same blind'); eq(d.enhanced,nil)
 near(calc('saki',saki,{individual=true,cardarea=G.play,other_card=a,blueprint=1}).xmult,1.2)
+local saki_retrigger = joker('saki')
+eq(calc('saki',saki_retrigger,{after=true,scoring_hand={d},retrigger_joker=true}),nil,'retrigger does not produce Makeup')
+eq(d.enhanced,nil)
 local satan=joker('satan')
 local member=joker('kamiya'); local dup=joker('kamiya'); local inactive=joker('saki'); inactive.debuff=true
 G.jokers.cards={satan,member,dup,inactive,joker('aslan'),joker('makio')}
@@ -178,6 +190,7 @@ for _,lang in ipairs({'ja','en-us'}) do
         end
         count=count+1
     end
+    assert(loc.misc.dictionary.k_cp_wild=='Makeup!')
     assert(loc.misc.challenge_names.c_cp_practice)
     assert(loc.misc.v_text.ch_c_cp_practice)
 end
