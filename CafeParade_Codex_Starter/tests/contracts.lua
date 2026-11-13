@@ -27,7 +27,11 @@ local dictionary = dofile(ROOT .. '/localization/ja.lua').misc.dictionary
 function localize(key) return dictionary[key] or key end
 function Event(e) return e end
 G.E_MANAGER={add_event=function(_,e) events[#events+1]=e end}
+function delay(seconds)
+    G.E_MANAGER:add_event(Event({trigger='after',delay=seconds,func=function() return true end}))
+end
 local function flush() for _,e in ipairs(events) do assert(e.func()) end events={} end
+local function step() local event=table.remove(events,1); assert(event.func()); return event end
 dofile(ROOT..'/main.lua')
 local cp=SMODS.current_mod.cafeparade
 local function joker(id)
@@ -35,10 +39,14 @@ local function joker(id)
     return {ability=clone(d.config or {}), config={center={key='j_cp_'..id}},sort_id=id}
 end
 local function play(rank,suits,enhanced)
-    return {rank=rank,suits=suits or {'Hearts'},enhanced=enhanced,
+    return {rank=rank,suits=suits or {'Hearts'},enhanced=enhanced,visible_enhanced=enhanced,
         get_id=function(self) return self.rank end,
         is_suit=function(self,suit) for _,s in ipairs(self.suits) do if s==suit then return true end end return false end,
-        set_ability=function(self,center) self.enhanced=center.key end}
+        set_ability=function(self,center,initial,delay_sprites)
+            self.enhanced=center.key
+            local function sprites() self.visible_enhanced=center.key; return true end
+            if delay_sprites then G.E_MANAGER:add_event(Event({func=sprites})) else sprites() end
+        end}
 end
 local function calc(id,card,ctx)
     if card.debuff then return end -- engine dispatch guard
@@ -93,24 +101,75 @@ end
 eq(calc('makio',joker('makio'),{repetition=true,cardarea=G.play,scoring_hand={a,b,c,d,e},other_card=b}),nil)
 eq(calc('makio',joker('makio'),{individual=true,cardarea=G.play,scoring_hand=pair,other_card=a}),nil,'no recursive scoring trigger')
 local saki=joker('saki')
-eq(calc('saki',saki,{after=true,scoring_hand={wild}}),nil)
+eq(calc('saki',saki,{before=true,scoring_hand={wild}}),nil)
 eq(saki.ability.extra.changed_blind,nil,'no target preserves chance')
-eq(calc('saki',saki,{after=true,scoring_hand=pair,blueprint=1}),nil); eq(a.enhanced,nil)
+eq(calc('saki',saki,{before=true,scoring_hand=pair,blueprint=1}),nil); eq(a.enhanced,nil)
+eq(calc('saki',saki,{after=true,scoring_hand=pair}),nil,'no late transformation')
 a.seal='Red'; a.edition='foil'
-local makeup = calc('saki',saki,{after=true,scoring_hand=pair})
-eq(a.enhanced,'m_wild'); eq(a.seal,'Red'); eq(a.edition,'foil')
+local makeup = calc('saki',saki,{before=true,scoring_hand=pair})
+eq(a.enhanced,nil,'selection leaves card unchanged until effect resolution')
 eq(makeup.message,'Makeup!')
-eq(makeup.message_card,a,'popup follows transformed playing card')
-eq(makeup.juice_card,a,'animate the transformed playing card')
+eq(makeup.message_card,a,'popup selects the leftmost unenhanced scoring card')
+eq(makeup.juice_card,a,'animate the selected playing card')
 eq(makeup.card,saki,'retain the source Joker')
 eq(makeup.colour,cp.config.saki.makeup_colour)
 eq(makeup.sound,'tarot1')
-eq(#events,0,'transformation does not depend on animation events')
-eq(calc('saki',saki,{after=true,scoring_hand={d}}),nil,'no second Makeup in the same blind'); eq(d.enhanced,nil)
+eq(#events,0,'selection does not schedule a premature sprite change')
+eq(calc('saki',saki,{before=true,scoring_hand={d}}),nil,'reserve use before resolution')
+-- Model SMODS's message -> func resolution and set_ability's delayed sprites.
+G.E_MANAGER:add_event(Event({func=function()
+    eq(a.visible_enhanced,nil,'Makeup popup precedes the visible Wild Card')
+    return true
+end}))
+makeup.func()
+eq(a.enhanced,'m_wild','ability is ready for this hand before visual events')
+eq(a.visible_enhanced,nil,'Wild sprite is deferred')
+eq(a.seal,'Red'); eq(a.edition,'foil')
+eq(saki.ability.extra.changed_blind,cp.blind_id())
 near(calc('saki',saki,{individual=true,cardarea=G.play,other_card=a,blueprint=1}).xmult,1.2)
+near(calc('aslan',aslan,{individual=true,cardarea=G.play,other_card=a}).xmult,1.25)
+G.E_MANAGER:add_event(Event({func=function()
+    eq(a.visible_enhanced,'m_wild','Wild sprite precedes the scoring animation')
+    return true
+end}))
+step() -- Makeup!
+eq(a.visible_enhanced,nil,'still unenhanced while Makeup is displayed')
+eq(step().delay,cp.config.saki.makeup_delay,'pause before visible transformation')
+eq(a.visible_enhanced,nil)
+step() -- delayed set_ability sprites
+eq(a.visible_enhanced,'m_wild')
+step() -- scoring
+eq(#events,0)
+eq(calc('saki',saki,{before=true,scoring_hand={d}}),nil,'no second Makeup in the same blind'); eq(d.enhanced,nil)
+local restored_saki=joker('saki'); restored_saki.ability=clone(saki.ability)
+eq(calc('saki',restored_saki,{before=true,scoring_hand={d}}),nil,'used flag survives save/load')
 local saki_retrigger = joker('saki')
-eq(calc('saki',saki_retrigger,{after=true,scoring_hand={d},retrigger_joker=true}),nil,'retrigger does not produce Makeup')
+eq(calc('saki',saki_retrigger,{before=true,scoring_hand={d},retrigger_joker=true}),nil,'retrigger does not produce Makeup')
 eq(d.enhanced,nil)
+local second_saki=joker('saki')
+local second_makeup=calc('saki',second_saki,{before=true,scoring_hand=pair})
+eq(second_makeup.message_card,d,'second Saki skips the first transformation')
+second_makeup.func(); flush()
+eq(d.enhanced,'m_wild')
+local invalid_hand={play(2,nil,'m_bonus'),play(3),play(4),play(5),play(6)}
+invalid_hand[2].removed=true; invalid_hand[3].shattered=true; invalid_hand[4].destroyed=true
+local guarded_saki=joker('saki')
+local guarded_makeup=calc('saki',guarded_saki,{before=true,scoring_hand=invalid_hand})
+eq(guarded_makeup.message_card,invalid_hand[5],'skip enhanced and destroyed cards')
+guarded_makeup.func(); flush()
+eq(invalid_hand[1].enhanced,'m_bonus','do not overwrite other enhancements')
+for i=2,4 do eq(invalid_hand[i].enhanced,nil) end
+eq(invalid_hand[5].enhanced,'m_wild')
+local no_target_saki=joker('saki')
+eq(calc('saki',no_target_saki,{before=true,scoring_hand={invalid_hand[1],invalid_hand[2]}}),nil)
+eq(no_target_saki.ability.extra.changed_blind,nil)
+local debuffed_saki=joker('saki'); debuffed_saki.debuff=true
+eq(calc('saki',debuffed_saki,{before=true,scoring_hand={play(7)}}),nil)
+eq(debuffed_saki.ability.extra.changed_blind,nil)
+G.GAME.round=G.GAME.round+1
+local next_blind=calc('saki',saki,{before=true,scoring_hand={play(8)}})
+eq(next_blind.message,'Makeup!','new blind restores the transformation')
+next_blind.func(); flush()
 local satan=joker('satan')
 local member=joker('kamiya'); local dup=joker('kamiya'); local inactive=joker('saki'); inactive.debuff=true
 G.jokers.cards={satan,member,dup,inactive,joker('aslan'),joker('makio')}

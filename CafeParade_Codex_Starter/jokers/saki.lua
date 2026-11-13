@@ -12,18 +12,14 @@ return function(cp)
             if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_wild') then
                 return {xmult = c.xmult}
             end
-            if context.after and cp.original(context) then
+            if context.before and cp.original(context) then
                 local e, blind = card.ability.extra, cp.blind_id()
                 if e.changed_blind == blind then return end
-                -- after は全得点処理の後。直接変化させ、保存可能な状態を即時確定。
-                -- 複数の咲も直前の変化を見て、強化済みカードを上書きしない。
                 for _, target in ipairs(context.scoring_hand or {}) do
                     if cp.plain(target) and not target.removed and not target.shattered
                         and not target.destroyed then
-                        target:set_ability(G.P_CENTERS.m_wild)
+                        -- 同じブラインドの再評価・再発動に備え、先に使用枠を確保。
                         e.changed_blind = blind
-                        -- 標準の効果表示に任せ、変化したカードへ文字と動きを出す。
-                        -- カードの変化自体は演出のイベント待ちにしない。
                         return {
                             message = localize('k_cp_wild'),
                             colour = c.makeup_colour,
@@ -31,6 +27,13 @@ return function(cp)
                             message_card = target,
                             juice_card = target,
                             card = card,
+                            -- Steamodded は message → func の順で効果を解決する。
+                            func = function()
+                                delay(c.makeup_delay)
+                                -- 能力はこのハンドの得点前に確定。見た目だけを
+                                -- キューへ送り、Makeup! → 待機 → ワイルド化とする。
+                                target:set_ability(G.P_CENTERS.m_wild, nil, true)
+                            end,
                         }
                     end
                 end

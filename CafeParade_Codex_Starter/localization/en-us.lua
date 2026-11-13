@@ -25,7 +25,7 @@ return {
       }},
       j_cp_saki = {name = "Saki Mizushima", text = {
         "Scored {C:attention}Wild Cards{} give {X:mult,C:white} X#1# {} Mult",
-        "After scoring, turn the leftmost",
+        "Before scoring, turn the leftmost",
         "unenhanced scoring card into a {C:attention}Wild Card{}",
         "{C:inactive}(Once per blind; #3#)",
       }},
@@ -43,7 +43,7 @@ return {
       cp_pair = {name = "Scored pairs", text = {"At least two scored cards of one rank", "Stone Cards do not count"}},
       cp_makio = {name = "Retrigger targets", text = {"Choose the leftmost repeated rank", "At most two cards, even with Two Pair"}},
       cp_members = {name = "Café Parade members", text = {"Kamiya, Shinonome, Aslan, Makio and Saki", "Count each active kind once", "Duplicates and Satan do not add members", "Boss growth remains if members leave"}},
-      cp_saki = {name = "Becoming Wild", text = {"Only unenhanced scoring cards can change", "Changes happen after all scoring", "No target means the use is preserved", "Copies only give the scoring Mult"}},
+      cp_saki = {name = "Becoming Wild", text = {"Only unenhanced scoring cards can change", "Makeup! plays before the visible change", "The new Wild Card scores this hand", "No target means the use is preserved", "Copies only give the scoring Mult"}},
       cp_shinonome = {name = "Growing Mult", text = {"Grows once per hand", "Stored XMult applies even without a Pair", "Copies do not cause extra growth"}},
     },
   },
