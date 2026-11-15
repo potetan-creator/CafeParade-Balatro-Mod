@@ -5,6 +5,7 @@ cp.config = load('config.lua')
 mod.cafeparade = cp
 load('badges.lua')(mod)
 SMODS.Atlas {key = 'jokers', path = 'cafeparade_jokers.png', px = 71, py = 95}
+SMODS.Atlas {key = 'satan_top', path = 'cafeparade_satan_top.png', px = 71, py = 95}
 SMODS.Atlas {key = 'modicon', path = 'cafeparade_icon.png', px = 34, py = 34}
 for i, id in ipairs({'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan'}) do
     local def = load('jokers/' .. id .. '.lua')(cp)

@@ -1,8 +1,14 @@
-# Café Parade × Balatro — CafeParade v0.2.4
+# Café Parade × Balatro — CafeParade v0.2.5
 
-5人のアイドルとサタンの6枚を追加する、Lovely + Steamodded 用の非公式ファンMODです。仮カード画像をそのまま使用しています。ゲーム本体を書き換える独自パッチはありません。
+5人のアイドルとサタンの6枚を追加する、Lovely + Steamodded 用の非公式ファンMODです。アップロードされたジョーカー画像を使用しています。ゲーム本体を書き換える独自パッチはありません。
 
 **実ゲーム起動は未検証です。** このリポジトリに Balatro 本体・Lovely・Steamodded の実行環境はありません。Lua 5.1 の構文とモックによる能力ロジック、画像生成は検証済みですが、実際のスコア処理・表示・セーブ復帰を保証するものではありません。詳細は `TEST_PLAN.md`。
+
+## v0.2.5 の変更
+
+- アスランを `Asselin_joker.png`、神谷幸広を `Kamiya_joker.png` に差し替え、1x／2xアトラスを再生成しました。
+- サタンは `Satan_base.png` をベース、`satan_top.png` を独立した前景として使用します。Steamodded標準の `soul_atlas` / `soul_pos` を指定し、レジェンダリーと同じ影・拡縮・揺れで前景を描画します。
+- 前景は71×95の透過キャンバスと配置を保ち、ベースの上に重ねます。1枚のPNGへ焼き込んでいません。能力・レアリティ・価格の変更はありません。
 
 ## v0.2.4 の変更
 
@@ -95,7 +101,7 @@ python tools/build_atlas.py --filter nearest
 python tools/build_atlas.py --filter lanczos
 ```
 
-先に `art/source/{kamiya,shinonome,aslan,makio,saki,satan}.png` の必要な原稿を差し替えてください。生成先は `assets/1x/cafeparade_jokers.png` と `assets/2x/cafeparade_jokers.png`。ゲームを再起動すると反映されます。サイズ・座標・色は `ASSET_GUIDE.md` と `COLOR_PALETTE.json` を参照。
+先に `art/source/{kamiya,shinonome,aslan,makio,saki,satan}.png` の必要な原稿を差し替えてください。サタンの `satan.png` はベース専用で、前景は `art/source/satan_top.png` です。生成先は `assets/{1x,2x}/cafeparade_jokers.png` と `cafeparade_satan_top.png`。ゲームを再起動すると反映されます。サイズ・座標・色は `ASSET_GUIDE.md` と `COLOR_PALETTE.json` を参照。
 
 ## 自動検証
 
@@ -125,9 +131,10 @@ python tests/run.py
 - `README.md`: 本書
 - `CODEX_PROMPT.md`, `CARD_SPEC.md`, `ASSET_GUIDE.md`, `COLOR_PALETTE.json`: 制作仕様・画像資料
 - `tools/build_atlas.py`: 画像再生成ツール
-- `assets/{1x,2x}/{cafeparade_jokers,cafeparade_icon}.png`: ジョーカー仮画像4枚
+- `assets/{1x,2x}/{cafeparade_jokers,cafeparade_icon}.png`: ジョーカーのベースとMODアイコン
+- `assets/{1x,2x}/cafeparade_satan_top.png`: サタンの独立した前景レイヤー
 - `assets/{1x,2x}/saki_cards_{lc,hc}.png`: トランプ画像4枚（元画像をそのまま収録）
-- `art/source/{kamiya,shinonome,aslan,makio,saki,satan}.png`: 原稿6枚
+- `art/source/{kamiya,shinonome,aslan,makio,saki,satan,satan_top}.png`: 原稿7枚
 - `previews/{kamiya,shinonome,aslan,makio,saki,satan}_71x95.png`, `previews/cafeparade_card_preview.png`: プレビュー7枚
 
 ## お題開始時に `rescale` エラーが出る場合
@@ -142,4 +149,4 @@ Malverk 1.1.3aは `SMODS.Atlas.pre_inject_class` を無効化しており、ブ�
 
 バニラカードと Steamodded 標準APIを対象にしています。追加手役・特殊ランク・独自スート・独自セーブ処理を持つ他MODとの完全互換は未検証です。長い日本語名・説明の画面収まりも実ゲームで確認が必要です。神谷の確率失敗でもブラインド使用枠を消費し、咲は対象なしなら消費しません。破壊・消滅済みカードは咲の対象から除きます。
 
-非公式ファン制作です。原作・ゲームの商標・設定は各権利者に帰属します。ジョーカー画像は元スターターの仮図形です。トランプ画像の作者・元の利用案内は `SAKI_CARDS_NOTICE.txt` を参照してください。配布時には各種ガイドラインを確認してください。
+非公式ファン制作です。原作・ゲームの商標・設定は各権利者に帰属します。ジョーカーのイラスト作者表記は `Art:Potetan` です。トランプ画像の作者・元の利用案内は `SAKI_CARDS_NOTICE.txt` を参照してください。配布時には各種ガイドラインを確認してください。

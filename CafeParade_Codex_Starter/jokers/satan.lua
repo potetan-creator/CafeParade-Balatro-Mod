@@ -1,6 +1,9 @@
 return function(cp)
     local c = cp.config.satan
     return {
+        -- 標準レジェンダリーと同じ、影と浮遊を持つ独立した前景。
+        soul_atlas = 'satan_top',
+        soul_pos = {x = 0, y = 0},
         config = {extra = {growth = 0}},
         loc_vars = function(self, queue, card)
             queue[#queue + 1] = {set = 'Other', key = 'cp_members'}

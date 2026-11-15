@@ -8,14 +8,14 @@ local function clone(t)
     if type(t)~='table' then return t end
     local r={} for k,v in pairs(t) do r[k]=clone(v) end return r
 end
-local defs, events, challenges = {}, {}, {}
+local defs, events, challenges, atlases = {}, {}, {}, {}
 G = {GAME={round_resets={ante=1},round=1,hands_played=1,
     blind={config={blind={key='bl_small'}}},consumeable_buffer=0},
     jokers={cards={},config={card_limit=5}}, play={}, hand={},
     consumeables={cards={},config={card_limit=2}}, P_CENTERS={m_wild={key='m_wild'}}, C={MULT={}}}
 SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}},
     load_file=function(path) return loadfile(ROOT..'/'..path) end,
-    Atlas=function() end, DeckSkin=function() end, Joker=function(d) defs[d.key]=d end,
+    Atlas=function(d) atlases[d.key]=d end, DeckSkin=function() end, Joker=function(d) defs[d.key]=d end,
     Challenge=function(d) challenges[d.key]=d end,
     has_no_rank=function(c) return c.stone end, has_no_suit=function(c) return c.stone end,
     get_enhancements=function(c) return c.enhanced and {[c.enhanced]=true} or {} end,
@@ -34,6 +34,16 @@ local function flush() for _,e in ipairs(events) do assert(e.func()) end events=
 local function step() local event=table.remove(events,1); assert(event.func()); return event end
 dofile(ROOT..'/main.lua')
 local cp=SMODS.current_mod.cafeparade
+eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
+eq(defs.satan.pos.x,5); eq(defs.satan.pos.y,0)
+eq(defs.satan.soul_atlas,'satan_top','foreground uses a separate native soul atlas')
+eq(defs.satan.soul_pos.x,0); eq(defs.satan.soul_pos.y,0)
+eq(defs.satan.soul_pos.draw,nil,'use the standard legendary floating draw step')
+eq(atlases.satan_top.path,'cafeparade_satan_top.png')
+eq(atlases.satan_top.px,71); eq(atlases.satan_top.py,95)
+for id,def in pairs(defs) do
+    if id~='satan' then eq(def.soul_atlas,nil); eq(def.soul_pos,nil) end
+end
 local function joker(id)
     local d=defs[id]
     return {ability=clone(d.config or {}), config={center={key='j_cp_'..id}},sort_id=id}

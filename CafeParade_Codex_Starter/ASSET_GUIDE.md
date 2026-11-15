@@ -3,11 +3,11 @@
 ## このZIPに含まれているもの
 - `assets/1x/cafeparade_jokers.png`: 426×95ピクセル、**71×95を横に6枚並べた**ゲーム用アトラス。
 - `assets/2x/cafeparade_jokers.png`: 852×190ピクセル、**142×190を横に6枚並べた**2倍解像度アトラス。
+- `assets/1x/cafeparade_satan_top.png` / `assets/2x/cafeparade_satan_top.png`: 71×95 / 142×190のサタン前景。透過部分も含めたカード全体のキャンバス。
 - `assets/1x/cafeparade_icon.png` / `assets/2x/cafeparade_icon.png`: 34×34 / 68×68 の仮MODアイコン。
-- `art/source/*.png`: 284×380ピクセルの仮カード原稿6枚。**あとから描く絵をここへ同じファイル名で上書き**してください。縦横比71:95を推奨。高解像度でも構いません。
-- `previews/cafeparade_card_preview.png`: 6枚並べた確認用プレビュー。
-- `previews/*_71x95.png`: 各ジョーカーの1x解像度の確認用PNG（ビルドには不要）。
-- `tools/build_atlas.py`: 原稿PNG6枚からゲーム用アトラスを作り直すツール。
+- `art/source/*.png`: カードの原稿6枚とサタンの前景1枚。現在はいずれも71×95ピクセル。**あとから描く絵をここへ同じファイル名で上書き**してください。縦横比71:95を推奨。高解像度でも構いません。
+- `previews/cafeparade_card_preview.png` / `previews/*_71x95.png`: スターター時点の参考画像。画像差し替え時のビルド対象には含まず、現在のゲーム用画像とは異なります。
+- `tools/build_atlas.py`: 原稿PNG7枚から、ジョーカーのベースとサタンの前景を別々に再生成するツール。
 
 ## アトラス座標（0始まり）
 | x | 内部ID | 表示名 | 色 |
@@ -21,16 +21,25 @@
 
 すべて `y=0` です。画像の中の名前は英字略称で、**ゲーム内の日本語名はローカライズが担当**します。
 
-## 登録イメージ（本物のLua実装はCodexが現行APIに合わせて作る）
+## サタンの2レイヤー構成
+
+- `Satan_base.png` → `art/source/satan.png` → 共通アトラスの `x=5, y=0`。カード枠と背景だけです。
+- `satan_top.png` → `art/source/satan_top.png` → `cafeparade_satan_top.png` の `x=0, y=0`。前景のサタンだけです。
+- 前景は透過余白を切り詰めず、元の71×95キャンバス上の位置を保ちます。ベースと同じ縦横比・同じキャンバスで描き直してください。
+- `jokers/satan.lua` の `soul_atlas='satan_top'` / `soul_pos={x=0,y=0}` により、標準レジェンダリーの浮遊スプライトとして描画されます。重ねる順序・影・揺れはSteamodded標準処理に任せます。
+
+## 現在のアトラス登録
 ```lua
 SMODS.Atlas {
-    key = 'cafeparade_jokers',
+    key = 'jokers',
     path = 'cafeparade_jokers.png',
     px = 71,
     py = 95
 }
--- ジョーカー側に atlas='cafeparade_jokers', pos={x=2,y=0} などを設定。
--- 自動prefixのため実際のatlasキー処理はSteamoddedバージョンで確認。
+SMODS.Atlas {key = 'satan_top', path = 'cafeparade_satan_top.png', px = 71, py = 95}
+-- ベースは atlas='jokers', pos={x=0..5,y=0}。
+-- サタンだけ soul_atlas='satan_top', soul_pos={x=0,y=0} を追加。
+-- atlas / soul_atlas にはSteamoddedがcpプレフィックスを自動付与します。
 ```
 
 ## 描き直した画像を使う
@@ -40,10 +49,10 @@ SMODS.Atlas {
 4. `assets/1x/` と `assets/2x/` のアトラスが自動更新される。ゲームを再起動して確認。
 5. ドット絵を鮮明に保ちたいときは `--filter nearest` を使う。
 
-**注意:** ゲームは個別の `art/source/*.png` ではなく、合成済みの `assets/{1x,2x}/cafeparade_jokers.png` を読む設計です。イラストを差し替えただけでは反映されず、アトラス再生成が必要です。Codexに「画像を変更したのでアトラスを再生成して」と依頼しても大丈夫です。
+**注意:** ゲームは個別の `art/source/*.png` ではなく、生成済みの `assets/{1x,2x}/cafeparade_jokers.png` と `cafeparade_satan_top.png` を読みます。イラストを差し替えただけでは反映されず、アトラス再生成が必要です。Codexに「画像を変更したのでアトラスを再生成して」と依頼しても大丈夫です。
 
 ## アートの特徴
-この仮絵は**すべて本パッケージで描いたシンプルな図形・ピクセルアイコン**で、公式の画像をコピーしていません。サタンは本来のぬいぐるみ形状をシンプルに象徴化し、色だけグレーに変更しています。
+ゲーム用ジョーカー画像は、アップロードされたイラストへ差し替え済みです。元のPNGと透過を保持し、1x／2xへnearestで変換しています。作者表記は `Art:Potetan`。サタンはベースと前景を分けて使用します。
 
 ## 統合版の水嶋咲トランプスキン
 

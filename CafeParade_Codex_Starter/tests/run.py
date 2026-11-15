@@ -35,10 +35,17 @@ with tempfile.TemporaryDirectory(prefix='cafeparade-assets-') as directory:
                         expected = source.convert('RGBA').resize((71 * scale, 95 * scale),
                             Image.Resampling.NEAREST if mode == 'nearest' else Image.Resampling.LANCZOS)
                     assert atlas.crop((index * 71 * scale, 0, (index + 1) * 71 * scale, 95 * scale)).tobytes() == expected.tobytes()
+            with Image.open(target / f'assets/{scale}x/cafeparade_satan_top.png') as top:
+                assert top.size == (71 * scale, 95 * scale) and top.mode == 'RGBA'
+                assert top.getchannel('A').getextrema() == (0, 255)
+                with Image.open(target / 'art/source/satan_top.png') as source:
+                    expected = source.convert('RGBA').resize(top.size,
+                        Image.Resampling.NEAREST if mode == 'nearest' else Image.Resampling.LANCZOS)
+                assert top.tobytes() == expected.tobytes(), 'foreground must retain the full-card canvas and alpha'
     for scale in (1, 2):
         with Image.open(target / f'assets/{scale}x/cafeparade_icon.png') as icon:
             assert icon.size == (34 * scale, 34 * scale)
-print('Metadata, six atlas positions, both resamplers, 1x/2x frame pixels and icons: passed')
+print('Metadata, six atlas positions, separate Satan foreground, both resamplers, 1x/2x pixels and icons: passed')
 
 # Separate VM: the registration test deliberately removes G to catch writes to defaults.
 skin_lua = LuaRuntime(unpack_returned_tuples=True)
