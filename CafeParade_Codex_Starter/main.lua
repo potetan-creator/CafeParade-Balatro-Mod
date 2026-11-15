@@ -3,6 +3,7 @@ local function load(path) return assert(SMODS.load_file(path))() end
 local cp = load('common.lua')
 cp.config = load('config.lua')
 mod.cafeparade = cp
+load('badges.lua')(mod)
 SMODS.Atlas {key = 'jokers', path = 'cafeparade_jokers.png', px = 71, py = 95}
 SMODS.Atlas {key = 'modicon', path = 'cafeparade_icon.png', px = 34, py = 34}
 for i, id in ipairs({'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan'}) do

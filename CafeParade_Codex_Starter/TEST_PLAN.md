@@ -85,3 +85,10 @@ Malverk公式タグ `v1.1.3a` (`02cdf66b4d3b7752a6b84afa6eb6ef35514963db`) と `
 - 強化済み・消滅・破壊・粉砕カードの除外、シール・エディションの保持、コピー・再発動での変化抑止を含め132アサーションが通過。
 - 別途、参照版の `calculate_effect` / `calculate_individual_effect` と効果キー一覧の実コードを、表示とスプライトを模したLua 5.1環境で実行。Makeup! → 待機 → ワイルドの見た目 → 得点演出の順と、そのハンドでのX1.20の判定を確認。実際のイベントマネージャーや描画を実行したものではない。
 - 参照APIはSteamodded 26.1002.0（`af0fdb1eb2c9e191262c128bc88bbc4da991e12d`）の `src/utils.lua`、`src/overrides.lua`、`lovely/enhancement.toml`、`lovely/better_calc.toml`。実ゲームの描画・音・ゲーム速度・他MODによる演出無効化は未検証。
+
+## v0.2.3: ユニットカラーとイラスト作者のバッジ
+
+- メタデータの背景色 `CC66CC` が `COLOR_PALETTE.json` のユニットカラーと一致し、文字色が白であることを確認。
+- 参照版の `SMODS.create_mod_badges` / `create_mod_badge` を、文字とスクロール部品を模したLua 5.1環境で実行。MOD固有の `set_mod_badge` が再帰せず、上段 `CafeParade`・下段 `Art:Potetan` の独立した2枠を作ることを確認。
+- 標準の重複抑止とMODバッジ非表示設定を尊重し、他MODのバッジには作者枠を追加しないことを確認。既存132アサーション、全Lua構文、画像・スキン検証も通過。
+- 実ゲームでの文字幅・枠の間隔・ホバー表示は未検証。ジョーカーの説明欄で上下の順序と表示を確認してください。
