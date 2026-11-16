@@ -2,8 +2,7 @@ return function(cp)
     return {
         config = {extra = {}},
         blueprint_compat = false,
-        loc_vars = function(self, queue, card)
-            queue[#queue + 1] = {set = 'Other', key = 'cp_cake_set'}
+        loc_vars = function()
             return {vars = {}}
         end,
         add_to_deck = function(self, card) cp.cake_set_added(card) end,
