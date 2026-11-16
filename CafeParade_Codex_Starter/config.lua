@@ -8,4 +8,5 @@ return {
         makeup_colour = {235/255, 110/255, 165/255, 1}, makeup_sound = 'tarot1',
         makeup_delay = 0.4},
     satan = {rarity = 4, cost = 20, slots = 1, base = 2, per_member = 0.25, growth = 0.15},
+    cake_set = {rarity = 1, cost = 4},
 }

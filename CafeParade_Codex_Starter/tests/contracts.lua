@@ -9,6 +9,7 @@ local function clone(t)
     local r={} for k,v in pairs(t) do r[k]=clone(v) end return r
 end
 local defs, events, challenges, atlases = {}, {}, {}, {}
+Blind = {debuff_card = function() end}
 G = {GAME={round_resets={ante=1},round=1,hands_played=1,
     blind={config={blind={key='bl_small'}}},consumeable_buffer=0},
     jokers={cards={},config={card_limit=5}}, play={}, hand={},

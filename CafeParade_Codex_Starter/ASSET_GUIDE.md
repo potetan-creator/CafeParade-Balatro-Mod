@@ -1,13 +1,13 @@
 # 仮カード画像の利用・差し替えガイド
 
 ## このZIPに含まれているもの
-- `assets/1x/cafeparade_jokers.png`: 426×95ピクセル、**71×95を横に6枚並べた**ゲーム用アトラス。
-- `assets/2x/cafeparade_jokers.png`: 852×190ピクセル、**142×190を横に6枚並べた**2倍解像度アトラス。
+- `assets/1x/cafeparade_jokers.png`: 497×95ピクセル、**71×95を横に7枚並べた**ゲーム用アトラス。
+- `assets/2x/cafeparade_jokers.png`: 994×190ピクセル、**142×190を横に7枚並べた**2倍解像度アトラス。
 - `assets/1x/cafeparade_satan_top.png` / `assets/2x/cafeparade_satan_top.png`: 71×95 / 142×190のサタン前景。透過部分も含めたカード全体のキャンバス。
 - `assets/1x/cafeparade_icon.png` / `assets/2x/cafeparade_icon.png`: 34×34 / 68×68 の仮MODアイコン。
-- `art/source/*.png`: カードの原稿6枚とサタンの前景1枚。現在はいずれも71×95ピクセル。**あとから描く絵をここへ同じファイル名で上書き**してください。縦横比71:95を推奨。高解像度でも構いません。
+- `art/source/*.png`: カードの原稿7枚とサタンの前景1枚。現在はいずれも71×95ピクセル。**あとから描く絵をここへ同じファイル名で上書き**してください。縦横比71:95を推奨。高解像度でも構いません。
 - `previews/cafeparade_card_preview.png` / `previews/*_71x95.png`: スターター時点の参考画像。画像差し替え時のビルド対象には含まず、現在のゲーム用画像とは異なります。
-- `tools/build_atlas.py`: 原稿PNG7枚から、ジョーカーのベースとサタンの前景を別々に再生成するツール。
+- `tools/build_atlas.py`: 原稿PNG8枚から、ジョーカーのベースとサタンの前景を別々に再生成するツール。
 
 ## アトラス座標（0始まり）
 | x | 内部ID | 表示名 | 色 |
@@ -18,6 +18,7 @@
 | 3 | makio | 卯月巻緒 | #EEC362 |
 | 4 | saki | 水嶋咲 | #EB6EA5 |
 | 5 | satan | サタン | #777B85 |
+| 6 | cake_set | ケーキセット | #D6AA60 |
 
 すべて `y=0` です。画像の中の名前は英字略称で、**ゲーム内の日本語名はローカライズが担当**します。
 
@@ -37,7 +38,7 @@ SMODS.Atlas {
     py = 95
 }
 SMODS.Atlas {key = 'satan_top', path = 'cafeparade_satan_top.png', px = 71, py = 95}
--- ベースは atlas='jokers', pos={x=0..5,y=0}。
+-- ベースは atlas='jokers', pos={x=0..6,y=0}。
 -- サタンだけ soul_atlas='satan_top', soul_pos={x=0,y=0} を追加。
 -- atlas / soul_atlas にはSteamoddedがcpプレフィックスを自動付与します。
 ```

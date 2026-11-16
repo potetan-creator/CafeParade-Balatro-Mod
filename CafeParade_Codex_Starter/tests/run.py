@@ -8,6 +8,9 @@ for path in root.rglob('*.lua'):
     lua.execute('assert(loadfile(...))', str(path))
 print('Lua 5.1 syntax: all Lua files passed')
 lua.execute((root / 'tests' / 'contracts.lua').read_text())
+cake_lua = LuaRuntime(unpack_returned_tuples=True)
+cake_lua.globals().ROOT = str(root)
+cake_lua.execute((root / 'tests' / 'cake_set.lua').read_text())
 
 import json
 import shutil
@@ -18,7 +21,7 @@ from PIL import Image
 metadata = json.loads((root / 'CafeParade.json').read_text())
 assert metadata['id'] == 'CafeParade' and (root / metadata['main_file']).is_file()
 palette = json.loads((root / 'COLOR_PALETTE.json').read_text())
-assert len(palette['jokers']) == 6
+assert len(palette['jokers']) == 7
 for index, spec in enumerate(palette['jokers']):
     assert spec['atlas_pos'] == {'x': index, 'y': 0}
     assert (root / 'jokers' / (spec['id'] + '.lua')).is_file()
@@ -29,7 +32,7 @@ with tempfile.TemporaryDirectory(prefix='cafeparade-assets-') as directory:
         subprocess.run([sys.executable, 'tools/build_atlas.py', '--filter', mode], cwd=target, check=True)
         for scale in (1, 2):
             with Image.open(target / f'assets/{scale}x/cafeparade_jokers.png') as atlas:
-                assert atlas.size == (426 * scale, 95 * scale) and atlas.mode == 'RGBA'
+                assert atlas.size == (71 * len(palette['jokers']) * scale, 95 * scale) and atlas.mode == 'RGBA'
                 for index, spec in enumerate(palette['jokers']):
                     with Image.open(target / 'art/source' / (spec['id'] + '.png')) as source:
                         expected = source.convert('RGBA').resize((71 * scale, 95 * scale),
@@ -45,7 +48,7 @@ with tempfile.TemporaryDirectory(prefix='cafeparade-assets-') as directory:
     for scale in (1, 2):
         with Image.open(target / f'assets/{scale}x/cafeparade_icon.png') as icon:
             assert icon.size == (34 * scale, 34 * scale)
-print('Metadata, six atlas positions, separate Satan foreground, both resamplers, 1x/2x pixels and icons: passed')
+print('Metadata, seven atlas positions, separate Satan foreground, both resamplers, 1x/2x pixels and icons: passed')
 
 # Separate VM: the registration test deliberately removes G to catch writes to defaults.
 skin_lua = LuaRuntime(unpack_returned_tuples=True)

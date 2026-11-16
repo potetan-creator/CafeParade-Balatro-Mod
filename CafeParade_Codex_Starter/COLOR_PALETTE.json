@@ -80,6 +80,19 @@
         "y": 0
       },
       "role": "legendary"
+    },
+    {
+      "id": "cake_set",
+      "display_name_ja": "ケーキセット",
+      "name_short": "CAKE SET",
+      "color_hex": "#D6AA60",
+      "rarity": "Common",
+      "cost": 4,
+      "atlas_pos": {
+        "x": 6,
+        "y": 0
+      },
+      "role": "suit_debuff_support"
     }
   ]
 }

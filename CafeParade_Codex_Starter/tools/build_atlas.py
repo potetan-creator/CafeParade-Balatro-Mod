@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuilds the six-frame Joker atlas and Satan's separate floating layer.
+"""Rebuilds the seven-frame Joker atlas and Satan's separate floating layer.
 Run: python tools/build_atlas.py --filter lanczos
 """
 from PIL import Image
@@ -7,7 +7,7 @@ from pathlib import Path
 import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
-NAMES = ["kamiya", "shinonome", "aslan", "makio", "saki", "satan"]
+NAMES = ["kamiya", "shinonome", "aslan", "makio", "saki", "satan", "cake_set"]
 
 def frame(name, size, resampling):
     source = ROOT / "art" / "source" / (name + ".png")

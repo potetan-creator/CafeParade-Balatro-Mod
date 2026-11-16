@@ -29,6 +29,12 @@ return {
         "unenhanced scoring card into a {C:attention}Wild Card{}",
         "{C:inactive}(Once per blind; #3#)",
       }},
+      j_cp_cake_set = {name = "Cake Set", text = {
+        "When the played hand is exactly a {C:attention}Pair{},",
+        "ignore the Boss Blind's {C:attention}suit debuffs{}",
+        "during that hand's scoring",
+        "{C:inactive}(Other Boss effects remain active)",
+      }},
       j_cp_satan = {name = "Satan", text = {
         "{C:attention}+#1#{} Joker slot; starts at {X:mult,C:white} X#2# {} Mult",
         "Each member adds {C:attention}#3#{} to {X:mult,C:white} XMult {}",
@@ -39,6 +45,7 @@ return {
       }},
     },
     Other = {
+      cp_cake_set = {name = "Pair only", text = {"The scoring hand must be exactly a Pair", "Two Pair, Full House, etc. do not qualify", "Only The Club, The Goad, The Window", "and The Head's suit debuffs are ignored", "Debuffs from other sources still apply", "Cake Set does not count as a member"}},
       cp_suits = {name = "Counting suits", text = {"Each Wild Card counts as one suit", "Suit-changing effects are respected"}},
       cp_pair = {name = "Scored pairs", text = {"At least two scored cards of one rank", "Stone Cards do not count"}},
       cp_makio = {name = "Retrigger targets", text = {"Choose the leftmost repeated rank", "At most two cards, even with Two Pair"}},
@@ -50,6 +57,7 @@ return {
   misc = {
     dictionary = {
       k_cp_wild = "Makeup!",
+      k_cp_suit_relief = "Suit debuffs lifted",
       k_cp_unused = "Ready",
       k_cp_used = "Used",
     },
