@@ -28,6 +28,11 @@ return {
         "{C:attention}ワイルドカード{}に変える",
         "{C:inactive}(ブラインドごとに1回／#3#)",
       }},
+      j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
+        "{C:attention}フラッシュハウス{}で、ランダムな",
+        "{C:spectral}スペクトル{}カードを最大{C:attention}#1#{}枚生成",
+        "{C:inactive}(空きが必要)",
+      }},
       j_cp_cake_set = {name = "ケーキセット", text = {
         "{C:attention}ワンペア{}の得点中のみ、",
         "ボスの{C:attention}スートによる",

@@ -1,8 +1,15 @@
-# Café Parade × Balatro — CafeParade v0.3.2
+# Café Parade × Balatro — CafeParade v0.4.0
 
-5人のアイドル・サタン・ケーキセットの7枚を追加する、Lovely + Steamodded 用の非公式ファンMODです。アップロードされたジョーカー画像を使用しています。ゲーム本体を書き換える独自パッチはありません。
+5人のアイドル・サタン・ケーキセット・Chocolate Spacialの8枚を追加する、Lovely + Steamodded 用の非公式ファンMODです。アップロードされたジョーカー画像を使用しています。ゲーム本体を書き換える独自パッチはありません。
 
 **実ゲーム起動は未検証です。** このリポジトリに Balatro 本体・Lovely・Steamodded の実行環境はありません。Lua 5.1 の構文とモックによる能力ロジック、画像生成は検証済みですが、実際のスコア処理・表示・セーブ復帰を保証するものではありません。詳細は `TEST_PLAN.md`。
+
+## v0.4.0 の変更
+
+- 曲にちなむ **Chocolate Spacial** を追加。レア・購入価格$8で、名前は日英とも同じ表記です。説明は日英対応、追加の補足ツールチップはありません。
+- 役が **フラッシュハウス** のハンド終了後に、ランダムなスペクトルカードを2枚生成します。空きが1枠なら1枚、満杯なら生成しません。フルハウス・フラッシュ・フラッシュファイブでは発動しません。
+- Blueprint/Brainstormも対応。コピー・複数所持・神谷のタロット生成は消耗品の予約枠を共有し、枠を超えて生成しないようにしています。同じハンドの重複評価やジョーカー再発動では追加生成しません。
+- `Chocolate_spacial_joker.png` を原稿へコピーし、アトラス末尾の `x=7,y=0` に追加。1xは568×95、2xは1136×190です。既存7枚の画像・座標を維持し、サタンのメンバー数とお試しライブの初期6枚には追加していません。
 
 ## v0.3.2 の変更
 
@@ -73,7 +80,7 @@
 2. [Lovely の公式配布](https://github.com/ethangreen-dev/lovely-injector/releases)から Windows 対応版を取得し、公式手順に従って Balatro 実行フォルダへ配置します（Steam → 管理 → ローカルファイルを閲覧）。参照 Steamodded リリースの Lovely 要件は **0.9.0以上**です。
 3. [Steamodded の公式配布](https://github.com/Steamodded/smods/releases)から **26.1002.0以上**の対応版を取得し、公式手順に従い `%AppData%\Balatro\Mods\Steamodded\` に配置します。古いバージョンの残骸と二重導入しないでください。
 4. このリポジトリの **`CafeParade_Codex_Starter` フォルダの中身**を `%AppData%\Balatro\Mods\CafeParade\` にコピーします。直下が `CafeParade.json`、`main.lua`、`assets/` になる構成です。リポジトリ全体とこのフォルダを別々に二重配置しないでください。
-5. ゲームを再起動し Mods メニューの CafeParade、コレクションの7枚、日英の説明を確認します。サタンはレジェンダリーとして登録し、通常の The Soul 経路を使用します。ケーキセットはコモンの通常ショップ枠に出現します。
+5. ゲームを再起動し Mods メニューの CafeParade、コレクションの8枚、日英の説明を確認します。サタンはレジェンダリーとして登録し、通常の The Soul 経路を使用します。ケーキセットはコモンの通常ショップ枠に出現します。
 
 API 参照対象は Steamodded **26.1002.0**（commit `af0fdb1eb2c9e191262c128bc88bbc4da991e12d`）。公式 `src/utils.lua`、`lovely/center.toml`、`lovely/better_calc.toml`、`lovely/card_limit.toml` の context・enhancement・確率・ライフサイクル処理を確認しました。実際にインストールされたゲーム側のバージョンは確認できていません。最新版で挙動が変わる場合はログとバージョンを記録してください。
 
@@ -100,8 +107,9 @@ Steamodded標準の `SMODS.DeckSkin` を使用しており、スキンの選択�
 |水嶋咲|ワイルド得点ごとにX1.20。ブラインドに1回、得点前に左端の未強化の得点対象カードをワイルド化|
 |サタン|有効所持中+1枠。X(2 + 0.25×有効な異種メンバー数 + 成長)。ボス撃破で人数×0.15成長|
 |ケーキセット|コモン・$4。ワンペアで得点する間だけ、標準4ボスのスートによるカード無効化を解除|
+|Chocolate Spacial|レア・$8。フラッシュハウスのハンド終了後、ランダムなスペクトルを最大2枚生成。空きが必要|
 
-数値・レアリティ・価格は `config.lua` に集約。サタンの価格はレジェンダリーの標準価格$20を採用（仕様書が許容するAPI既定相当）。メンバー5種の重複は数えず、debuff・サタン・ケーキセット・Blueprint/Brainstormは人数に含めません。
+数値・レアリティ・価格は `config.lua` に集約。サタンの価格はレジェンダリーの標準価格$20を採用（仕様書が許容するAPI既定相当）。メンバー5種の重複は数えず、debuff・サタン・ケーキセット・Chocolate Spacial・Blueprint/Brainstormは人数に含めません。
 
 神谷は `card:is_suit` の候補を二部マッチングで割り当てます。ワイルド1枚だけで3スートを成立させません。確率は Steamodded のシード付き確率APIを使用し、確率変更ジョーカーにも従います。消耗品生成の予約枠で同時生成の衝突を防ぎます。コピーによる神谷の使用済みフラグはコピーの `sort_id` ごとに管理します。
 
@@ -120,7 +128,7 @@ python tools/build_atlas.py --filter nearest
 python tools/build_atlas.py --filter lanczos
 ```
 
-先に `art/source/{kamiya,shinonome,aslan,makio,saki,satan,cake_set}.png` の必要な原稿を差し替えてください。サタンの `satan.png` はベース専用で、前景は `art/source/satan_top.png` です。生成先は `assets/{1x,2x}/cafeparade_jokers.png` と `cafeparade_satan_top.png`。ゲームを再起動すると反映されます。サイズ・座標・色は `ASSET_GUIDE.md` と `COLOR_PALETTE.json` を参照。
+先に `art/source/{kamiya,shinonome,aslan,makio,saki,satan,cake_set,chocolate_spacial}.png` の必要な原稿を差し替えてください。サタンの `satan.png` はベース専用で、前景は `art/source/satan_top.png` です。生成先は `assets/{1x,2x}/cafeparade_jokers.png` と `cafeparade_satan_top.png`。ゲームを再起動すると反映されます。サイズ・座標・色は `ASSET_GUIDE.md` と `COLOR_PALETTE.json` を参照。
 
 ## 自動検証
 
@@ -136,15 +144,15 @@ python tests/run.py
 ## ファイル一覧
 
 - `CafeParade.json`: MODメタデータ・対応Steamoddedバージョン
-- `main.lua`: アトラス、アイコン、7種の登録
+- `main.lua`: アトラス、アイコン、8種の登録
 - `cake_set.lua`: スート制限だけを一時的に除外し、得点後に戻す処理
 - `config.lua`: 能力数値・価格・レアリティ
 - `common.lua`: 有効メンバー数、ペア選択、スート割り当て、使用済み識別
 - `deck_skins.lua`: 4スーツ、通常色／ハイコントラストの選択式スキン登録
 - `SAKI_CARDS_NOTICE.txt`: 旧トランプMODの利用案内・作者表記
-- `jokers/{kamiya,shinonome,aslan,makio,saki,satan,cake_set}.lua`: 各能力
+- `jokers/{kamiya,shinonome,aslan,makio,saki,satan,cake_set,chocolate_spacial}.lua`: 各能力
 - `localization/{ja,en-us}.lua`: 日英カード名・説明・現在値
-- `tests/run.py`, `tests/contracts.lua`, `tests/cake_set.lua`, `tests/deck_skins.lua`, `tests/requirements.txt`: 構文・ロジック・画像・スキン登録検証
+- `tests/run.py`, `tests/contracts.lua`, `tests/cake_set.lua`, `tests/chocolate_spacial.lua`, `tests/deck_skins.lua`, `tests/requirements.txt`: 構文・ロジック・画像・スキン登録検証
 - `TEST_PLAN.md`: 結果と実ゲーム手順
 - `PRACTICE_GUIDE.md`: お題の開始方法・確認用ハンド
 - `challenges/practice.lua`: 効果確認用のお題
@@ -154,7 +162,7 @@ python tests/run.py
 - `assets/{1x,2x}/{cafeparade_jokers,cafeparade_icon}.png`: ジョーカーのベースとMODアイコン
 - `assets/{1x,2x}/cafeparade_satan_top.png`: サタンの独立した前景レイヤー
 - `assets/{1x,2x}/saki_cards_{lc,hc}.png`: トランプ画像4枚（元画像をそのまま収録）
-- `art/source/{kamiya,shinonome,aslan,makio,saki,satan,cake_set,satan_top}.png`: 原稿8枚
+- `art/source/{kamiya,shinonome,aslan,makio,saki,satan,cake_set,chocolate_spacial,satan_top}.png`: 原稿9枚
 - `previews/{kamiya,shinonome,aslan,makio,saki,satan}_71x95.png`, `previews/cafeparade_card_preview.png`: プレビュー7枚
 
 ## お題開始時に `rescale` エラーが出る場合

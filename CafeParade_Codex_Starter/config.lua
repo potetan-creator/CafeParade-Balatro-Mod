@@ -9,4 +9,5 @@ return {
         makeup_delay = 0.4},
     satan = {rarity = 4, cost = 20, slots = 1, base = 2, per_member = 0.25, growth = 0.15},
     cake_set = {rarity = 1, cost = 4},
+    chocolate_spacial = {rarity = 3, cost = 8, cards = 2},
 }

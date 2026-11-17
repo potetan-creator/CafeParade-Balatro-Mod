@@ -93,6 +93,19 @@
         "y": 0
       },
       "role": "suit_debuff_support"
+    },
+    {
+      "id": "chocolate_spacial",
+      "display_name_ja": "Chocolate Spacial",
+      "name_short": "CHOCOLATE SPACIAL",
+      "color_hex": "#B88AA8",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 7,
+        "y": 0
+      },
+      "role": "spectral_generation"
     }
   ]
 }

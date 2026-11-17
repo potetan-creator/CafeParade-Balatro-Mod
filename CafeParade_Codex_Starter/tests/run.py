@@ -11,6 +11,9 @@ lua.execute((root / 'tests' / 'contracts.lua').read_text())
 cake_lua = LuaRuntime(unpack_returned_tuples=True)
 cake_lua.globals().ROOT = str(root)
 cake_lua.execute((root / 'tests' / 'cake_set.lua').read_text())
+chocolate_lua = LuaRuntime(unpack_returned_tuples=True)
+chocolate_lua.globals().ROOT = str(root)
+chocolate_lua.execute((root / 'tests' / 'chocolate_spacial.lua').read_text())
 
 import json
 import shutil
@@ -21,7 +24,7 @@ from PIL import Image
 metadata = json.loads((root / 'CafeParade.json').read_text())
 assert metadata['id'] == 'CafeParade' and (root / metadata['main_file']).is_file()
 palette = json.loads((root / 'COLOR_PALETTE.json').read_text())
-assert len(palette['jokers']) == 7
+assert len(palette['jokers']) == 8
 for index, spec in enumerate(palette['jokers']):
     assert spec['atlas_pos'] == {'x': index, 'y': 0}
     assert (root / 'jokers' / (spec['id'] + '.lua')).is_file()
@@ -48,7 +51,7 @@ with tempfile.TemporaryDirectory(prefix='cafeparade-assets-') as directory:
     for scale in (1, 2):
         with Image.open(target / f'assets/{scale}x/cafeparade_icon.png') as icon:
             assert icon.size == (34 * scale, 34 * scale)
-print('Metadata, seven atlas positions, separate Satan foreground, both resamplers, 1x/2x pixels and icons: passed')
+print('Metadata, eight atlas positions, separate Satan foreground, both resamplers, 1x/2x pixels and icons: passed')
 
 # Separate VM: the registration test deliberately removes G to catch writes to defaults.
 skin_lua = LuaRuntime(unpack_returned_tuples=True)

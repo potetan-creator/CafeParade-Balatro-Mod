@@ -47,6 +47,10 @@ local function flush() for _,e in ipairs(events) do assert(e.func()) end events=
 local function step() local event=table.remove(events,1); assert(event.func()); return event end
 dofile(ROOT..'/main.lua')
 local cp=SMODS.current_mod.cafeparade
+eq(defs.chocolate_spacial.rarity,3)
+eq(defs.chocolate_spacial.cost,8)
+eq(defs.chocolate_spacial.pos.x,7)
+eq(defs.chocolate_spacial.blueprint_compat,true)
 eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,5); eq(defs.satan.pos.y,0)
 eq(defs.satan.soul_atlas,'satan_top','foreground uses a separate native soul atlas')

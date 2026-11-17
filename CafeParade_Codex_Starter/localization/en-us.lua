@@ -27,6 +27,11 @@ return {
         "unenhanced scoring card into a {C:attention}Wild Card{}",
         "{C:inactive}(Once per blind; #3#)",
       }},
+      j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
+        "With a {C:attention}Flush House{}, create",
+        "up to {C:attention}#1#{} random {C:spectral}Spectral{} cards",
+        "{C:inactive}(Must have room)",
+      }},
       j_cp_cake_set = {name = "Cake Set", text = {
         "When playing exactly a {C:attention}Pair{},",
         "ignore Boss Blind {C:attention}suit debuffs{}",
