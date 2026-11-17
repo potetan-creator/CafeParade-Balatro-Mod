@@ -14,3 +14,5 @@
 GitHub自動生成の「Source code」は開発リポジトリ全体です。インストール用の添付ZIPは `Cafetro-v<version>.zip`。配布フォルダ名は **Cafetro**、ゲーム内の表示名は **Cafetro!** です。
 
 同一入力から同一ZIPを作れるよう、収録ファイルを明示し、並び順・日時・ファイル権限を固定しています。`art/`、`tests/`、`tools/`、`docs/`、旧MOD、過去の仮画像、開発用のお試しライブは入りません。作者の利用案内 `SAKI_CARDS_NOTICE.txt` はそのまま残します。
+
+`cafeparade-v0.1.0` のMOD本体・画像・生成ツール・テストを更新すると、GitHub Actionsでも検証とZIP作成を行います。対応バージョンのReleaseが下書きならZIPとSHA-256を差し替え、対象コミットを更新します。公開済みのReleaseは変更しません。READMEを `Cafetro/README.md` に追加してpushした場合も同じ処理が動きます。

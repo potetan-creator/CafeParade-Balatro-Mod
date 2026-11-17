@@ -4,7 +4,7 @@
   "author": [
     "potetan-creator"
   ],
-  "description": "Café Paradeをテーマにしたジョーカーとトランプスキンを追加する非公式ファンMOD。",
+  "description": "アイドルマスターSideMに登場するアイドルユニット「CafeParade」をモチーフとしたジョーカーを中心に、新チャレンジ・トランプの見た目などを追加するMODです。このMODはChatGPT-6.1Sol Codexの力を借りて生成されています。 Art:Potetan",
   "prefix": "cp",
   "main_file": "main.lua",
   "version": "1.0.0",
