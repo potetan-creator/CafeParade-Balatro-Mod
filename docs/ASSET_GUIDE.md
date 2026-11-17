@@ -1,0 +1,45 @@
+# Cafetro! 画像の管理
+
+## 原稿と生成先
+
+原稿は `art/source/` に集約しています。同じ絵を複数の場所で管理せず、差し替え後にリポジトリのルートから生成します。
+
+```sh
+python tools/build_atlas.py --filter nearest
+# 滑らかな補間が必要な場合:
+python tools/build_atlas.py --filter lanczos
+```
+
+- ジョーカー原稿: `art/source/{id}.png`。カードの比率は71:95。現在は71×95のRGBA。
+- アイコン原稿: `art/source/icon.png`。アップロードされた `cafetro_icon.png` と同一の68×68画像。1xは34×34へ縮小し、2xは元PNGのバイトを保持。
+- ゲーム用画像: `Cafetro/assets/{1x,2x}/`。生成済み画像を配布するので、ゲーム側には原稿やPythonは不要。
+- 画像一覧: `docs/images/cafetro_cards.png`。5列で折り返し、サタンの前景を合成した開発用プレビュー。
+
+## 5列のアトラス
+
+カード数に応じて段数を増やします。現在は10枚・5列×2段で、1xが355×190、2xが710×380。1セルは71×95／142×190です。
+
+|ID|x|y|
+|---|---:|---:|
+|kamiya|0|0|
+|shinonome|1|0|
+|aslan|2|0|
+|makio|3|0|
+|saki|4|0|
+|satan|0|1|
+|cake_set|1|1|
+|chocolate_spacial|2|1|
+|plain_cakeroll|3|1|
+|three_one_five|4|1|
+
+画像の順序・列数は `art/COLOR_PALETTE.json`、ゲームでの登録は `Cafetro/main.lua` にあります。追加時は両方をそろえ、テストで全座標と全画素を確認します。
+
+## サタンの2レイヤー
+
+`art/source/satan.png` はベース、`satan_top.png` は透明な前景です。前景もカード全体のキャンバスを維持し、透明な余白を切り詰めません。共通アトラスのベースに、別の `cafeparade_satan_top.png` を標準の `soul_atlas` / `soul_pos` で重ねます。影・浮遊はSteamodded標準処理を使います。
+
+## 水嶋咲のトランプ
+
+`Cafetro/assets/{1x,2x}/saki_cards_{lc,hc}.png` は統合元の画像を無加工で保持しています。1xは923×380、2xは1846×760。13ランク×4スートで、通常色とハイコントラストの選択式です。アトラス生成ツールはこの4枚を書き換えません。
+
+元画像と作者の利用案内は、重複した旧MODを削除する前にバイト単位で照合しました。以後は `tests/asset_hashes.json` で保持を検証します。作者表記・利用案内は `Cafetro/SAKI_CARDS_NOTICE.txt` を配布にも残します。ジョーカーの表示には `Art:Potetan` を使用します。
