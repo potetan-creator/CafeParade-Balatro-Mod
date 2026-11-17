@@ -1,7 +1,7 @@
 -- バランス数値はここだけで調整する。個体の成長値は ability.extra に保存。
 return {
     kamiya = {rarity = 2, cost = 6, dollars = 3, suits = 3, odds = 4},
-    shinonome = {rarity = 2, cost = 6, mult = 8, initial = 1, growth = 0.05},
+    shinonome = {rarity = 2, cost = 6, mult = 8, initial = 1, growth = 0.05, growth_delay = 0.2},
     aslan = {rarity = 3, cost = 8, xmult = 1.25},
     makio = {rarity = 3, cost = 8, targets = 2, repetitions = 1},
     saki = {rarity = 3, cost = 8, xmult = 1.20,

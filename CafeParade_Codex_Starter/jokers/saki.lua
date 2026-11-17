@@ -3,7 +3,6 @@ return function(cp)
     return {
         config = {extra = {}},
         loc_vars = function(self, queue, card)
-            queue[#queue + 1] = {set = 'Other', key = 'cp_saki'}
             queue[#queue + 1] = G.P_CENTERS.m_wild
             return {vars = {c.xmult, card.ability.extra.changed_blind == cp.blind_id() and 1 or 0,
                 localize(card.ability.extra.changed_blind == cp.blind_id() and 'k_cp_used' or 'k_cp_unused')}}

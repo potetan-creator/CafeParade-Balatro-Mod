@@ -9,11 +9,12 @@ local function clone(t)
     local r={} for k,v in pairs(t) do r[k]=clone(v) end return r
 end
 local defs, events, challenges, atlases = {}, {}, {}, {}
+local growth_feedback, sounds = {}, {}
 Blind = {debuff_card = function() end}
 G = {GAME={round_resets={ante=1},round=1,hands_played=1,
     blind={config={blind={key='bl_small'}}},consumeable_buffer=0},
     jokers={cards={},config={card_limit=5}}, play={}, hand={},
-    consumeables={cards={},config={card_limit=2}}, P_CENTERS={m_wild={key='m_wild'}}, C={MULT={}}}
+    consumeables={cards={},config={card_limit=2}}, P_CENTERS={m_wild={key='m_wild'}}, C={MULT={},WHITE={1,1,1,1}}}
 SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}},
     load_file=function(path) return loadfile(ROOT..'/'..path) end,
     Atlas=function(d) atlases[d.key]=d end, DeckSkin=function() end, Joker=function(d) defs[d.key]=d end,
@@ -24,8 +25,19 @@ SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}
     get_probability_vars=function(_,n,d) return n,d end,
     pseudorandom_probability=function() return true end,
     add_card=function() table.insert(G.consumeables.cards,{}) end}
-local dictionary = dofile(ROOT .. '/localization/ja.lua').misc.dictionary
-function localize(key) return dictionary[key] or key end
+local localization = dofile(ROOT .. '/localization/ja.lua').misc
+function localize(key)
+    if type(key)=='table' then
+        local text=assert(localization.v_dictionary[key.key])
+        for i,value in ipairs(key.vars or {}) do text=text:gsub('#'..i..'#',tostring(value)) end
+        return text
+    end
+    return localization.dictionary[key] or key
+end
+function attention_text(args)
+    growth_feedback[#growth_feedback+1]={args=args,xmult=args.major.ability.extra.xmult}
+end
+function play_sound(sound) sounds[#sounds+1]=sound end
 function Event(e) return e end
 G.E_MANAGER={add_event=function(_,e) events[#events+1]=e end}
 function delay(seconds)
@@ -47,7 +59,8 @@ for id,def in pairs(defs) do
 end
 local function joker(id)
     local d=defs[id]
-    return {ability=clone(d.config or {}), config={center={key='j_cp_'..id}},sort_id=id}
+    return {ability=clone(d.config or {}), config={center={key='j_cp_'..id}},sort_id=id,
+        juice_up=function(self) self.juice_count=(self.juice_count or 0)+1 end}
 end
 local function play(rank,suits,enhanced)
     return {rank=rank,suits=suits or {'Hearts'},enhanced=enhanced,visible_enhanced=enhanced,
@@ -97,11 +110,52 @@ near(sh.ability.extra.xmult,1)
 calc('shinonome',sh,{before=true,scoring_hand=pair})
 calc('shinonome',sh,{before=true,scoring_hand=pair})
 calc('shinonome',sh,{before=true,scoring_hand=pair,retrigger_joker=true})
-near(sh.ability.extra.xmult,1.05)
+near(sh.ability.extra.xmult,1,'no growth before scoring')
 eq(calc('shinonome',sh,{joker_main=true,scoring_hand=pair}).mult,8)
+near(calc('shinonome',sh,{joker_main=true,scoring_hand=pair}).xmult,1)
+eq(calc('shinonome',sh,{after=true,scoring_hand=pair,blueprint=1}),nil)
+eq(calc('shinonome',sh,{after=true,scoring_hand=pair,retrigger_joker=true}),nil)
+local growth=calc('shinonome',sh,{after=true,scoring_hand=pair})
+near(sh.ability.extra.xmult,1,'reserve growth without silently applying it')
+near(sh.ability.extra.pending_growth.xmult,1.05)
+eq(calc('shinonome',sh,{after=true,scoring_hand=pair}),nil,'no duplicate growth before animation')
+local saved_growth=clone(sh.ability)
+local loaded_sh=joker('shinonome'); loaded_sh.ability=saved_growth
+defs.shinonome:load(loaded_sh,{})
+near(loaded_sh.ability.extra.xmult,1.05,'pending growth survives a save before animation')
+eq(loaded_sh.ability.extra.pending_growth,nil)
+defs.shinonome:load(loaded_sh,{})
+near(loaded_sh.ability.extra.xmult,1.05,'load applies earned growth only once')
+eq(calc('shinonome',loaded_sh,{after=true,scoring_hand=pair}),nil,'saved used flag prevents another growth')
+G.E_MANAGER:add_event(Event({func=function()
+    near(sh.ability.extra.xmult,1,'scoring visuals finish before growth')
+    return true
+end}))
+growth.func()
+eq(#events,2)
+eq(events[2].delay,cp.config.shinonome.growth_delay)
+eq(#growth_feedback,0)
+step()
+near(sh.ability.extra.xmult,1)
+step()
+near(sh.ability.extra.xmult,1.05)
+eq(sh.ability.extra.pending_growth,nil)
+eq(#growth_feedback,1)
+near(growth_feedback[1].xmult,1.05,'popup sees the new value in the same event')
+eq(growth_feedback[1].args.text,'成長！X1.05')
+eq(growth_feedback[1].args.major,sh)
+eq(sounds[1],'tarot1')
+eq(sh.juice_count,1)
+eq(calc('shinonome',sh,{after=true,scoring_hand=pair}),nil,'no duplicate growth after animation')
 near(calc('shinonome',sh,{joker_main=true,scoring_hand={a},blueprint=1}).xmult,1.05)
 G.GAME.hands_played=2
-calc('shinonome',sh,{before=true,scoring_hand=pair}); near(sh.ability.extra.xmult,1.10)
+calc('shinonome',sh,{before=true,scoring_hand=pair}); near(sh.ability.extra.xmult,1.05)
+calc('shinonome',sh,{after=true,scoring_hand=pair}).func(); flush()
+near(sh.ability.extra.xmult,1.10)
+eq(growth_feedback[2].args.text,'成長！X1.10')
+G.GAME.hands_played=3
+eq(calc('shinonome',sh,{after=true,scoring_hand={a}}),nil,'no pair means no growth')
+near(sh.ability.extra.xmult,1.10)
 local aslan=joker('aslan')
 eq(calc('aslan',aslan,{individual=true,cardarea=G.hand,other_card=wild}),nil)
 near(calc('aslan',aslan,{individual=true,cardarea=G.play,other_card=wild}).xmult,1.25)
@@ -261,6 +315,7 @@ for _,lang in ipairs({'ja','en-us'}) do
         count=count+1
     end
     assert(loc.misc.dictionary.k_cp_wild=='Makeup!')
+    assert(loc.misc.v_dictionary.a_cp_growth)
     assert(loc.misc.challenge_names.c_cp_practice)
     assert(loc.misc.v_text.ch_c_cp_practice)
 end
