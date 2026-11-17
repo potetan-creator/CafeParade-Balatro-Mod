@@ -24,8 +24,8 @@ return {
       j_cp_saki = {name = "水嶋咲", text = {
         "{C:attention}ワイルドカード{}が得点されるたびに",
         "倍率{X:mult,C:white} X#1# {}",
-        "プレイした{C:attention}左端{}が{C:attention}未強化{}なら、",
-        "得点前に{C:attention}ワイルドカード{}に変える",
+        "プレイした{C:attention}最初のカード{}が",
+        "{C:attention}未強化{}の場合、{C:attention}ワイルドカード{}に変える",
         "{C:inactive}(ブラインドごとに1回／#3#)",
       }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {

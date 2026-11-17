@@ -22,9 +22,10 @@ return {
         "{C:inactive}(Up to #1# cards, from the left)",
       }},
       j_cp_saki = {name = "Saki Mizushima", text = {
-        "Scored {C:attention}Wild Cards{} give {X:mult,C:white} X#1# {} Mult",
-        "If the {C:attention}leftmost played card{} is unenhanced,",
-        "turn it into a {C:attention}Wild Card{} before scoring",
+        "Each played {C:attention}Wild Card{} gives",
+        "{X:mult,C:white} X#1# {} Mult when scored",
+        "{C:attention}First played card{} becomes",
+        "a {C:attention}Wild Card{} if unenhanced",
         "{C:inactive}(Once per blind; #3#)",
       }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
