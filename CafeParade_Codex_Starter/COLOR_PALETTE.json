@@ -106,6 +106,19 @@
         "y": 0
       },
       "role": "spectral_generation"
+    },
+    {
+      "id": "plain_cakeroll",
+      "display_name_ja": "ロールケーキ",
+      "name_short": "PLAIN CAKEROLL",
+      "color_hex": "#E8CB7A",
+      "rarity": "Common",
+      "cost": 4,
+      "atlas_pos": {
+        "x": 8,
+        "y": 0
+      },
+      "role": "two_card_chips"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "id": "CafeParade", "name": "CafeParade", "author": ["potetan-creator"],
   "description": "Café Paradeをテーマにしたジョーカーとトランプスキンを追加する非公式ファンMOD。",
-  "prefix": "cp", "main_file": "main.lua", "version": "0.4.2",
+  "prefix": "cp", "main_file": "main.lua", "version": "0.5.0",
   "badge_colour": "CC66CC", "badge_text_colour": "FFFFFF",
   "dependencies": ["Steamodded (>=26.1002.0)"], "priority": 0
 }

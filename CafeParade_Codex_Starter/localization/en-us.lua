@@ -28,6 +28,11 @@ return {
         "a {C:attention}Wild Card{} if unenhanced",
         "{C:inactive}(Once per blind; #3#)",
       }},
+      j_cp_plain_cakeroll = {name = "Plain cakeroll", text = {
+        "If exactly {C:attention}#2#{} cards score,",
+        "each gives {C:chips}+#1#{} Chips",
+        "when scored",
+      }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
         "With a {C:attention}Flush House{}, create",
         "up to {C:attention}#1#{} random {C:spectral}Spectral{} cards",

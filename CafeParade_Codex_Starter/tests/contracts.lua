@@ -47,6 +47,10 @@ local function flush() for _,e in ipairs(events) do assert(e.func()) end events=
 local function step() local event=table.remove(events,1); assert(event.func()); return event end
 dofile(ROOT..'/main.lua')
 local cp=SMODS.current_mod.cafeparade
+eq(defs.plain_cakeroll.rarity,1)
+eq(defs.plain_cakeroll.cost,4)
+eq(defs.plain_cakeroll.pos.x,8)
+eq(defs.plain_cakeroll.blueprint_compat,true)
 eq(defs.chocolate_spacial.rarity,3)
 eq(defs.chocolate_spacial.cost,8)
 eq(defs.chocolate_spacial.pos.x,7)
@@ -169,6 +173,46 @@ for _,target in ipairs({a,d}) do
 end
 eq(calc('makio',joker('makio'),{repetition=true,cardarea=G.play,scoring_hand={a,b,c,d,e},other_card=b}),nil)
 eq(calc('makio',joker('makio'),{individual=true,cardarea=G.play,scoring_hand=pair,other_card=a}),nil,'no recursive scoring trigger')
+local roll=joker('plain_cakeroll')
+local function roll_score(target,scoring_hand,area,flags)
+    local context=flags or {}
+    context.individual=true; context.cardarea=area or G.play
+    context.other_card=target; context.scoring_hand=scoring_hand
+    return calc('plain_cakeroll',roll,context)
+end
+local played={a,b,c,d,e}
+local total=0
+for _,target in ipairs(pair) do
+    local effect=roll_score(target,pair,G.play,{full_hand=played})
+    eq(effect.chips,30,'two scored cards qualify even when five cards were played')
+    total=total+effect.chips
+end
+eq(total,60,'each scored card gets its own chips')
+for size=0,5 do
+    local scoring={}
+    for i=1,size do scoring[i]=played[i] end
+    local effect=roll_score(a,scoring)
+    if size==2 then eq(effect.chips,30) else eq(effect,nil,'exactly two scored cards required') end
+end
+eq(roll_score(a,nil),nil)
+eq(roll_score(a,pair,G.hand),nil,'held cards do not receive chips')
+eq(roll_score(a,pair,'unscored'),nil)
+eq(roll_score(b,pair),nil,'unscored card in the played area does not receive chips')
+for _,context in ipairs({{before=true},{after=true},{joker_main=true},{repetition=true}}) do
+    context.cardarea=G.play; context.scoring_hand=pair; context.other_card=a
+    eq(calc('plain_cakeroll',roll,context),nil,'only individual scoring grants chips')
+end
+eq(roll_score(a,pair,G.play,{blueprint=1}).chips,30,'Blueprint copies the card-scoring effect')
+local retrigger_total=0
+for _=1,3 do retrigger_total=retrigger_total+roll_score(a,pair).chips end
+eq(retrigger_total,90,'each scoring retrigger grants another thirty chips')
+local stone=play(7); stone.stone=true
+eq(roll_score(stone,{a,stone}).chips,30,'two scored cards need not be a Pair')
+eq(roll_score(a,{a,d,stone}),nil,'a third scored Stone Card prevents activation')
+roll.debuff=true; eq(roll_score(a,pair),nil,'debuffed Joker is inactive')
+roll.debuff=nil; eq(roll_score(a,pair).chips,30)
+G.jokers.cards={roll}
+eq(cp.members(),0,'roll cake does not count as an idol member')
 local saki=joker('saki')
 local function saki_before(source, full_hand, scoring_hand, flags)
     local context=flags or {}

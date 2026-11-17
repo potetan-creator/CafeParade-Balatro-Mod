@@ -28,6 +28,11 @@ return {
         "{C:attention}未強化{}の場合、{C:attention}ワイルドカード{}に変える",
         "{C:inactive}(ブラインドごとに1回／#3#)",
       }},
+      j_cp_plain_cakeroll = {name = "ロールケーキ", text = {
+        "得点するカードが{C:attention}#2#{}枚の場合、",
+        "各カードは得点時に",
+        "{C:chips}+#1#{}チップを得る",
+      }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
         "{C:attention}フラッシュハウス{}で、ランダムな",
         "{C:spectral}スペクトル{}カードを最大{C:attention}#1#{}枚生成",
