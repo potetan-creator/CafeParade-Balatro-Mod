@@ -71,10 +71,34 @@ return {
       k_cp_unused = "未使用",
       k_cp_used = "使用済み",
     },
-    challenge_names = {c_cp_practice = "Café Parade：お試しライブ"},
-    v_text = {ch_c_cp_practice = {
-      "Café Paradeの6枚を所持してスタート",
-      "デッキは8枚、最初の手札に全カードがそろう",
-    }},
+    challenge_names = {
+      c_cp_practice = "Café Parade：お試しライブ",
+      c_cp_solo_kamiya = "神谷幸広：三色のおもてなし",
+      c_cp_solo_shinonome = "東雲荘一郎：一対ずつの積み重ね",
+      c_cp_solo_aslan = "アスラン：闇のパティスリー",
+      c_cp_solo_makio = "卯月巻緒：ふたり分のケーキ",
+      c_cp_solo_saki = "水嶋咲：Makeup! ワンステージ",
+      c_cp_finale = "Café Parade：悪魔のフルコース",
+    },
+    v_text = {
+      ch_c_cp_solo_member = {
+        "主役は{C:attention}エターナル{}",
+        "他のメンバーとサタンは出現しない",
+      },
+      ch_c_cp_finale_unlock = {
+        "5人のソロお題をすべてクリアで",
+        "{C:attention}悪魔のフルコース{}を解放",
+      },
+      ch_c_cp_no_faces = {"絵札のない{C:attention}40枚{}のデッキで開始"},
+      ch_c_cp_finale_roster = {
+        "{C:attention}5人とサタン{}はエターナル",
+        "追加のジョーカーは入手できない",
+      },
+      ch_c_cp_finale_scaling = {"要求スコアの上昇率は{C:attention}パープルステーク{}相当"},
+      ch_c_cp_practice = {
+        "Café Paradeの6枚を所持してスタート",
+        "デッキは8枚、最初の手札に全カードがそろう",
+      },
+    },
   },
 }

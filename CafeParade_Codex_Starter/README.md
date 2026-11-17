@@ -1,8 +1,15 @@
-# Café Parade × Balatro — CafeParade v0.6.1
+# Café Parade × Balatro — CafeParade v1.0.0
 
 5人のアイドル・サタン・ケーキセット・Chocolate Spacial・ロールケーキ・THREE ONE FIVEの10枚を追加する、Lovely + Steamodded 用の非公式ファンMODです。アップロードされたジョーカー画像を使用しています。ゲーム本体を書き換える独自パッチはありません。
 
 **実ゲーム起動は未検証です。** このリポジトリに Balatro 本体・Lovely・Steamodded の実行環境はありません。Lua 5.1 の構文とモックによる能力ロジック、画像生成は検証済みですが、実際のスコア処理・表示・セーブ復帰を保証するものではありません。詳細は `TEST_PLAN.md`。
+
+## v1.0.0 の変更
+
+- 5人それぞれが主役の**ソロお題5つ**を追加。各メンバーを1枚、エターナルで初期所持し、他の4人とサタンを禁止。スプラッシュ・ロールケーキ・マーブル・ケーキセットなどを組み合わせ、資金・ディスカード・手札・スロットの縛りを変えています。
+- 同じプロフィールで5つをすべてクリアすると、**Café Parade：悪魔のフルコース**を解放。5人＋サタンをエターナルで固定し、2ハンド・1ディスカード、パープルステーク相当のスコア上昇、利息と残りハンド報酬なしで挑みます。追加ジョーカーの入手経路も制限しています。
+- お題名・追加ルールは日英対応。初期所持、全設定、攻略の軸と解放条件は **[CHALLENGE_GUIDE.md](CHALLENGE_GUIDE.md)**。お試しライブも残しています。
+- 追加427件を含む合計1,086件のロジック検証、Lua 5.1構文・画像・スキン登録の検証が通過。実ゲームでの難易度と表示は未確認です。
 
 ## v0.6.1 の変更
 
@@ -181,10 +188,12 @@ python tests/run.py
 - `SAKI_CARDS_NOTICE.txt`: 旧トランプMODの利用案内・作者表記
 - `jokers/{kamiya,shinonome,aslan,makio,saki,satan,cake_set,chocolate_spacial,plain_cakeroll,three_one_five}.lua`: 各能力
 - `localization/{ja,en-us}.lua`: 日英カード名・説明・現在値
-- `tests/run.py`, `tests/contracts.lua`, `tests/cake_set.lua`, `tests/chocolate_spacial.lua`, `tests/deck_skins.lua`, `tests/requirements.txt`: 構文・ロジック・画像・スキン登録検証
+- `tests/run.py`, `tests/contracts.lua`, `tests/cake_set.lua`, `tests/chocolate_spacial.lua`, `tests/challenges.lua`, `tests/deck_skins.lua`, `tests/requirements.txt`: 構文・ロジック・画像・スキン登録検証
 - `TEST_PLAN.md`: 結果と実ゲーム手順
-- `PRACTICE_GUIDE.md`: お題の開始方法・確認用ハンド
+- `CHALLENGE_GUIDE.md`: ソロお題5種と最終お題のルール・解放条件・攻略の軸
+- `PRACTICE_GUIDE.md`: お試しライブの開始方法・確認用ハンド
 - `challenges/practice.lua`: 効果確認用のお題
+- `challenges/member_challenges.lua`: ソロお題5種とプロフィールのクリア記録で解放する最終お題
 - `README.md`: 本書
 - `CODEX_PROMPT.md`, `CARD_SPEC.md`, `ASSET_GUIDE.md`, `COLOR_PALETTE.json`: 制作仕様・画像資料
 - `tools/build_atlas.py`: 画像再生成ツール

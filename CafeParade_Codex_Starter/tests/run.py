@@ -14,6 +14,9 @@ cake_lua.execute((root / 'tests' / 'cake_set.lua').read_text())
 chocolate_lua = LuaRuntime(unpack_returned_tuples=True)
 chocolate_lua.globals().ROOT = str(root)
 chocolate_lua.execute((root / 'tests' / 'chocolate_spacial.lua').read_text())
+challenge_lua = LuaRuntime(unpack_returned_tuples=True)
+challenge_lua.globals().ROOT = str(root)
+challenge_lua.execute((root / 'tests' / 'challenges.lua').read_text())
 
 import json
 import shutil

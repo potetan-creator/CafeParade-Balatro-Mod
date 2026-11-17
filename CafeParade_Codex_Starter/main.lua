@@ -19,4 +19,5 @@ for i, id in ipairs({'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan', '
     SMODS.Joker(def)
 end
 load('challenges/practice.lua')
+load('challenges/member_challenges.lua')
 load('deck_skins.lua')()

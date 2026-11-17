@@ -72,10 +72,34 @@ return {
       k_cp_unused = "Ready",
       k_cp_used = "Used",
     },
-    challenge_names = {c_cp_practice = "Café Parade: Practice Live"},
-    v_text = {ch_c_cp_practice = {
-      "Start with all six Café Parade Jokers",
-      "All eight deck cards fit in the opening hand",
-    }},
+    challenge_names = {
+      c_cp_practice = "Café Parade: Practice Live",
+      c_cp_solo_kamiya = "Kamiya: Three-Suit Hospitality",
+      c_cp_solo_shinonome = "Shinonome: A Pair at a Time",
+      c_cp_solo_aslan = "Aslan: Dark Patisserie",
+      c_cp_solo_makio = "Makio: Cake for Two",
+      c_cp_solo_saki = "Saki: Makeup! One Stage",
+      c_cp_finale = "Café Parade: Devil's Full Course",
+    },
+    v_text = {
+      ch_c_cp_solo_member = {
+        "Your featured member is {C:attention}Eternal{}",
+        "Other members and Satan cannot appear",
+      },
+      ch_c_cp_finale_unlock = {
+        "Beat all five solo challenges to unlock",
+        "{C:attention}Devil's Full Course{}",
+      },
+      ch_c_cp_no_faces = {"Start with {C:attention}40 cards{} and no face cards"},
+      ch_c_cp_finale_roster = {
+        "{C:attention}All five members and Satan{} are Eternal",
+        "No additional Jokers can be obtained",
+      },
+      ch_c_cp_finale_scaling = {"Required scores scale as in {C:attention}Purple Stake{}"},
+      ch_c_cp_practice = {
+        "Start with all six Café Parade Jokers",
+        "All eight deck cards fit in the opening hand",
+      },
+    },
   },
 }
