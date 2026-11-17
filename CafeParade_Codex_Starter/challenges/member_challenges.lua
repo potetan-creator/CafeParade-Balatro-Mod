@@ -16,7 +16,7 @@ local function solo(member, options)
     end
     local jokers = {{id = 'j_cp_' .. member, eternal = true}}
     for _, support in ipairs(options.support or {}) do jokers[#jokers + 1] = {id = support} end
-    local custom = {{id = 'cp_solo_member'}, {id = 'cp_finale_unlock'}}
+    local custom = {{id = 'cp_solo_member'}}
     for _, rule in ipairs(options.custom or {}) do custom[#custom + 1] = rule end
     SMODS.Challenge {
         key = 'solo_' .. member,

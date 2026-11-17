@@ -50,7 +50,7 @@ for _, member in ipairs(members) do
     end
     local rules = indexed(challenge.rules.custom)
     eq(rules.cp_solo_member.id,'cp_solo_member')
-    eq(rules.cp_finale_unlock.id,'cp_finale_unlock')
+    eq(rules.cp_finale_unlock,nil,'unlock hint is omitted from challenge descriptions')
     local params = indexed(challenge.rules.modifiers)
     eq(params.dollars.value,4)
     eq(params.joker_slots.value,spec.slots)

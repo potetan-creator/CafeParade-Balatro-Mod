@@ -86,10 +86,6 @@ return {
         "Your featured member is {C:attention}Eternal{}",
         "Other members and Satan cannot appear",
       },
-      ch_c_cp_finale_unlock = {
-        "Beat all five solo challenges to unlock",
-        "{C:attention}Devil's Full Course{}",
-      },
       ch_c_cp_no_faces = {"Start with {C:attention}40 cards{} and no face cards"},
       ch_c_cp_finale_roster = {
         "{C:attention}All five members and Satan{} are Eternal",

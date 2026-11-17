@@ -85,10 +85,6 @@ return {
         "主役は{C:attention}エターナル{}",
         "他のメンバーとサタンは出現しない",
       },
-      ch_c_cp_finale_unlock = {
-        "5人のソロお題をすべてクリアで",
-        "{C:attention}悪魔のフルコース{}を解放",
-      },
       ch_c_cp_no_faces = {"絵札のない{C:attention}40枚{}のデッキで開始"},
       ch_c_cp_finale_roster = {
         "{C:attention}5人とサタン{}はエターナル",
