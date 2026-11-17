@@ -4,7 +4,7 @@
   "author": [
     "potetan-creator"
   ],
-  "description": "アイドルマスターSideMに登場するアイドルユニット「CafeParade」をモチーフとしたジョーカーを中心に、新チャレンジ・トランプの見た目などを追加するMODです。このMODはChatGPT-6.1Sol Codexの力を借りて生成されています。 Art:Potetan",
+  "description": "アイドルマスターSideMに登場する\nアイドルユニット「CafeParade」を\nモチーフとしたジョーカーを中心に、\n新チャレンジ・トランプの見た目などを\n追加するMODです。\nこのMODはChatGPT-6.1Sol Codexの\n力を借りて生成されています。\nArt:Potetan",
   "prefix": "cp",
   "main_file": "main.lua",
   "version": "1.0.0",

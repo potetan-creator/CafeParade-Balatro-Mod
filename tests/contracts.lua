@@ -454,6 +454,11 @@ for id,def in pairs(defs) do
 end
 for _,lang in ipairs({'ja','en-us'}) do
     local loc=dofile(ROOT..'/localization/'..lang..'.lua')
+    local description=assert(loc.descriptions.Mod.CafeParade)
+    eq(description.name,'Cafetro!','localized MOD title stays branded')
+    eq(#description.text > 1,true,'MOD description has explicit rows')
+    eq(description.text[#description.text],'Art:Potetan','MOD description retains artist credit')
+    eq(table.concat(description.text,' '):find('ChatGPT-6.1Sol Codex',1,true)~=nil,true,'generation credit retained')
     for id,def in pairs(defs) do
         local entry=assert(loc.descriptions.Joker['j_cp_'..id])
         local queue={}
@@ -471,4 +476,30 @@ for _,lang in ipairs({'ja','en-us'}) do
     eq(loc.descriptions.Joker.j_cp_three_one_five.text[4],
         '{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE','small gray source footer')
 end
+
+-- Unit badges are scoped to the six character Jokers, without renaming the MOD.
+local badge_mod=SMODS.current_mod
+badge_mod.id='CafeParade'
+badge_mod.display_name='Cafetro!'
+badge_mod.badge_colour='unit-purple'
+badge_mod.badge_text_colour='white'
+G.UIT={C='column'}
+function HEX(value) return value end
+SMODS.create_mod_badge=function(def,obj)
+    assert(def.set_mod_badge==nil,'display-only settings avoid recursive badge callbacks')
+    return {badge=def,obj=obj}
+end
+local character_badges={kamiya=true,shinonome=true,aslan=true,makio=true,saki=true,satan=true}
+for id in pairs(defs) do
+    local obj={key='j_cp_'..id,set='Joker'}
+    local rows=badge_mod:set_mod_badge(obj).nodes
+    eq(rows[1].badge.display_name,character_badges[id] and 'CafeParade' or 'Cafetro!','category for '..id)
+    eq(rows[1].badge.badge_colour,'unit-purple','unit colour preserved')
+    eq(rows[2].badge.display_name,'Art:Potetan','artist badge preserved')
+    eq(rows[2].badge.badge_colour,'D6AA60','artist badge background preserved')
+    eq(rows[2].obj,obj,'same card passed through')
+end
+eq(badge_mod:set_mod_badge({key='c_cp_finale',set='Challenge'}).nodes[1].badge.display_name,'Cafetro!')
+eq(badge_mod:set_mod_badge(nil).nodes[1].badge.display_name,'Cafetro!')
+eq(badge_mod.display_name,'Cafetro!','badge rendering does not mutate global display name')
 print('Contract assertions passed: '..count)

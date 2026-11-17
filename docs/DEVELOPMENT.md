@@ -13,6 +13,8 @@
 
 表示名は **Cafetro!**。既存セーブとの互換性のため、内部MOD ID `CafeParade`、prefix `cp`、ジョーカー・お題・スキンの内部キー、アトラスキーは維持します。`Cafetro.json` のファイル名とインストールフォルダ名は変更しています。
 
+MOD一覧の説明は `Cafetro/localization/{ja,en-us}.lua` の `descriptions.Mod.CafeParade` に行ごとに定義します。メタデータの `description` はフォールバックです。カードのカテゴリは `badges.lua` で5人＋サタンだけをCafeParade、他のカードをCafetro!とし、MOD自体の表示名は変更しません。
+
 ## 開発コマンド
 
 リポジトリのルートから実行します。画像・ZIPは更新が必要なときにだけ再生成します。

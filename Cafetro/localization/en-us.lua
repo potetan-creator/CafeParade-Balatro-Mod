@@ -1,5 +1,16 @@
 return {
   descriptions = {
+    Mod = {
+      CafeParade = {name = "Cafetro!", text = {
+        "Adds Jokers inspired by CafeParade,",
+        "the idol unit from THE IDOLM@STER SideM,",
+        "along with new challenges and",
+        "custom playing card designs.",
+        "This mod was created with help from",
+        "ChatGPT-6.1Sol Codex.",
+        "Art:Potetan",
+      }},
+    },
     Joker = {
       j_cp_kamiya = {name = "Yukihiro Kamiya", text = {
         "If scored cards cover {C:attention}#1# suits{},",

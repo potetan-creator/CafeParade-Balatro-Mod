@@ -1,5 +1,17 @@
 return {
   descriptions = {
+    Mod = {
+      CafeParade = {name = "Cafetro!", text = {
+        "アイドルマスターSideMに登場する",
+        "アイドルユニット「CafeParade」を",
+        "モチーフとしたジョーカーを中心に、",
+        "新チャレンジ・トランプの見た目などを",
+        "追加するMODです。",
+        "このMODはChatGPT-6.1Sol Codexの",
+        "力を借りて生成されています。",
+        "Art:Potetan",
+      }},
+    },
     Joker = {
       j_cp_kamiya = {name = "神谷幸広", text = {
         "得点カードのスーツが{C:attention}#1#種類{}以上なら",
