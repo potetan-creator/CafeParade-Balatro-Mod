@@ -76,8 +76,8 @@
       "rarity": "Legendary",
       "cost": 0,
       "atlas_pos": {
-        "x": 5,
-        "y": 0
+        "x": 0,
+        "y": 1
       },
       "role": "legendary"
     },
@@ -89,8 +89,8 @@
       "rarity": "Common",
       "cost": 4,
       "atlas_pos": {
-        "x": 6,
-        "y": 0
+        "x": 1,
+        "y": 1
       },
       "role": "suit_debuff_support"
     },
@@ -102,8 +102,8 @@
       "rarity": "Rare",
       "cost": 8,
       "atlas_pos": {
-        "x": 7,
-        "y": 0
+        "x": 2,
+        "y": 1
       },
       "role": "spectral_generation"
     },
@@ -115,10 +115,24 @@
       "rarity": "Common",
       "cost": 4,
       "atlas_pos": {
-        "x": 8,
-        "y": 0
+        "x": 3,
+        "y": 1
       },
       "role": "two_card_chips"
+    },
+    {
+      "id": "three_one_five",
+      "display_name_ja": "THREE ONE FIVE",
+      "name_short": "THREE ONE FIVE",
+      "color_hex": "#777B85",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 4,
+        "y": 1
+      },
+      "role": "rank_xmult"
     }
-  ]
+  ],
+  "atlas_columns": 5
 }

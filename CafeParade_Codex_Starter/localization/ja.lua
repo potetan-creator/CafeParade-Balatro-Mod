@@ -28,6 +28,11 @@ return {
         "{C:attention}未強化{}の場合、{C:attention}ワイルドカード{}に変える",
         "{C:inactive}(ブラインドごとに1回／#3#)",
       }},
+      j_cp_three_one_five = {name = "THREE ONE FIVE", text = {
+        "得点カードに{C:attention}3{}か{C:attention}5{}を含むと",
+        "倍率{X:mult,C:white} X#1# {}",
+        "{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE",
+      }},
       j_cp_plain_cakeroll = {name = "ロールケーキ", text = {
         "得点するカードが{C:attention}#2#{}枚の場合、",
         "各カードは得点時に",

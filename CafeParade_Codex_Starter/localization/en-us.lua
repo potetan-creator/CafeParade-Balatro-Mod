@@ -28,6 +28,11 @@ return {
         "a {C:attention}Wild Card{} if unenhanced",
         "{C:inactive}(Once per blind; #3#)",
       }},
+      j_cp_three_one_five = {name = "THREE ONE FIVE", text = {
+        "{X:mult,C:white} X#1# {} Mult if played hand",
+        "contains a scoring {C:attention}3{} or {C:attention}5{}",
+        "{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE",
+      }},
       j_cp_plain_cakeroll = {name = "Plain cakeroll", text = {
         "If exactly {C:attention}#2#{} cards score,",
         "each gives {C:chips}+#1#{} Chips",

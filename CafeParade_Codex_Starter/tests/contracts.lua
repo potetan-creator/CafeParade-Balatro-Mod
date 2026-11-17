@@ -49,14 +49,20 @@ dofile(ROOT..'/main.lua')
 local cp=SMODS.current_mod.cafeparade
 eq(defs.plain_cakeroll.rarity,1)
 eq(defs.plain_cakeroll.cost,4)
-eq(defs.plain_cakeroll.pos.x,8)
+eq(defs.plain_cakeroll.pos.x,3); eq(defs.plain_cakeroll.pos.y,1)
 eq(defs.plain_cakeroll.blueprint_compat,true)
 eq(defs.chocolate_spacial.rarity,3)
 eq(defs.chocolate_spacial.cost,8)
-eq(defs.chocolate_spacial.pos.x,7)
+eq(defs.chocolate_spacial.pos.x,2); eq(defs.chocolate_spacial.pos.y,1)
 eq(defs.chocolate_spacial.blueprint_compat,true)
 eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
-eq(defs.satan.pos.x,5); eq(defs.satan.pos.y,0)
+eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
+eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
+eq(defs.three_one_five.blueprint_compat,true)
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five'}) do
+    eq(defs[id].pos.x,(i-1)%5,'registration column')
+    eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
+end
 eq(defs.satan.soul_atlas,'satan_top','foreground uses a separate native soul atlas')
 eq(defs.satan.soul_pos.x,0); eq(defs.satan.soul_pos.y,0)
 eq(defs.satan.soul_pos.draw,nil,'use the standard legendary floating draw step')
@@ -84,6 +90,39 @@ local function calc(id,card,ctx)
     if card.debuff then return end -- engine dispatch guard
     return defs[id]:calculate(card,ctx)
 end
+-- THREE ONE FIVE checks actual scoring ranks, once in the Joker stage.
+local three_one_five=joker('three_one_five')
+for rank=2,14 do
+    local result=calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(rank)}})
+    if rank==3 or rank==5 then near(result.xmult,3.15) else eq(result,nil,'other ranks') end
+end
+local threes_and_fives={play(3),play(3),play(5),play(5),play(5)}
+near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand=threes_and_fives}).xmult,3.15)
+for _,target in ipairs(threes_and_fives) do
+    eq(calc('three_one_five',three_one_five,{individual=true,cardarea=G.play,other_card=target,scoring_hand=threes_and_fives}),nil,'no per-card XMult')
+end
+eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(9)},full_hand={play(3),play(9)}}),nil,'unscored 3 ignored')
+eq(calc('three_one_five',three_one_five,{joker_main=true}),nil)
+eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={}}),nil)
+for _,flag in ipairs({'debuff','stone'}) do
+    local target=play(3); target[flag]=true
+    eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={target}}),nil,flag..' 3 excluded')
+    near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={target,play(5)}}).xmult,3.15)
+    target=play(5); target[flag]=true
+    eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={target}}),nil,flag..' 5 excluded')
+end
+near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(3,nil,'m_wild')}}).xmult,3.15)
+near(calc('three_one_five',three_one_five,{joker_main=true,blueprint=1,scoring_hand={play(5)}}).xmult,3.15)
+near(calc('three_one_five',three_one_five,{joker_main=true,retrigger_joker=true,scoring_hand={play(3)}}).xmult,3.15,'Joker retriggers follow the engine')
+for _,phase in ipairs({'before','after','repetition'}) do
+    eq(calc('three_one_five',three_one_five,{[phase]=true,scoring_hand=threes_and_fives}),nil)
+end
+eq(calc('three_one_five',three_one_five,{individual=true,cardarea=G.hand,other_card=play(3)}),nil,'held cards ignored')
+three_one_five.debuff=true
+eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand=threes_and_fives}),nil)
+three_one_five.debuff=nil
+near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(5)}}).xmult,3.15,'next hand remains usable')
+G.jokers.cards={three_one_five}; eq(cp.members(),0,'not a Cafe Parade member'); G.jokers.cards={}
 local a,b,c,d,e=play(2),play(3),play(3),play(2),play(3)
 eq(#cp.pair_cards({a,b,c,d,e}),2,'two-pair leftmost group')
 eq(cp.pair_cards({a,b,c,d,e})[2],d)
@@ -405,5 +444,7 @@ for _,lang in ipairs({'ja','en-us'}) do
     assert(loc.misc.v_dictionary.a_cp_growth)
     assert(loc.misc.challenge_names.c_cp_practice)
     assert(loc.misc.v_text.ch_c_cp_practice)
+    eq(loc.descriptions.Joker.j_cp_three_one_five.text[3],
+        '{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE','small gray source footer')
 end
 print('Contract assertions passed: '..count)

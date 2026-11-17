@@ -76,7 +76,8 @@ local function after()
 end
 eq(defs.cake_set.rarity,1,'Common')
 eq(defs.cake_set.cost,4)
-eq(defs.cake_set.pos.x,6,'append without moving existing cards')
+eq(defs.cake_set.pos.x,1,'wrapped atlas column')
+eq(defs.cake_set.pos.y,1,'wrapped atlas row')
 eq(defs.cake_set.blueprint_compat,false)
 
 for key,suit in pairs({bl_club='Clubs',bl_goad='Spades',bl_window='Diamonds',bl_head='Hearts'}) do
