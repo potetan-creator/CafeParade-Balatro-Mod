@@ -170,21 +170,26 @@ end
 eq(calc('makio',joker('makio'),{repetition=true,cardarea=G.play,scoring_hand={a,b,c,d,e},other_card=b}),nil)
 eq(calc('makio',joker('makio'),{individual=true,cardarea=G.play,scoring_hand=pair,other_card=a}),nil,'no recursive scoring trigger')
 local saki=joker('saki')
-eq(calc('saki',saki,{before=true,scoring_hand={wild}}),nil)
+local function saki_before(source, full_hand, scoring_hand, flags)
+    local context=flags or {}
+    context.before=true; context.full_hand=full_hand; context.scoring_hand=scoring_hand or full_hand
+    return calc('saki',source,context)
+end
+eq(saki_before(saki,{wild}),nil)
 eq(saki.ability.extra.changed_blind,nil,'no target preserves chance')
-eq(calc('saki',saki,{before=true,scoring_hand=pair,blueprint=1}),nil); eq(a.enhanced,nil)
+eq(saki_before(saki,pair,pair,{blueprint=1}),nil); eq(a.enhanced,nil)
 eq(calc('saki',saki,{after=true,scoring_hand=pair}),nil,'no late transformation')
 a.seal='Red'; a.edition='foil'
-local makeup = calc('saki',saki,{before=true,scoring_hand=pair})
+local makeup = saki_before(saki,pair)
 eq(a.enhanced,nil,'selection leaves card unchanged until effect resolution')
 eq(makeup.message,'Makeup!')
-eq(makeup.message_card,a,'popup selects the leftmost unenhanced scoring card')
+eq(makeup.message_card,a,'popup selects the leftmost played card')
 eq(makeup.juice_card,a,'animate the selected playing card')
 eq(makeup.card,saki,'retain the source Joker')
 eq(makeup.colour,cp.config.saki.makeup_colour)
 eq(makeup.sound,'tarot1')
 eq(#events,0,'selection does not schedule a premature sprite change')
-eq(calc('saki',saki,{before=true,scoring_hand={d}}),nil,'reserve use before resolution')
+eq(saki_before(saki,{d}),nil,'reserve use before resolution')
 -- Model SMODS's message -> func resolution and set_ability's delayed sprites.
 G.E_MANAGER:add_event(Event({func=function()
     eq(a.visible_enhanced,nil,'Makeup popup precedes the visible Wild Card')
@@ -209,34 +214,68 @@ step() -- delayed set_ability sprites
 eq(a.visible_enhanced,'m_wild')
 step() -- scoring
 eq(#events,0)
-eq(calc('saki',saki,{before=true,scoring_hand={d}}),nil,'no second Makeup in the same blind'); eq(d.enhanced,nil)
+eq(saki_before(saki,{d}),nil,'no second Makeup in the same blind'); eq(d.enhanced,nil)
 local restored_saki=joker('saki'); restored_saki.ability=clone(saki.ability)
-eq(calc('saki',restored_saki,{before=true,scoring_hand={d}}),nil,'used flag survives save/load')
+eq(saki_before(restored_saki,{d}),nil,'used flag survives save/load')
 local saki_retrigger = joker('saki')
-eq(calc('saki',saki_retrigger,{before=true,scoring_hand={d},retrigger_joker=true}),nil,'retrigger does not produce Makeup')
+eq(saki_before(saki_retrigger,{d},{d},{retrigger_joker=true}),nil,'retrigger does not produce Makeup')
 eq(d.enhanced,nil)
 local second_saki=joker('saki')
-local second_makeup=calc('saki',second_saki,{before=true,scoring_hand=pair})
-eq(second_makeup.message_card,d,'second Saki skips the first transformation')
+eq(saki_before(second_saki,pair),nil,'second Saki cannot skip the newly Wild leftmost card')
+eq(second_saki.ability.extra.changed_blind,nil,'second Saki retains its use')
+eq(d.enhanced,nil)
+G.GAME.hands_played=G.GAME.hands_played+1
+local second_makeup=saki_before(second_saki,{d,a})
+eq(second_makeup.message_card,d,'reordering on the next hand permits the new leftmost card')
 second_makeup.func(); flush()
 eq(d.enhanced,'m_wild')
-local invalid_hand={play(2,nil,'m_bonus'),play(3),play(4),play(5),play(6)}
-invalid_hand[2].removed=true; invalid_hand[3].shattered=true; invalid_hand[4].destroyed=true
-local guarded_saki=joker('saki')
-local guarded_makeup=calc('saki',guarded_saki,{before=true,scoring_hand=invalid_hand})
-eq(guarded_makeup.message_card,invalid_hand[5],'skip enhanced and destroyed cards')
-guarded_makeup.func(); flush()
-eq(invalid_hand[1].enhanced,'m_bonus','do not overwrite other enhancements')
-for i=2,4 do eq(invalid_hand[i].enhanced,nil) end
-eq(invalid_hand[5].enhanced,'m_wild')
+-- A scoring card in the middle or on the right must never become a fallback.
+for _,position in ipairs({2,3}) do
+    local layout={play(2,nil,'m_bonus'),play(3,nil,'m_mult'),play(4,nil,'m_steel')}
+    local target=play(5); layout[position]=target
+    local source=joker('saki')
+    eq(saki_before(source,layout,{target}),nil,'plain card is not at the left edge')
+    eq(target.enhanced,nil)
+    eq(source.ability.extra.changed_blind,nil)
+    eq(#events,0,'no Makeup animation when the leftmost card is enhanced')
+    -- Move the same card to the left on a later hand of this blind.
+    G.GAME.hands_played=G.GAME.hands_played+1
+    local moved=saki_before(source,{target,layout[1]},{target})
+    eq(moved.message_card,target)
+    moved.func(); flush()
+    eq(target.enhanced,'m_wild')
+end
+for _,enhancement in ipairs({'m_wild','m_bonus','m_mult','m_steel','m_glass','m_stone'}) do
+    local left,right=play(2,nil,enhancement),play(3)
+    local source=joker('saki')
+    eq(saki_before(source,{left,right},{right}),nil,'leftmost enhancement blocks transformation')
+    eq(left.enhanced,enhancement)
+    eq(right.enhanced,nil)
+    eq(source.ability.extra.changed_blind,nil)
+end
+for _,state in ipairs({'removed','shattered','destroyed'}) do
+    local left,right=play(2),play(3); left[state]=true
+    local source=joker('saki')
+    eq(saki_before(source,{left,right},{right}),nil,'invalid leftmost card cannot be skipped')
+    eq(right.enhanced,nil)
+    eq(source.ability.extra.changed_blind,nil)
+end
+local played_left,scoring_right=play(7),play(8)
+local layout_saki=joker('saki')
+local left_makeup=saki_before(layout_saki,{played_left,scoring_right},{scoring_right})
+eq(left_makeup.message_card,played_left,'use played-card order, not scoring-hand order')
+left_makeup.func(); flush()
+eq(played_left.enhanced,'m_wild','an unscored leftmost played card can be selected')
+eq(scoring_right.enhanced,nil)
 local no_target_saki=joker('saki')
-eq(calc('saki',no_target_saki,{before=true,scoring_hand={invalid_hand[1],invalid_hand[2]}}),nil)
+eq(saki_before(no_target_saki,{}, {play(2)}),nil,'empty played hand must not use the scoring hand')
+eq(calc('saki',no_target_saki,{before=true,scoring_hand={play(2)}}),nil,'missing full hand has no target')
 eq(no_target_saki.ability.extra.changed_blind,nil)
 local debuffed_saki=joker('saki'); debuffed_saki.debuff=true
-eq(calc('saki',debuffed_saki,{before=true,scoring_hand={play(7)}}),nil)
+eq(saki_before(debuffed_saki,{play(7)}),nil)
 eq(debuffed_saki.ability.extra.changed_blind,nil)
 G.GAME.round=G.GAME.round+1
-local next_blind=calc('saki',saki,{before=true,scoring_hand={play(8)}})
+local next_blind=saki_before(saki,{play(8)})
 eq(next_blind.message,'Makeup!','new blind restores the transformation')
 next_blind.func(); flush()
 local satan=joker('satan')

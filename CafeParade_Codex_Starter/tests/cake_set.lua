@@ -169,7 +169,7 @@ for _,cake_first in ipairs({true,false}) do
     normal,wild=setup('bl_head','Hearts')
     local saki=joker('saki'); G.jokers.cards[#G.jokers.cards+1]=saki
     if cake_first then before('Pair') end
-    local makeup=defs.saki:calculate(saki,{before=true,scoring_hand={normal,wild}})
+    local makeup=defs.saki:calculate(saki,{before=true,full_hand=G.play.cards,scoring_hand={normal,wild}})
     makeup.func()
     if not cake_first then before('Pair') end
     eq(normal.enhanced,'m_wild','Saki still transforms')

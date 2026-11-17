@@ -23,8 +23,8 @@ return {
       }},
       j_cp_saki = {name = "Saki Mizushima", text = {
         "Scored {C:attention}Wild Cards{} give {X:mult,C:white} X#1# {} Mult",
-        "Before scoring, turn the leftmost",
-        "unenhanced scoring card into a {C:attention}Wild Card{}",
+        "If the {C:attention}leftmost played card{} is unenhanced,",
+        "turn it into a {C:attention}Wild Card{} before scoring",
         "{C:inactive}(Once per blind; #3#)",
       }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
