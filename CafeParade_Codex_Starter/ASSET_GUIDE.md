@@ -4,7 +4,7 @@
 - `assets/1x/cafeparade_jokers.png`: 355×190ピクセル、**71×95を5列×2段に並べた**ゲーム用アトラス。
 - `assets/2x/cafeparade_jokers.png`: 710×380ピクセル、**142×190を5列×2段に並べた**2倍解像度アトラス。
 - `assets/1x/cafeparade_satan_top.png` / `assets/2x/cafeparade_satan_top.png`: 71×95 / 142×190のサタン前景。透過部分も含めたカード全体のキャンバス。
-- `assets/1x/cafeparade_icon.png` / `assets/2x/cafeparade_icon.png`: 34×34 / 68×68 の仮MODアイコン。
+- `assets/1x/cafeparade_icon.png` / `assets/2x/cafeparade_icon.png`: 34×34 / 68×68 のMODアイコン。`cafetro_icon.png` の透過を保持し、2xは元PNGをそのまま使用、1xはnearestで縮小しています。
 - `art/source/*.png`: カードの原稿10枚とサタンの前景1枚。現在はいずれも71×95ピクセル。**あとから描く絵をここへ同じファイル名で上書き**してください。縦横比71:95を推奨。高解像度でも構いません。
 - `previews/cafeparade_card_preview.png`: 現在の全10枚を5列×2段で並べた710×380の一覧。再生成時に更新し、サタンの前景を合成します。
 - `previews/*_71x95.png`: スターター時点の参考画像。現在のゲーム用画像とは異なります。
