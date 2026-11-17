@@ -90,38 +90,62 @@ local function calc(id,card,ctx)
     if card.debuff then return end -- engine dispatch guard
     return defs[id]:calculate(card,ctx)
 end
--- THREE ONE FIVE checks actual scoring ranks, once in the Joker stage.
+-- THREE ONE FIVE needs both played ranks and at least one scoring 3/5.
 local three_one_five=joker('three_one_five')
+local function three_calc(scoring,played,extra)
+    local context={joker_main=true,scoring_hand=scoring,full_hand=played or scoring}
+    for key,value in pairs(extra or {}) do context[key]=value end
+    return calc('three_one_five',three_one_five,context)
+end
 for rank=2,14 do
-    local result=calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(rank)}})
-    if rank==3 or rank==5 then near(result.xmult,3.15) else eq(result,nil,'other ranks') end
+    eq(three_calc({play(rank)}),nil,'a single rank never meets both ranks')
 end
-local threes_and_fives={play(3),play(3),play(5),play(5),play(5)}
-near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand=threes_and_fives}).xmult,3.15)
+local threes={play(3),play(3)}
+local fives={play(5),play(5)}
+local threes_and_fives={threes[1],threes[2],fives[1],fives[2],play(5)}
+near(three_calc(threes,threes_and_fives).xmult,3.15,'only the 3 pair scores')
+near(three_calc(fives,threes_and_fives).xmult,3.15,'only the 5 pair scores')
+near(three_calc(threes_and_fives).xmult,3.15,'multiple matching cards give one XMult')
+-- The other rank must be played, rather than merely held in hand.
+eq(three_calc(threes),nil,'scoring 3 without a played 5')
+eq(three_calc(fives),nil,'scoring 5 without a played 3')
+G.hand.cards={play(5)}; eq(three_calc(threes),nil,'held 5 does not count')
+G.hand.cards={play(3)}; eq(three_calc(fives),nil,'held 3 does not count'); G.hand.cards=nil
+local nines={play(9),play(9)}
+eq(three_calc(nines,{nines[1],nines[2],play(3),play(5)}),nil,'both ranks played but neither scores')
+eq(three_calc({},threes_and_fives),nil,'no scoring cards')
+eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand=threes_and_fives}),nil,'missing played hand')
+eq(calc('three_one_five',three_one_five,{joker_main=true,full_hand=threes_and_fives}),nil,'missing scoring hand')
+for _,rank in ipairs({3,5}) do
+    local target=play(rank)
+    local other=play(rank==3 and 5 or 3)
+    target.debuff=true
+    eq(three_calc({target},{target,other}),nil,'debuffed scoring rank cannot trigger')
+    near(three_calc({other},{target,other}).xmult,3.15,'debuffed other rank still present in played hand')
+    other.debuff=true
+    eq(three_calc({target,other}),nil,'both scoring ranks debuffed')
+    target.debuff=nil; other.debuff=nil
+    target.stone=true
+    eq(three_calc({other},{target,other}),nil,'Stone cannot supply the missing played rank')
+    eq(three_calc({target},{target,other,play(rank)}),nil,'Stone cannot count as scoring rank')
+    near(three_calc({other},{target,other,play(rank)}).xmult,3.15,'real ranked card supplies missing rank')
+end
+local enhanced={play(3,nil,'m_wild'),play(5,nil,'m_glass')}
+near(three_calc({enhanced[1]},enhanced).xmult,3.15,'Wild 3 keeps its rank')
+near(three_calc({enhanced[2]},enhanced).xmult,3.15,'enhanced 5 keeps its rank')
+near(three_calc(threes,threes_and_fives,{blueprint=1}).xmult,3.15)
+near(three_calc(fives,threes_and_fives,{retrigger_joker=true}).xmult,3.15,'Joker retriggers follow the engine')
 for _,target in ipairs(threes_and_fives) do
-    eq(calc('three_one_five',three_one_five,{individual=true,cardarea=G.play,other_card=target,scoring_hand=threes_and_fives}),nil,'no per-card XMult')
+    eq(calc('three_one_five',three_one_five,{individual=true,cardarea=G.play,other_card=target,scoring_hand=threes_and_fives,full_hand=threes_and_fives}),nil,'no per-card XMult')
 end
-eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(9)},full_hand={play(3),play(9)}}),nil,'unscored 3 ignored')
-eq(calc('three_one_five',three_one_five,{joker_main=true}),nil)
-eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={}}),nil)
-for _,flag in ipairs({'debuff','stone'}) do
-    local target=play(3); target[flag]=true
-    eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={target}}),nil,flag..' 3 excluded')
-    near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={target,play(5)}}).xmult,3.15)
-    target=play(5); target[flag]=true
-    eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={target}}),nil,flag..' 5 excluded')
-end
-near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(3,nil,'m_wild')}}).xmult,3.15)
-near(calc('three_one_five',three_one_five,{joker_main=true,blueprint=1,scoring_hand={play(5)}}).xmult,3.15)
-near(calc('three_one_five',three_one_five,{joker_main=true,retrigger_joker=true,scoring_hand={play(3)}}).xmult,3.15,'Joker retriggers follow the engine')
 for _,phase in ipairs({'before','after','repetition'}) do
-    eq(calc('three_one_five',three_one_five,{[phase]=true,scoring_hand=threes_and_fives}),nil)
+    eq(calc('three_one_five',three_one_five,{[phase]=true,scoring_hand=threes_and_fives,full_hand=threes_and_fives}),nil)
 end
-eq(calc('three_one_five',three_one_five,{individual=true,cardarea=G.hand,other_card=play(3)}),nil,'held cards ignored')
+eq(calc('three_one_five',three_one_five,{individual=true,cardarea=G.hand,other_card=play(3)}),nil,'held cards cannot trigger')
 three_one_five.debuff=true
-eq(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand=threes_and_fives}),nil)
+eq(three_calc(threes_and_fives),nil)
 three_one_five.debuff=nil
-near(calc('three_one_five',three_one_five,{joker_main=true,scoring_hand={play(5)}}).xmult,3.15,'next hand remains usable')
+near(three_calc(fives,threes_and_fives).xmult,3.15,'next hand remains usable')
 G.jokers.cards={three_one_five}; eq(cp.members(),0,'not a Cafe Parade member'); G.jokers.cards={}
 local a,b,c,d,e=play(2),play(3),play(3),play(2),play(3)
 eq(#cp.pair_cards({a,b,c,d,e}),2,'two-pair leftmost group')
@@ -444,7 +468,7 @@ for _,lang in ipairs({'ja','en-us'}) do
     assert(loc.misc.v_dictionary.a_cp_growth)
     assert(loc.misc.challenge_names.c_cp_practice)
     assert(loc.misc.v_text.ch_c_cp_practice)
-    eq(loc.descriptions.Joker.j_cp_three_one_five.text[3],
+    eq(loc.descriptions.Joker.j_cp_three_one_five.text[4],
         '{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE','small gray source footer')
 end
 print('Contract assertions passed: '..count)

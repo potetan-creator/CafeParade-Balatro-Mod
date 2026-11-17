@@ -29,7 +29,8 @@ return {
         "{C:inactive}(ブラインドごとに1回／#3#)",
       }},
       j_cp_three_one_five = {name = "THREE ONE FIVE", text = {
-        "得点カードに{C:attention}3{}か{C:attention}5{}を含むと",
+        "プレイしたハンドに{C:attention}3{}と{C:attention}5{}を含み、",
+        "どちらかが得点すると",
         "倍率{X:mult,C:white} X#1# {}",
         "{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE",
       }},

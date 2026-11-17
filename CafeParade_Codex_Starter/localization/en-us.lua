@@ -30,7 +30,8 @@ return {
       }},
       j_cp_three_one_five = {name = "THREE ONE FIVE", text = {
         "{X:mult,C:white} X#1# {} Mult if played hand",
-        "contains a scoring {C:attention}3{} or {C:attention}5{}",
+        "contains a {C:attention}3{} and a {C:attention}5{}, and",
+        "at least one of them scores",
         "{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE",
       }},
       j_cp_plain_cakeroll = {name = "Plain cakeroll", text = {
