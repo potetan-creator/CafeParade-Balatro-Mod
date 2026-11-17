@@ -101,5 +101,5 @@ for scale in (1, 2):
                     assert cell.getchannel('A').getextrema()[1] == 255
             images[palette] = image.tobytes()
     assert images['lc'] != images['hc']
-print('Playing cards: two palettes, 1x/2x, all 52 cells; original images and author notice hashes: passed')
+print('Playing cards: two palettes, 1x/2x, all 52 cells and original image hashes: passed')
 runpy.run_path(str(TESTS / 'release.py'), run_name='__main__')

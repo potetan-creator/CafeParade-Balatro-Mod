@@ -59,4 +59,4 @@ jobs:
             exit 0
           fi
           gh release upload "$RELEASE_TAG" "dist/Cafetro-${RELEASE_TAG}.zip" "dist/Cafetro-${RELEASE_TAG}.sha256" --clobber
-          gh release edit "$RELEASE_TAG" --target "$GITHUB_SHA"
+          gh release edit "$RELEASE_TAG" --target "$GITHUB_SHA" --notes-file Cafetro/README.txt

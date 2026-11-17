@@ -1,6 +1,6 @@
 # Cafetro! 開発メモ
 
-ダウンロード者向けREADMEは作者が別途用意します。このファイルは配布ZIPには含めません。
+ダウンロード者向けREADMEは、作者提供の文面を整理した `Cafetro/README.txt` です。同じ文面をGitHub Releaseにも使用します。この開発メモは配布ZIPには含めません。
 
 ## 構成
 

@@ -10,13 +10,13 @@ from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME_FILES = (
     'Cafetro.json', 'main.lua', 'config.lua', 'common.lua', 'badges.lua',
-    'cake_set.lua', 'deck_skins.lua', 'SAKI_CARDS_NOTICE.txt',
+    'cake_set.lua', 'deck_skins.lua', 'README.txt',
     'challenges/member_challenges.lua',
     'localization/ja.lua', 'localization/en-us.lua',
 )
 ASSETS = ('cafeparade_jokers', 'cafeparade_satan_top', 'cafeparade_icon',
           'saki_cards_lc', 'saki_cards_hc')
-OPTIONAL_FILES = ('README.md', 'README.txt', 'ReadMe.txt', 'LICENSE', 'LICENSE.txt')
+OPTIONAL_FILES = ('README.md', 'ReadMe.txt', 'LICENSE', 'LICENSE.txt')
 
 
 def build_release(output_dir=None, project_root=ROOT):

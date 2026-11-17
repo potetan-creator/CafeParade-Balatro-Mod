@@ -42,4 +42,4 @@ python tools/build_atlas.py --filter lanczos
 
 `Cafetro/assets/{1x,2x}/saki_cards_{lc,hc}.png` は統合元の画像を無加工で保持しています。1xは923×380、2xは1846×760。13ランク×4スートで、通常色とハイコントラストの選択式です。アトラス生成ツールはこの4枚を書き換えません。
 
-元画像と作者の利用案内は、重複した旧MODを削除する前にバイト単位で照合しました。以後は `tests/asset_hashes.json` で保持を検証します。作者表記・利用案内は `Cafetro/SAKI_CARDS_NOTICE.txt` を配布にも残します。ジョーカーの表示には `Art:Potetan` を使用します。
+元画像は、重複した旧MODを削除する前にバイト単位で照合しました。以後は `tests/asset_hashes.json` で保持を検証します。作者提供の利用案内は、MOD全体向けに整えた `Cafetro/README.txt` へ統合しました。旧 `SAKI_CARDS_NOTICE.txt` は配布から外します。ジョーカーの表示には `Art:Potetan` を使用します。

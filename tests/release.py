@@ -31,8 +31,11 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
         assert not any(part in {'art', 'docs', 'tests', 'tools', 'previews', '__pycache__'}
                        for path in paths for part in Path(path).parts)
         assert 'Cafetro/challenges/practice.lua' not in paths
+        assert 'Cafetro/README.txt' in paths
+        assert 'Cafetro/SAKI_CARDS_NOTICE.txt' not in paths
         assert {path for path in paths if Path(path).name.lower().startswith('readme')} == {
-            path for path in optional if Path(path).name.lower().startswith('readme')}
+            'Cafetro/README.txt',
+            *(path for path in optional if Path(path).name.lower().startswith('readme'))}
         for info in package.infolist():
             assert info.date_time == (1980, 1, 1, 0, 0, 0)
             assert info.external_attr >> 16 == 0o100644
@@ -79,7 +82,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
     (project / 'Cafetro/.DS_Store').write_bytes(b'not for release')
     clean = build_release(temp / 'filtered', project)
     assert clean.read_bytes() == archive.read_bytes(), 'unlisted files are excluded'
-    # A README supplied later by the author is included without generating one.
+    # An additional author-supplied Markdown README can also be included.
     readme = project / 'Cafetro/README.md'
     readme.write_text('Author-supplied README', encoding='utf-8')
     documented = build_release(temp / 'documented', project)
@@ -96,4 +99,4 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
         raise AssertionError('missing runtime module must fail the build')
     assert clean.read_bytes() == previous
 
-print('Release ZIP: runtime-only files, integrity, reproducibility, standalone Lua registration, future README and missing-file checks passed')
+print('Release ZIP: runtime-only files, integrity, reproducibility, standalone Lua registration, author README replacement and missing-file checks passed')
