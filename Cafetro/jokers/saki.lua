@@ -15,10 +15,18 @@ return function(cp)
             if context.before and cp.original(context) then
                 local e, blind = card.ability.extra, cp.blind_id()
                 if e.changed_blind == blind then return end
-                -- プレイした左端だけを判定し、中央・右の未強化カードは探さない。
+                -- プレイした左端だけを判定し、得点対象外なら変化させない。
                 local target = (context.full_hand or {})[1]
                 if not target or not cp.plain(target) or target.removed
                     or target.shattered or target.destroyed then return end
+                local scores = false
+                for _, scored in ipairs(context.scoring_hand or {}) do
+                    if scored == target then
+                        scores = true
+                        break
+                    end
+                end
+                if not scores then return end
                 -- 同じブラインドの再評価・再発動に備え、先に使用枠を確保。
                 e.changed_blind = blind
                 return {

@@ -37,6 +37,7 @@ return {
         "{X:mult,C:white} X#1# {} Mult when scored",
         "{C:attention}First played card{} becomes",
         "a {C:attention}Wild Card{} if unenhanced",
+        "and included in the {C:attention}scoring hand{}",
         "{C:inactive}(Once per blind; #3#)",
       }},
       j_cp_three_one_five = {name = "THREE ONE FIVE", text = {
