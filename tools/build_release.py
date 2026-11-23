@@ -10,7 +10,7 @@ from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME_FILES = (
     'Cafetro.json', 'main.lua', 'config.lua', 'common.lua', 'badges.lua',
-    'cake_set.lua', 'deck_skins.lua', 'README.txt',
+    'cake_set.lua', 'goldpeople.lua', 'deck_skins.lua', 'README.txt',
     'challenges/member_challenges.lua',
     'localization/ja.lua', 'localization/en-us.lua',
 )

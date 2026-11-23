@@ -28,7 +28,7 @@ for directory in (ROOT, TESTS):
     for path in directory.rglob('*.lua'):
         syntax.execute('assert(loadfile(...))', str(path))
 print('Lua 5.1 syntax: all runtime and test files passed')
-for name in ('contracts.lua', 'cake_set.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
+for name in ('contracts.lua', 'cake_set.lua', 'goldpeople.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
     run_lua(name)
 
 metadata = json.loads((ROOT / 'Cafetro.json').read_text(encoding='utf-8'))
@@ -36,7 +36,7 @@ assert metadata['name'] == 'Cafetro!'
 assert metadata['id'] == 'CafeParade' and metadata['prefix'] == 'cp'
 assert (ROOT / metadata['main_file']).is_file()
 palette = json.loads((PROJECT / 'art/COLOR_PALETTE.json').read_text(encoding='utf-8'))
-assert len(palette['jokers']) == 12
+assert len(palette['jokers']) == 13
 columns = palette['atlas_columns']
 assert columns == 5
 for index, spec in enumerate(palette['jokers']):

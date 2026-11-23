@@ -13,6 +13,11 @@ return {
       }},
     },
     Joker = {
+      j_cp_goldpeople = {name = "金人間", text = {
+        "{C:attention}道化師パック{}に",
+        "{C:blue}コモン{}ジョーカーが",
+        "出現しなくなる",
+      }},
       j_cp_embossing = {name = "エンボスジョーカー", text = {
         "プレイした{C:attention}強化カード{}は",
         "得点時に倍率{C:mult}+#1#{}を得る",

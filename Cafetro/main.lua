@@ -7,6 +7,7 @@ local cp = load('common.lua')
 cp.config = load('config.lua')
 mod.cafeparade = cp
 load('cake_set.lua')(cp)
+load('goldpeople.lua')()
 load('badges.lua')(mod)
 
 SMODS.Atlas {key = 'jokers', path = 'cafeparade_jokers.png', px = 71, py = 95}
@@ -17,7 +18,7 @@ local atlas_columns = 5
 local joker_ids = {
     'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan',
     'cake_set', 'chocolate_spacial', 'plain_cakeroll', 'three_one_five',
-    'embossing', 'sunsun',
+    'embossing', 'sunsun', 'goldpeople',
 }
 for i, id in ipairs(joker_ids) do
     local def = load('jokers/' .. id .. '.lua')(cp)

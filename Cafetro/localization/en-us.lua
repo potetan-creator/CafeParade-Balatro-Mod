@@ -12,6 +12,10 @@ return {
       }},
     },
     Joker = {
+      j_cp_goldpeople = {name = "Goldpeople", text = {
+        "{C:blue}Common{} Jokers no longer",
+        "appear in {C:attention}Buffoon Packs{}",
+      }},
       j_cp_embossing = {name = "Embossing Joker", text = {
         "Each played {C:attention}Enhanced{} card",
         "gives {C:mult}+#1#{} Mult when scored",

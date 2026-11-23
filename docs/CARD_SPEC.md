@@ -3,7 +3,7 @@
 現行の数値は `Cafetro/config.lua` に集約する。v1.1.0では依頼に基づき神谷とサタンを上方調整。比較資料と判断理由は `BALANCE_NOTES.md` を参照。
 
 ## 共通定義
-- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` / `embossing` / `sunsun` の12種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
+- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` / `embossing` / `sunsun` / `goldpeople` の13種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
 - 「Café Paradeメンバー」は **神谷・東雲・アスラン・巻緒・咲の5種のみ**。サタンは6枚目だがメンバー数には数えない。異なるメンバーを数えるときは種類ごとに最大1、同名2枚を所持しても1人。
 - 「所持している」はジョーカー領域に存在する有効（非debuff）のカードを意味する。Blueprint / Brainstormによる能力コピーは所持人数を増やさない。デッキにカードがあってもジョーカー領域になければ対象外。
 - 「得点したカード」はスコア計算に参加したカード。捨て札、得点に不参加の手札、手札に残るスチールカード等は対象外。
@@ -147,3 +147,14 @@
 v1.2.0は原作のEven Steven／Hack／Hanging Chadと同様、カードの得点ごとの効果と標準の追加再発動を使う。独自の得点ループや追加の補足ツールチップは設けない。
 
 表記参照: 原作の[日本語localization](https://github.com/Jofr3/balatro-source/blob/main/localization/ja.lua)および[英語localization](https://github.com/Jofr3/balatro-source/blob/main/localization/en-us.lua)のEven Steven・Hack・Hanging Chad（公開再掲）。実機での文字の収まりは未確認。
+
+## 13. 金人間 / Goldpeople
+
+- レア・$8。画像は `art/source/goldpeople.png`（アップロードされたGoldpeople_joker.pngと同一）。
+- 所持中、原作の道化師パック4種（`p_buffoon_normal_1/2`、`p_buffoon_jumbo_1`、`p_buffoon_mega_1`）の生成からコモンを除外。パックのkindや表示名では判定せず、他MODのパックは対象外。ショップなど他の生成領域も変更しない。
+- 売却・除去・デバフ中は通常の抽選。複数所持で重複適用せず、Blueprint非対応。サタンのメンバーに数えない。
+- 残るレアリティの重みを再正規化し、通常はアンコモン:レア=5:1。重みが正の追加レアリティ・MODの重み補正にも対応。通常の抽選ではレジェンダリーを追加しない。
+- エンジンのプールを通して禁止・アンロック・重複・in_poolを尊重。全ての候補が尽きた例外時は、原作の固定ジョーカーフォールバックと同様、アンコモンのJoker Stencilを生成してコモンの再混入を防ぐ（通常抽選外の固定補充は重複・禁止制約に優先）。
+- 日英の説明には主効果のみを記載し、他MODのパックに関する補足は表示しない。日本語のパック名は原作の「道化師パック」に合わせる。
+
+API参照: Steamodded 26.1002.0（`af0fdb1eb2c9e191262c128bc88bbc4da991e12d`）の `src/utils.lua`（create_card / poll_rarity）、`src/utils/weights.lua`（poll_object）、`src/game_object.lua`（標準Buffoon定義）、`lovely/booster.toml`（OPENED_BOOSTER）、`lovely/pool.toml`（プール条件と枯渇時の補充）。グローバルな抽選重みは変更せず、標準パック内のカード生成の引数だけを複製・変更する。

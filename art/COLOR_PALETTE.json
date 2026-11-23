@@ -158,6 +158,19 @@
         "y": 2
       },
       "role": "six_retrigger"
+    },
+    {
+      "id": "goldpeople",
+      "display_name_ja": "金人間",
+      "name_short": "GOLDPEOPLE",
+      "color_hex": "#F2A335",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 2,
+        "y": 2
+      },
+      "role": "buffoon_rarity_filter"
     }
   ],
   "atlas_columns": 5

@@ -16,6 +16,8 @@ MOD Creator / Art: Potetan
 
 ### v1.2.0の変更
 
+- 金人間（レア・$8）を追加。
+  所持中、道化師パックにコモンジョーカーが出現しなくなります。
 - エンボスジョーカー（コモン・$4）を追加。
   得点する強化カード1枚につき倍率+4。再発動時も加算します。
 - スンスン（アンコモン・$6）を追加。
@@ -40,12 +42,12 @@ MOD Creator / Art: Potetan
   見た目を切り替えられる形で再実装しています。
 - **特別なチャレンジ6つ**
   CafeParadeの5人が活躍する、個性に合わせたお題を収録しています。
-- **新ジョーカー12枚**
+- **新ジョーカー13枚**
   - CafeParadeの5人をモチーフとしたジョーカー：5枚
   - レジェンダリージョーカー「サタン」：1枚
   - メンバーを活かすためのサポートジョーカー：3枚
   - アイドルマスターSideM×FiFS展をモチーフとしたジョーカー：1枚
-  - エンボスジョーカー・スンスン：各1枚
+  - エンボスジョーカー・スンスン・金人間：各1枚
 
 ### 制作について
 
@@ -121,6 +123,8 @@ It adds new content inspired by **Café Parade**, an idol unit from
 
 ### Changes in v1.2.0
 
+- Added Goldpeople (Rare, $8): Common Jokers no longer appear in Buffoon Packs
+  while this Joker is held.
 - Added Embossing Joker (Common, $4): each played Enhanced card gives
   +4 Mult when scored, including retriggers.
 - Added SUNSUN (Uncommon, $6): retrigger each played 6 two additional times.
@@ -144,12 +148,12 @@ It adds new content inspired by **Café Parade**, an idol unit from
   the in-game Customize Deck menu so you can switch between card designs.
 - **6 Special Challenges**
   Challenges designed to let all five members of Café Parade shine.
-- **12 New Jokers**
+- **13 New Jokers**
   - 5 Jokers inspired by the five members of Café Parade
   - 1 Legendary Joker featuring Satan
   - 3 support Jokers designed to complement the members
   - 1 Joker inspired by THE IDOLM@STER SideM × FiFS Exhibition
-  - Embossing Joker and SUNSUN: 1 each
+  - Embossing Joker, SUNSUN and Goldpeople: 1 each
 
 ### Development Notes
 

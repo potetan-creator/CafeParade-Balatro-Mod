@@ -49,6 +49,8 @@ dofile(ROOT..'/main.lua')
 eq(challenges.practice,nil,'diagnostic challenge is not registered in production')
 dofile(TEST_ROOT..'/fixtures/practice.lua')
 local cp=SMODS.current_mod.cafeparade
+eq(defs.goldpeople.rarity,3); eq(defs.goldpeople.cost,8)
+eq(defs.goldpeople.blueprint_compat,false)
 eq(defs.plain_cakeroll.rarity,1)
 eq(defs.plain_cakeroll.cost,4)
 eq(defs.plain_cakeroll.pos.x,3); eq(defs.plain_cakeroll.pos.y,1)
@@ -61,7 +63,7 @@ eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
 eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
 eq(defs.three_one_five.blueprint_compat,true)
-for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun'}) do
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople'}) do
     eq(defs[id].pos.x,(i-1)%5,'registration column')
     eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
 end
