@@ -15,6 +15,8 @@
 
 MOD一覧の説明は `Cafetro/localization/{ja,en-us}.lua` の `descriptions.Mod.CafeParade` に行ごとに定義します。メタデータの `description` はフォールバックです。カードのカテゴリは `badges.lua` で5人＋サタンだけをCafeParade、他のカードをCafetro!とし、MOD自体の表示名は変更しません。
 
+通常の追加・調整は開発版に蓄積し、バージョン番号を据え置きます。未公開の変更は [CHANGELOG.md](CHANGELOG.md) にまとめ、ユーザーのリリース指示を受けた時点で番号を確定して公開します。
+
 ## 開発コマンド
 
 リポジトリのルートから実行します。画像・ZIPは更新が必要なときにだけ再生成します。
