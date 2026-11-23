@@ -16,12 +16,12 @@ return {
         "If scored cards cover {C:attention}#1# suits{},",
         "earn {C:money}$#2#{} and a {C:green}#3# in #4#{} chance",
         "for a {C:tarot}Tarot{} {C:inactive}(must have room)",
-        "{C:inactive}(Once per blind; #6#)",
       }},
       j_cp_shinonome = {name = "Soichiro Shinonome", text = {
-        "{X:mult,C:white} X#3# {} Mult",
-        "Hands with a {C:attention}Pair{}: {C:mult}+#1#{} Mult,",
-        "then gain {C:attention}#2#{} XMult after scoring",
+        "Hands with a {C:attention}Pair{} give {C:mult}+#1#{} Mult",
+        "and this Joker gains",
+        "{X:mult,C:white} X#2# {} Mult after scoring",
+        "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)",
       }},
       j_cp_aslan = {name = "Aslan BB II", text = {
         "Each scored {C:attention}Enhanced{} card",
@@ -35,7 +35,7 @@ return {
       j_cp_saki = {name = "Saki Mizushima", text = {
         "Each played {C:attention}Wild Card{} gives",
         "{X:mult,C:white} X#1# {} Mult when scored",
-        "{C:attention}First played card{} becomes",
+        "{C:attention}Leftmost played card{} becomes",
         "a {C:attention}Wild Card{} if unenhanced",
         "and included in the {C:attention}scoring hand{}",
         "{C:inactive}(Once per blind; #3#)",
@@ -63,10 +63,11 @@ return {
       }},
       j_cp_satan = {name = "Satan", text = {
         "{C:attention}+#1#{} Joker slot; base {X:mult,C:white} X#2# {} Mult",
-        "{C:attention}+#3#{} XMult per member",
-        "{C:attention}Boss defeated{}: grow {C:attention}#4#{} per member",
-        "{C:inactive}(#5# members; +#6# growth)",
-        "{C:inactive}(Currently {X:mult,C:white} X#7# {C:inactive} Mult)",
+        "Gives {X:mult,C:white} X#3# {} Mult per",
+        "{C:attention}Café Parade{} member",
+        "Defeat a {C:attention}Boss Blind{}: gain",
+        "{X:mult,C:white} X#4# {} Mult per member",
+        "{C:inactive}(Currently {X:mult,C:white} X#5# {C:inactive} Mult)",
       }},
     },
     Other = {

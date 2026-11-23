@@ -15,18 +15,18 @@ return {
     Joker = {
       j_cp_kamiya = {name = "神谷幸広", text = {
         "得点カードのスーツが{C:attention}#1#種類{}以上なら",
-        "{C:money}$#2#{}、{C:green}#4#分の#3#{}で{C:tarot}タロット{}1枚",
-        "{C:inactive}(生成は空きが必要／ブラインドごとに1回)",
-        "{C:inactive}(このブラインド：#6#)",
+        "{C:money}$#2#{}を得る。{C:green}#4#分の#3#{}の確率で",
+        "{C:tarot}タロット{}カードを1枚生成",
+        "{C:inactive}（空きが必要）",
       }},
       j_cp_shinonome = {name = "東雲荘一郎", text = {
-        "倍率{X:mult,C:white} X#3# {}",
-        "{C:attention}ペア{}を含むハンドで倍率{C:mult} +#1#{}、",
-        "得点後に{X:mult,C:white}X倍率{}が{C:attention}+#2#{}成長",
+        "{C:attention}ペア{}を含むハンドで倍率{C:mult}+#1#{}、",
+        "得点後に倍率{X:mult,C:white}X#2#{}を得る",
+        "{C:inactive}（現在 倍率{X:mult,C:white}X#3#{C:inactive}）",
       }},
       j_cp_aslan = {name = "アスラン＝ベルゼビュートⅡ世", text = {
         "{C:attention}強化カード{}が得点されるたびに",
-        "倍率{X:mult,C:white} X#1# {}",
+        "倍率{X:mult,C:white}X#1#{}",
       }},
       j_cp_makio = {name = "卯月巻緒", text = {
         "得点した{C:attention}ペア{}のカードを",
@@ -35,21 +35,21 @@ return {
       }},
       j_cp_saki = {name = "水嶋咲", text = {
         "{C:attention}ワイルドカード{}が得点されるたびに",
-        "倍率{X:mult,C:white} X#1# {}",
-        "プレイした{C:attention}最初のカード{}が得点し、",
+        "倍率{X:mult,C:white}X#1#{}",
+        "プレイした{C:attention}一番左のカード{}が得点し、",
         "{C:attention}未強化{}なら{C:attention}ワイルドカード{}に変える",
         "{C:inactive}(ブラインドごとに1回／#3#)",
       }},
       j_cp_three_one_five = {name = "THREE ONE FIVE", text = {
         "プレイしたハンドに{C:attention}3{}と{C:attention}5{}を含み、",
         "どちらかが得点すると",
-        "倍率{X:mult,C:white} X#1# {}",
+        "倍率{X:mult,C:white}X#1#{}",
         "{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE",
       }},
       j_cp_plain_cakeroll = {name = "ロールケーキ", text = {
         "得点するカードが{C:attention}#2#{}枚の場合、",
         "各カードは得点時に",
-        "{C:chips}+#1#{}チップを得る",
+        "チップ{C:chips}+#1#{}を得る",
       }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
         "{C:attention}フラッシュハウス{}で、ランダムな",
@@ -62,10 +62,12 @@ return {
         "{C:attention}カード無効化{}を解除",
       }},
       j_cp_satan = {name = "サタン", text = {
-        "ジョーカースロット{C:attention} +#1#{}、倍率{X:mult,C:white} X#2# {}",
-        "メンバー1人につき{X:mult,C:white}X倍率{}が{C:attention}+#3#{}",
-        "{C:attention}ボス撃破{}ごとに1人につき{C:attention}+#4#{}成長",
-        "{C:inactive}(#5#人／成長+#6#／現在{X:mult,C:white} X#7# {C:inactive})",
+        "ジョーカースロット{C:attention}+#1#{}、倍率{X:mult,C:white}X#2#{}",
+        "メンバー1人につき",
+        "倍率{X:mult,C:white}X#3#{}を得る",
+        "{C:attention}ボスブラインド{}撃破時、1人につき",
+        "倍率{X:mult,C:white}X#4#{}を得る",
+        "{C:inactive}（現在 倍率{X:mult,C:white}X#5#{C:inactive}）",
       }},
     },
     Other = {

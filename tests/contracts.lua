@@ -176,6 +176,53 @@ eq(#events,0)
 local saved=clone(kamiya.ability)
 kamiya=joker('kamiya'); kamiya.ability=saved
 eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand}),nil,'used flag restored')
+-- Kamiya can pay on consecutive hands in the same blind, but only once per evaluation.
+local old_round=G.GAME.round
+G.consumeables.config.card_limit=0
+for i=1,4 do
+    G.GAME.hands_played=G.GAME.hands_played+1
+    eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand}).dollars,3,'qualifying hand '..i)
+    eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand}),nil,'duplicate hand does not pay twice')
+    eq(G.GAME.round,old_round,'same blind is reused')
+end
+local legacy_kamiya=joker('kamiya')
+legacy_kamiya.ability.extra={blind=cp.blind_id(),used={original=true}}
+eq(calc('kamiya',legacy_kamiya,{after=true,scoring_hand=hand}).dollars,3,'legacy blind limit no longer blocks income')
+eq(calc('kamiya',legacy_kamiya,{after=true,scoring_hand=hand}),nil,'migrated hand is guarded')
+local fail_probability=SMODS.pseudorandom_probability
+SMODS.pseudorandom_probability=function() return false end
+G.GAME.hands_played=G.GAME.hands_played+1
+G.consumeables.cards={}; G.consumeables.config.card_limit=2
+eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand}).dollars,3,'failed Tarot roll still pays')
+eq(#events,0); eq(G.GAME.consumeable_buffer,0)
+SMODS.pseudorandom_probability=fail_probability
+G.GAME.hands_played=G.GAME.hands_played+1
+local one_suit={play(2,{'Hearts'}),play(3,{'Hearts'}),play(4,{'Hearts'})}
+eq(calc('kamiya',kamiya,{after=true,scoring_hand=one_suit}),nil,'non-qualifying hand does not pay')
+eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand,retrigger_joker=true}),nil)
+eq(calc('kamiya',kamiya,{before=true,scoring_hand=hand}),nil)
+eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand}).dollars,3,'invalid evaluation does not consume hand')
+for _,copy in ipairs({{sort_id=42},{sort_id=43}}) do
+    local context={after=true,scoring_hand=hand,blueprint=1,blueprint_card=copy}
+    eq(calc('kamiya',kamiya,context).dollars,3,'each ability copy can pay')
+    eq(calc('kamiya',kamiya,context),nil,'each copy has its own duplicate guard')
+end
+eq(G.GAME.consumeable_buffer,2,'copies share reserved Tarot slots')
+flush(); eq(#G.consumeables.cards,2); eq(G.GAME.consumeable_buffer,0)
+G.GAME.hands_played=G.GAME.hands_played+1
+eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand}).dollars,3,'next hand pays again with full slots')
+eq(#events,0)
+kamiya.debuff=true
+G.GAME.hands_played=G.GAME.hands_played+1
+eq(calc('kamiya',kamiya,{after=true,scoring_hand=hand}),nil,'debuffed Kamiya is inactive')
+kamiya.debuff=nil
+G.consumeables.cards={}; G.GAME.hands_played=1
+local probability_vars=SMODS.get_probability_vars
+SMODS.get_probability_vars=function(_,n,d) return 2*n,d end
+local odds=defs.kamiya:loc_vars({},kamiya).vars
+eq(odds[3],2,'probability changes are reflected in the tooltip')
+eq(odds[4],4)
+SMODS.get_probability_vars=probability_vars
 local sh=joker('shinonome')
 local pair={a,d}
 calc('shinonome',sh,{before=true,scoring_hand=pair,blueprint=1})
@@ -433,10 +480,19 @@ local ctx={end_of_round=true,beat_boss=true}
 calc('satan',satan,{end_of_round=true,beat_boss=true,blueprint=1}); near(satan.ability.extra.growth,0)
 for i=1,5 do G.GAME.round=i+2; calc('satan',satan,ctx); calc('satan',satan,ctx) end
 near(satan.ability.extra.growth,2.25)
-near(calc('satan',satan,{joker_main=true,blueprint=1}).xmult,5)
-G.jokers.cards={satan}; near(calc('satan',satan,{joker_main=true}).xmult,4.25)
+near(calc('satan',satan,{joker_main=true,blueprint=1}).xmult,5.5)
+G.jokers.cards={satan}; near(calc('satan',satan,{joker_main=true}).xmult,4.75)
 local restored=joker('satan'); restored.ability=clone(satan.ability)
 calc('satan',restored,ctx); near(restored.ability.extra.growth,2.25)
+-- A Legendary should have the new base even without any unit members.
+for members=0,5 do
+    G.jokers.cards={satan}
+    local ids={'kamiya','shinonome','aslan','makio','saki'}
+    for i=1,members do G.jokers.cards[#G.jokers.cards+1]=joker(ids[i]) end
+    local fresh=joker('satan')
+    near(calc('satan',fresh,{joker_main=true}).xmult,2.5+0.25*members)
+    near(defs.satan:loc_vars({},fresh).vars[5],2.5+0.25*members,'tooltip matches actual Mult')
+end
 -- お題のカード構成と通常の能力との接続を確認。
 local practice = assert(challenges.practice)
 eq(practice:unlocked(),true)
@@ -473,7 +529,7 @@ G.jokers.cards={}
 for _,j in ipairs(practice.jokers) do table.insert(G.jokers.cards,joker(j.id:sub(6))) end
 eq(cp.members(),5)
 local practice_satan=G.jokers.cards[6]
-near(calc('satan',practice_satan,{joker_main=true}).xmult,3.25)
+near(calc('satan',practice_satan,{joker_main=true}).xmult,3.75)
 
 -- Collection/menu tooltips must work without an active run.
 G.GAME={}
@@ -499,6 +555,25 @@ for _,lang in ipairs({'ja','en-us'}) do
         end
         count=count+1
     end
+    for id,variable in pairs({shinonome=3,satan=5}) do
+        local lines=loc.descriptions.Joker['j_cp_'..id].text
+        local last=lines[#lines]
+        eq(last:find('{C:inactive}',1,true)~=nil,true,'current value is an inactive final row')
+        eq(last:match('{X:mult,C:white}%s*X#'..variable..'#')~=nil,true,'current Mult uses native red box')
+        eq(last:find(lang=='ja' and '現在 倍率' or 'Currently',1,true)~=nil,true)
+        for i=1,#lines-1 do
+            eq(lines[i]:find('#'..variable..'#',1,true),nil,'current value appears only in the last row')
+        end
+    end
+    local sh_text=table.concat(loc.descriptions.Joker.j_cp_shinonome.text,' ')
+    eq(sh_text:match('{X:mult,C:white}%s*X#2#%s*{}')~=nil,true,'growth uses a red XMult box')
+    local satan_text=table.concat(loc.descriptions.Joker.j_cp_satan.text,' ')
+    for _,variable in ipairs({3,4}) do
+        eq(satan_text:match('{X:mult,C:white}%s*X#'..variable..'#%s*{}')~=nil,true)
+    end
+    local kamiya_text=table.concat(loc.descriptions.Joker.j_cp_kamiya.text,' ')
+    eq(kamiya_text:find('#6#',1,true),nil,'no obsolete blind state')
+    eq(table.concat(loc.descriptions.Joker.j_cp_saki.text,' '):find(lang=='ja' and '一番左' or 'Leftmost',1,true)~=nil,true)
     assert(loc.misc.dictionary.k_cp_wild=='Makeup!')
     assert(loc.misc.v_dictionary.a_cp_growth)
     eq(loc.descriptions.Joker.j_cp_three_one_five.text[4],

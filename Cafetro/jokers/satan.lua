@@ -8,8 +8,8 @@ return function(cp)
         loc_vars = function(self, queue, card)
             queue[#queue + 1] = {set = 'Other', key = 'cp_members'}
             local members = cp.members()
-            return {vars = {c.slots, c.base, c.per_member, c.growth, members,
-                card.ability.extra.growth, c.base + c.per_member * members + card.ability.extra.growth}}
+            return {vars = {c.slots, c.base, c.per_member, c.growth,
+                c.base + c.per_member * members + card.ability.extra.growth}}
         end,
         -- transient な印は copy_card がコピーする ability に入れない。
         add_to_deck = function(self, card)

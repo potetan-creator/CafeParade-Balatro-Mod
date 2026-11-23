@@ -1,19 +1,18 @@
 return function(cp)
     local c = cp.config.kamiya
     return {
-        config = {extra = {used = {}, blind = ''}},
+        config = {extra = {used = {}, hand = ''}},
         loc_vars = function(self, queue, card)
             queue[#queue + 1] = {set = 'Other', key = 'cp_suits'}
             local n, d = SMODS.get_probability_vars(card, 1, c.odds, 'cp_kamiya')
-            local e = card.ability.extra
-            local used = e.blind == cp.blind_id() and e.used.original
-            return {vars = {c.suits, c.dollars, n, d,
-                used and 1 or 0, localize(used and 'k_cp_used' or 'k_cp_unused')}}
+            return {vars = {c.suits, c.dollars, n, d}}
         end,
         calculate = function(self, card, context)
             if context.after and not context.retrigger_joker and cp.suits(context.scoring_hand, c.suits) then
-                local e, blind = card.ability.extra, cp.blind_id()
-                if e.blind ~= blind then e.blind, e.used = blind, {} end
+                local e, hand = card.ability.extra, cp.hand_id()
+                -- Each qualifying hand pays. Keep only the duplicate-evaluation guard;
+                -- old saves with a blind-scoped flag reset on their first new evaluation.
+                if e.hand ~= hand then e.hand, e.used = hand, {} end
                 local copy = context.blueprint and context.blueprint_card
                 local key = copy and ('copy_' .. tostring(copy.sort_id)) or 'original'
                 if e.used[key] then return end

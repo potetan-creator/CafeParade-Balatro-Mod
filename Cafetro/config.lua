@@ -7,7 +7,7 @@ return {
     saki = {rarity = 3, cost = 8, xmult = 1.20,
         makeup_colour = {235/255, 110/255, 165/255, 1}, makeup_sound = 'tarot1',
         makeup_delay = 0.4},
-    satan = {rarity = 4, cost = 20, slots = 1, base = 2, per_member = 0.25, growth = 0.15},
+    satan = {rarity = 4, cost = 20, slots = 1, base = 2.5, per_member = 0.25, growth = 0.15},
     cake_set = {rarity = 1, cost = 4},
     chocolate_spacial = {rarity = 3, cost = 8, cards = 2},
     plain_cakeroll = {rarity = 1, cost = 4, chips = 30, targets = 2},

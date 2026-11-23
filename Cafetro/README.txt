@@ -1,4 +1,4 @@
-# Cafetro! v1.0.0
+# Cafetro! v1.1.0
 
 THE IDOLM@STER™ & ©Bandai Namco Entertainment Inc.
 
@@ -13,6 +13,16 @@ MOD Creator / Art: Potetan
 **Cafetro!** は、Steam等で販売されている「Balatro」に、
 アイドルマスターSideMのアイドルユニット「CafeParade」をモチーフとした
 新要素を追加するファンメイドMODです。
+
+### v1.1.0の変更
+
+- 神谷幸広：ブラインドごとの発動制限を撤廃。条件を満たすハンドごとに
+  $3を獲得し、1/4の確率でタロットを生成します（空きが必要）。
+- サタン：初期倍率をX2からX2.5へ上方調整しました。
+- 東雲荘一郎・サタン：倍率の増加量を赤枠で表示し、現在の倍率を
+  説明の末尾へまとめました。成長量と成長タイミングは従来どおりです。
+- 水嶋咲：「最初のカード」を「一番左のカード」へ変更しました。
+  未強化かつ得点対象の左端カードだけが変化する条件は同じです。
 
 ### 収録内容
 
@@ -70,7 +80,7 @@ Lovelyを更新する場合は、公式の更新手順に従ってください�
 
 #### 3. Cafetro!を導入する
 
-1. リリースの添付ファイル`Cafetro-v1.0.0.zip`をダウンロードして解凍します。
+1. リリースの添付ファイル`Cafetro-v1.1.0.zip`をダウンロードして解凍します。
 2. 中の`Cafetro`フォルダーを`%AppData%\Balatro\Mods`に配置します。
    配置後のパスは次のとおりです。
 
@@ -98,6 +108,16 @@ Lovelyを更新する場合は、公式の更新手順に従ってください�
 **Cafetro!** is a fan-made mod for *Balatro*, available on Steam and other platforms.
 It adds new content inspired by **Café Parade**, an idol unit from
 *THE IDOLM@STER SideM*.
+
+### Changes in v1.1.0
+
+- Yukihiro Kamiya: removed the once-per-blind limit. Each qualifying hand
+  earns $3 and has a 1 in 4 chance to create a Tarot card (must have room).
+- Satan: increased base Mult from X2 to X2.5.
+- Soichiro Shinonome and Satan: growth uses red XMult boxes, with current
+  Mult shown on the final line. Growth amounts and timing are unchanged.
+- Saki Mizushima: clarified "first played card" as "leftmost played card".
+  It must still be unenhanced and part of the scoring hand to transform.
 
 ### Included Content
 
@@ -155,7 +175,7 @@ Create the `Mods` folder if it does not exist.
 
 #### 3. Install Cafetro!
 
-1. Download the attached `Cafetro-v1.0.0.zip` release file and extract it.
+1. Download the attached `Cafetro-v1.1.0.zip` release file and extract it.
 2. Place the `Cafetro` folder in `%AppData%\Balatro\Mods`.
    The resulting path should be:
 

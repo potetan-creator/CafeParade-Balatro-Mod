@@ -7,7 +7,7 @@
   "description": "アイドルマスターSideMに登場する\nアイドルユニット「CafeParade」を\nモチーフとしたジョーカーを中心に、\n新チャレンジ・トランプの見た目などを\n追加するMODです。\nこのMODはChatGPT-6.1Sol Codexの\n力を借りて生成されています。\nArt:Potetan",
   "prefix": "cp",
   "main_file": "main.lua",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "badge_colour": "CC66CC",
   "badge_text_colour": "FFFFFF",
   "dependencies": [
