@@ -26,7 +26,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
     with ZipFile(archive) as package:
         assert package.testzip() is None
         paths = package.namelist()
-        assert len(paths) == len(set(paths)) == 31 + len(optional)
+        assert len(paths) == len(set(paths)) == 33 + len(optional)
         assert all(path.startswith('Cafetro/') and '..' not in Path(path).parts for path in paths)
         assert not any(part in {'art', 'docs', 'tests', 'tools', 'previews', '__pycache__'}
                        for path in paths for part in Path(path).parts)
@@ -64,7 +64,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
         assert(registered.challenges.finale:unlocked() == false)
     ''')
     definitions = lua.globals().registered
-    assert len(list(definitions.jokers.items())) == 10
+    assert len(list(definitions.jokers.items())) == 12
     assert len(list(definitions.challenges.items())) == 6
     assert len(list(definitions.skins.items())) == 4
     for _, atlas in definitions.atlases.items():

@@ -17,7 +17,7 @@ python tools/build_atlas.py --filter lanczos
 
 ## 5列のアトラス
 
-カード数に応じて段数を増やします。現在は10枚・5列×2段で、1xが355×190、2xが710×380。1セルは71×95／142×190です。
+カード数に応じて段数を増やします。現在は12枚・5列×3段で、1xが355×285、2xが710×570。1セルは71×95／142×190です。
 
 |ID|x|y|
 |---|---:|---:|
@@ -31,6 +31,8 @@ python tools/build_atlas.py --filter lanczos
 |chocolate_spacial|2|1|
 |plain_cakeroll|3|1|
 |three_one_five|4|1|
+|embossing|0|2|
+|sunsun|1|2|
 
 画像の順序・列数は `art/COLOR_PALETTE.json`、ゲームでの登録は `Cafetro/main.lua` にあります。追加時は両方をそろえ、テストで全座標と全画素を確認します。
 

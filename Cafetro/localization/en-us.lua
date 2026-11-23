@@ -12,6 +12,15 @@ return {
       }},
     },
     Joker = {
+      j_cp_embossing = {name = "Embossing Joker", text = {
+        "Each played {C:attention}Enhanced{} card",
+        "gives {C:mult}+#1#{} Mult when scored",
+      }},
+      j_cp_sunsun = {name = "SUNSUN", text = {
+        "Retrigger each played",
+        "{C:attention}6{} an additional {C:attention}#1#{} times",
+        "{C:inactive,s:0.6}[Fan art of PUPPET SUNSUN (Unofficial)]",
+      }},
       j_cp_kamiya = {name = "Yukihiro Kamiya", text = {
         "If scored cards cover {C:attention}#1# suits{},",
         "earn {C:money}$#2#{} and a {C:green}#3# in #4#{} chance",

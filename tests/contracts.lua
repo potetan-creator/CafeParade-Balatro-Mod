@@ -61,7 +61,7 @@ eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
 eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
 eq(defs.three_one_five.blueprint_compat,true)
-for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five'}) do
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun'}) do
     eq(defs[id].pos.x,(i-1)%5,'registration column')
     eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
 end
@@ -92,6 +92,64 @@ local function calc(id,card,ctx)
     if card.debuff then return end -- engine dispatch guard
     return defs[id]:calculate(card,ctx)
 end
+-- Embossing gives +4 on each scored Enhanced-card hit.
+eq(defs.embossing.rarity,1); eq(defs.embossing.cost,4)
+eq(defs.embossing.blueprint_compat,true)
+local embossing=joker('embossing')
+for _,enhancement in ipairs({'m_bonus','m_mult','m_wild','m_glass','m_steel','m_stone','m_gold','m_lucky'}) do
+    local target=play(6,nil,enhancement)
+    eq(calc('embossing',embossing,{individual=true,cardarea=G.play,other_card=target}).mult,4,enhancement)
+    eq(calc('embossing',embossing,{individual=true,cardarea=G.hand,other_card=target}),nil)
+end
+local plain=play(6); plain.seal='Red'; plain.edition='foil'
+eq(calc('embossing',embossing,{individual=true,cardarea=G.play,other_card=plain}),nil,'seal and edition alone are not enhancements')
+local enhanced_six=play(6,nil,'m_bonus')
+local total=0
+for i=1,3 do total=total+calc('embossing',embossing,{individual=true,cardarea=G.play,other_card=enhanced_six}).mult end
+eq(total,12,'original plus two retriggers')
+eq(calc('embossing',embossing,{individual=true,cardarea=G.play,other_card=enhanced_six,blueprint=1}).mult,4)
+for _,phase in ipairs({'before','after','joker_main','repetition'}) do
+    eq(calc('embossing',embossing,{[phase]=true,cardarea=G.play,other_card=enhanced_six}),nil)
+end
+embossing.debuff=true
+eq(calc('embossing',embossing,{individual=true,cardarea=G.play,other_card=enhanced_six}),nil)
+embossing.debuff=nil
+-- SUNSUN grants two additional hits only to scoring ranked sixes.
+eq(defs.sunsun.rarity,2); eq(defs.sunsun.cost,6)
+eq(defs.sunsun.blueprint_compat,true)
+local sunsun=joker('sunsun')
+local function sun(target,scoring,flags)
+    local context=flags or {}; context.repetition=true; context.cardarea=G.play
+    context.other_card=target; context.scoring_hand=scoring
+    return calc('sunsun',sunsun,context)
+end
+for rank=2,14 do
+    local target=play(rank)
+    local effect=sun(target,{target})
+    if rank==6 then eq(effect.repetitions,2); eq(effect.message,'k_again_ex'); eq(effect.card,sunsun)
+    else eq(effect,nil,'only rank 6') end
+end
+local six=play(6)
+eq(sun(six,{}),nil,'unscored six excluded')
+eq(sun(six,{play(9)}),nil,'scoring card identity must match')
+eq(sun(six,nil),nil,'missing scoring hand excluded')
+local stone=play(6,nil,'m_stone'); stone.stone=true
+eq(sun(stone,{stone}),nil,'Stone has no rank')
+for _,enhancement in ipairs({'m_bonus','m_wild','m_glass','m_steel','m_gold','m_lucky'}) do
+    local target=play(6,nil,enhancement)
+    eq(sun(target,{target}).repetitions,2,'ranked Enhanced six retriggers')
+end
+local copied=sun(six,{six},{blueprint=1,blueprint_card={sort_id=901}})
+eq(copied.repetitions,2); eq(copied.card.sort_id,901)
+for _,phase in ipairs({'before','after','joker_main','individual'}) do
+    eq(calc('sunsun',sunsun,{[phase]=true,cardarea=G.play,other_card=six,scoring_hand={six}}),nil)
+end
+eq(calc('sunsun',sunsun,{repetition=true,cardarea=G.hand,other_card=six,scoring_hand={six}}),nil)
+sunsun.debuff=true; eq(sun(six,{six}),nil); sunsun.debuff=nil
+for _,target in ipairs({six,enhanced_six}) do
+    eq(sun(target,{six,enhanced_six}).repetitions,2,'each scored six')
+end
+G.jokers.cards={embossing,sunsun}; eq(cp.members(),0); G.jokers.cards={}
 -- THREE ONE FIVE needs both played ranks and at least one scoring 3/5.
 local three_one_five=joker('three_one_five')
 local function three_calc(scoring,played,extra)
@@ -574,6 +632,8 @@ for _,lang in ipairs({'ja','en-us'}) do
     local kamiya_text=table.concat(loc.descriptions.Joker.j_cp_kamiya.text,' ')
     eq(kamiya_text:find('#6#',1,true),nil,'no obsolete blind state')
     eq(table.concat(loc.descriptions.Joker.j_cp_saki.text,' '):find(lang=='ja' and '一番左' or 'Leftmost',1,true)~=nil,true)
+    eq(loc.descriptions.Joker.j_cp_sunsun.text[3],
+        '{C:inactive,s:0.6}[Fan art of PUPPET SUNSUN (Unofficial)]','SUNSUN fan art footer')
     assert(loc.misc.dictionary.k_cp_wild=='Makeup!')
     assert(loc.misc.v_dictionary.a_cp_growth)
     eq(loc.descriptions.Joker.j_cp_three_one_five.text[4],

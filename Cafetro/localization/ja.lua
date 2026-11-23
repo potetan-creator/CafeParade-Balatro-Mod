@@ -13,6 +13,15 @@ return {
       }},
     },
     Joker = {
+      j_cp_embossing = {name = "エンボスジョーカー", text = {
+        "プレイした{C:attention}強化カード{}は",
+        "得点時に倍率{C:mult}+#1#{}を得る",
+      }},
+      j_cp_sunsun = {name = "スンスン", text = {
+        "プレイした{C:attention}6{}のカードを",
+        "{C:attention}#1#回{}追加で再発動させる",
+        "{C:inactive,s:0.6}[Fan art of PUPPET SUNSUN (Unofficial)]",
+      }},
       j_cp_kamiya = {name = "神谷幸広", text = {
         "得点カードのスーツが{C:attention}#1#種類{}以上なら",
         "{C:money}$#2#{}を得る。{C:green}#4#分の#3#{}の確率で",

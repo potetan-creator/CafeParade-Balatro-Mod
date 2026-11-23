@@ -1,4 +1,4 @@
-# Cafetro! v1.1.0
+# Cafetro! v1.2.0
 
 THE IDOLM@STER™ & ©Bandai Namco Entertainment Inc.
 
@@ -13,6 +13,15 @@ MOD Creator / Art: Potetan
 **Cafetro!** は、Steam等で販売されている「Balatro」に、
 アイドルマスターSideMのアイドルユニット「CafeParade」をモチーフとした
 新要素を追加するファンメイドMODです。
+
+### v1.2.0の変更
+
+- エンボスジョーカー（コモン・$4）を追加。
+  得点する強化カード1枚につき倍率+4。再発動時も加算します。
+- スンスン（アンコモン・$6）を追加。
+  得点する6のカードを2回追加で再発動します。
+  [Fan art of PUPPET SUNSUN (Unofficial)]
+- ジョーカー画像を5列×3段へ拡張しました。
 
 ### v1.1.0の変更
 
@@ -31,11 +40,12 @@ MOD Creator / Art: Potetan
   見た目を切り替えられる形で再実装しています。
 - **特別なチャレンジ6つ**
   CafeParadeの5人が活躍する、個性に合わせたお題を収録しています。
-- **新ジョーカー10枚**
+- **新ジョーカー12枚**
   - CafeParadeの5人をモチーフとしたジョーカー：5枚
   - レジェンダリージョーカー「サタン」：1枚
   - メンバーを活かすためのサポートジョーカー：3枚
   - アイドルマスターSideM×FiFS展をモチーフとしたジョーカー：1枚
+  - エンボスジョーカー・スンスン：各1枚
 
 ### 制作について
 
@@ -80,7 +90,7 @@ Lovelyを更新する場合は、公式の更新手順に従ってください�
 
 #### 3. Cafetro!を導入する
 
-1. リリースの添付ファイル`Cafetro-v1.1.0.zip`をダウンロードして解凍します。
+1. リリースの添付ファイル`Cafetro-v1.2.0.zip`をダウンロードして解凍します。
 2. 中の`Cafetro`フォルダーを`%AppData%\Balatro\Mods`に配置します。
    配置後のパスは次のとおりです。
 
@@ -109,6 +119,14 @@ Lovelyを更新する場合は、公式の更新手順に従ってください�
 It adds new content inspired by **Café Parade**, an idol unit from
 *THE IDOLM@STER SideM*.
 
+### Changes in v1.2.0
+
+- Added Embossing Joker (Common, $4): each played Enhanced card gives
+  +4 Mult when scored, including retriggers.
+- Added SUNSUN (Uncommon, $6): retrigger each played 6 two additional times.
+  [Fan art of PUPPET SUNSUN (Unofficial)]
+- Expanded the Joker atlas to five columns and three rows.
+
 ### Changes in v1.1.0
 
 - Yukihiro Kamiya: removed the once-per-blind limit. Each qualifying hand
@@ -126,11 +144,12 @@ It adds new content inspired by **Café Parade**, an idol unit from
   the in-game Customize Deck menu so you can switch between card designs.
 - **6 Special Challenges**
   Challenges designed to let all five members of Café Parade shine.
-- **10 New Jokers**
+- **12 New Jokers**
   - 5 Jokers inspired by the five members of Café Parade
   - 1 Legendary Joker featuring Satan
   - 3 support Jokers designed to complement the members
   - 1 Joker inspired by THE IDOLM@STER SideM × FiFS Exhibition
+  - Embossing Joker and SUNSUN: 1 each
 
 ### Development Notes
 
@@ -175,7 +194,7 @@ Create the `Mods` folder if it does not exist.
 
 #### 3. Install Cafetro!
 
-1. Download the attached `Cafetro-v1.1.0.zip` release file and extract it.
+1. Download the attached `Cafetro-v1.2.0.zip` release file and extract it.
 2. Place the `Cafetro` folder in `%AppData%\Balatro\Mods`.
    The resulting path should be:
 

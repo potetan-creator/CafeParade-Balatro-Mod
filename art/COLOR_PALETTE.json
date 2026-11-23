@@ -132,6 +132,32 @@
         "y": 1
       },
       "role": "rank_xmult"
+    },
+    {
+      "id": "embossing",
+      "display_name_ja": "エンボスジョーカー",
+      "name_short": "EMBOSSING",
+      "color_hex": "#DDDDDD",
+      "rarity": "Common",
+      "cost": 4,
+      "atlas_pos": {
+        "x": 0,
+        "y": 2
+      },
+      "role": "enhanced_mult"
+    },
+    {
+      "id": "sunsun",
+      "display_name_ja": "スンスン",
+      "name_short": "SUNSUN",
+      "color_hex": "#389EC3",
+      "rarity": "Uncommon",
+      "cost": 6,
+      "atlas_pos": {
+        "x": 1,
+        "y": 2
+      },
+      "role": "six_retrigger"
     }
   ],
   "atlas_columns": 5

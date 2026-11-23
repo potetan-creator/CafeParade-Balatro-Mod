@@ -17,6 +17,7 @@ local atlas_columns = 5
 local joker_ids = {
     'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan',
     'cake_set', 'chocolate_spacial', 'plain_cakeroll', 'three_one_five',
+    'embossing', 'sunsun',
 }
 for i, id in ipairs(joker_ids) do
     local def = load('jokers/' .. id .. '.lua')(cp)

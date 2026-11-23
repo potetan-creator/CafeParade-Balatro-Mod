@@ -12,4 +12,6 @@ return {
     chocolate_spacial = {rarity = 3, cost = 8, cards = 2},
     plain_cakeroll = {rarity = 1, cost = 4, chips = 30, targets = 2},
     three_one_five = {rarity = 3, cost = 8, xmult = 3.15},
+    embossing = {rarity = 1, cost = 4, mult = 4},
+    sunsun = {rarity = 2, cost = 6, repetitions = 2},
 }

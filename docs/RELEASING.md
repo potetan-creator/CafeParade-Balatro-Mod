@@ -6,8 +6,8 @@
 2. 配布用READMEは **`Cafetro/README.txt`** を編集する。GitHub Releaseにも表示するため、Markdownの見出し・箇条書き・リンクを使える。原稿・テスト・開発資料をMOD本体へ戻さない。
 3. 画像を更新したときだけ `python tools/build_atlas.py --filter nearest` を実行する。
 4. `python tests/run.py` で能力・画像・配布ZIPを検証する。
-5. `python tools/build_release.py` を実行する。`dist/Cafetro-v1.1.0.zip` と `dist/Cafetro-v1.1.0.sha256` を生成する。バージョン部分はメタデータに従う。
-6. ZIPの最上位は `Cafetro/` ひとつで、その直下に `Cafetro.json` と `main.lua` がある。現在はREADME.txtを含む必要な31ファイルのみ。
+5. `python tools/build_release.py` を実行する。`dist/Cafetro-v1.2.0.zip` と `dist/Cafetro-v1.2.0.sha256` を生成する。バージョン部分はメタデータに従う。
+6. ZIPの最上位は `Cafetro/` ひとつで、その直下に `Cafetro.json` と `main.lua` がある。現在はREADME.txtを含む必要な33ファイルのみ。
 7. GitHub Releaseの下書きにZIPとSHA-256を添付する。READMEを追加・変更したら再ビルドし、両方の添付を更新する。
 8. 実ゲーム確認・README・リリース説明の準備ができたら下書きを公開する。
 

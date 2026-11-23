@@ -36,7 +36,7 @@ assert metadata['name'] == 'Cafetro!'
 assert metadata['id'] == 'CafeParade' and metadata['prefix'] == 'cp'
 assert (ROOT / metadata['main_file']).is_file()
 palette = json.loads((PROJECT / 'art/COLOR_PALETTE.json').read_text(encoding='utf-8'))
-assert len(palette['jokers']) == 10
+assert len(palette['jokers']) == 12
 columns = palette['atlas_columns']
 assert columns == 5
 for index, spec in enumerate(palette['jokers']):
@@ -59,6 +59,9 @@ with tempfile.TemporaryDirectory(prefix='cafetro-assets-') as directory:
                         expected = source.convert('RGBA').resize((71 * scale, 95 * scale), resampling)
                     x, y = spec['atlas_pos']['x'] * 71 * scale, spec['atlas_pos']['y'] * 95 * scale
                     assert atlas.crop((x, y, x + 71 * scale, y + 95 * scale)).tobytes() == expected.tobytes()
+                for index in range(len(palette['jokers']), columns * rows):
+                    x, y = (index % columns) * 71 * scale, (index // columns) * 95 * scale
+                    assert atlas.crop((x, y, x + 71 * scale, y + 95 * scale)).getchannel('A').getbbox() is None
             with Image.open(target / f'assets/{scale}x/cafeparade_satan_top.png') as top:
                 assert top.size == (71 * scale, 95 * scale) and top.mode == 'RGBA'
                 assert top.getchannel('A').getextrema() == (0, 255)
@@ -82,7 +85,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-assets-') as directory:
         with Image.open(target / 'assets/2x/cafeparade_satan_top.png') as top:
             expected.alpha_composite(top, (satan['x'] * 142, satan['y'] * 190))
         with Image.open(project / 'docs/images/cafetro_cards.png') as preview:
-            assert preview.size == (710, 380) and preview.tobytes() == expected.tobytes()
+            assert preview.size == (710, 570) and preview.tobytes() == expected.tobytes()
 print('Metadata, all atlas cells, icons, alpha, both resamplers and committed runtime images: passed')
 
 hashes = json.loads((TESTS / 'asset_hashes.json').read_text(encoding='utf-8'))

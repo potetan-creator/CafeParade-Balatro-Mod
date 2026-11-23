@@ -1,9 +1,9 @@
-# Cafetro! — ジョーカー能力仕様書 v1.1.0
+# Cafetro! — ジョーカー能力仕様書 v1.2.0
 
 現行の数値は `Cafetro/config.lua` に集約する。v1.1.0では依頼に基づき神谷とサタンを上方調整。比較資料と判断理由は `BALANCE_NOTES.md` を参照。
 
 ## 共通定義
-- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` の10種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
+- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` / `embossing` / `sunsun` の12種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
 - 「Café Paradeメンバー」は **神谷・東雲・アスラン・巻緒・咲の5種のみ**。サタンは6枚目だがメンバー数には数えない。異なるメンバーを数えるときは種類ごとに最大1、同名2枚を所持しても1人。
 - 「所持している」はジョーカー領域に存在する有効（非debuff）のカードを意味する。Blueprint / Brainstormによる能力コピーは所持人数を増やさない。デッキにカードがあってもジョーカー領域になければ対象外。
 - 「得点したカード」はスコア計算に参加したカード。捨て札、得点に不参加の手札、手札に残るスチールカード等は対象外。
@@ -130,3 +130,20 @@
 - 個体ごとに変わる現在倍率は本文の末尾に「（現在 倍率X…）」を置く。サタンの人数・内部成長値の内訳は本文から外し、実際の総倍率だけを表示する。
 - 咲は「プレイした一番左のカード / Leftmost played card」に統一。選択条件や変化タイミングは変更しない。
 - 神谷はブラインド使用状態の表示を廃止。毎ハンドの条件・$3・可変確率・空き枠の条件を本文で示す。
+
+## 11. エンボスジョーカー / Embossing Joker
+
+- コモン・$4。画像は `art/source/embossing.png`（アップロードされたembossing_joker.pngと同一）。
+- 得点する強化カードの各発動で倍率+4。再発動・Blueprintにも適用。手札に残る強化カードや、シール／エディションだけのカードは対象外。
+- アスランと同じ標準の強化判定を使い、ストーンも強化カードとして扱う。サタンのメンバーには含めない。
+
+## 12. スンスン / SUNSUN
+
+- アンコモン・$6。画像は `art/source/sunsun.png`（アップロードされたsunsun_joker.pngと同一）。
+- 得点対象の6それぞれを2回追加で再発動。基本1回と合わせて3回。通常の再発動コンテキストを使い、レッドシール・巻緒などの再発動と加算できる。Blueprintにも対応。
+- ストーンなどランクなしのカード、得点対象外の6、手札に残った6は対象外。サタンのメンバーには含めない。
+- 日英とも説明の最後に `{C:inactive,s:0.6}[Fan art of PUPPET SUNSUN (Unofficial)]` を表示する。
+
+v1.2.0は原作のEven Steven／Hack／Hanging Chadと同様、カードの得点ごとの効果と標準の追加再発動を使う。独自の得点ループや追加の補足ツールチップは設けない。
+
+表記参照: 原作の[日本語localization](https://github.com/Jofr3/balatro-source/blob/main/localization/ja.lua)および[英語localization](https://github.com/Jofr3/balatro-source/blob/main/localization/en-us.lua)のEven Steven・Hack・Hanging Chad（公開再掲）。実機での文字の収まりは未確認。
