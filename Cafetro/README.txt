@@ -16,6 +16,9 @@ MOD Creator / Art: Potetan
 
 ### v1.2.0の変更
 
+- ケーキセット：ペアを含む役にも対応。ラウンド終了時に1/5の確率で食べられます。
+- ロールケーキ：得点カードがちょうど2枚のとき、各+50チップへ調整。
+  ラウンド終了時に1/10の確率で食べられます。
 - 金人間（レア・$8）を追加。
   所持中、道化師パックにコモンジョーカーが出現しなくなります。
 - エンボスジョーカー（コモン・$4）を追加。
@@ -123,6 +126,10 @@ It adds new content inspired by **Café Parade**, an idol unit from
 
 ### Changes in v1.2.0
 
+- Cake Set now works with any hand containing a Pair and has a 1 in 5 chance
+  to be eaten at the end of each round.
+- Plain cakeroll now gives +50 Chips per card when exactly two cards score,
+  with a 1 in 10 chance to be eaten at the end of each round.
 - Added Goldpeople (Rare, $8): Common Jokers no longer appear in Buffoon Packs
   while this Joker is held.
 - Added Embossing Joker (Common, $4): each played Enhanced card gives

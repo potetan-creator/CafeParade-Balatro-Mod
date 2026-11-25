@@ -63,6 +63,8 @@ return {
         "If exactly {C:attention}#2#{} cards score,",
         "each gives {C:chips}+#1#{} Chips",
         "when scored",
+        "{C:green}#3# in #4#{} chance to be",
+        "eaten at end of round",
       }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
         "With a {C:attention}Flush House{}, create",
@@ -70,9 +72,11 @@ return {
         "{C:inactive}(Must have room)",
       }},
       j_cp_cake_set = {name = "Cake Set", text = {
-        "When playing exactly a {C:attention}Pair{},",
+        "If played hand contains a {C:attention}Pair{},",
         "ignore Boss Blind {C:attention}suit debuffs{}",
         "during scoring",
+        "{C:green}#1# in #2#{} chance to be",
+        "eaten at end of round",
       }},
       j_cp_satan = {name = "Satan", text = {
         "{C:attention}+#1#{} Joker slot; base {X:mult,C:white} X#2# {} Mult",

@@ -1,6 +1,7 @@
 return function(cp)
     local c = cp.config.makio
     return {
+        get_weight = function(self, weight) return weight * cp.makio_food_weight() end,
         loc_vars = function(self, queue)
             queue[#queue + 1] = {set = 'Other', key = 'cp_pair'}
             queue[#queue + 1] = {set = 'Other', key = 'cp_makio'}

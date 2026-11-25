@@ -6,6 +6,7 @@ end
 local cp = load('common.lua')
 cp.config = load('config.lua')
 mod.cafeparade = cp
+load('food.lua')(cp)
 load('cake_set.lua')(cp)
 load('goldpeople.lua')()
 load('badges.lua')(mod)
@@ -27,7 +28,8 @@ for i, id in ipairs(joker_ids) do
     def.pos = {x = (i - 1) % atlas_columns, y = math.floor((i - 1) / atlas_columns)}
     def.unlocked, def.discovered = true, true
     if def.blueprint_compat == nil then def.blueprint_compat = true end
-    def.eternal_compat, def.perishable_compat = true, true
+    if def.eternal_compat == nil then def.eternal_compat = true end
+    if def.perishable_compat == nil then def.perishable_compat = true end
     SMODS.Joker(def)
 end
 

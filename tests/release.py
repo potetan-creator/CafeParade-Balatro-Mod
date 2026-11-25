@@ -26,7 +26,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
     with ZipFile(archive) as package:
         assert package.testzip() is None
         paths = package.namelist()
-        assert len(paths) == len(set(paths)) == 35 + len(optional)
+        assert len(paths) == len(set(paths)) == 36 + len(optional)
         assert all(path.startswith('Cafetro/') and '..' not in Path(path).parts for path in paths)
         assert not any(part in {'art', 'docs', 'tests', 'tools', 'previews', '__pycache__'}
                        for path in paths for part in Path(path).parts)

@@ -64,6 +64,8 @@ return {
         "得点するカードが{C:attention}#2#{}枚の場合、",
         "各カードは得点時に",
         "チップ{C:chips}+#1#{}を得る",
+        "ラウンド終了時に",
+        "{C:green}#4#分の#3#{}の確率で食べられる",
       }},
       j_cp_chocolate_spacial = {name = "Chocolate Spacial", text = {
         "{C:attention}フラッシュハウス{}で、ランダムな",
@@ -71,9 +73,11 @@ return {
         "{C:inactive}(空きが必要)",
       }},
       j_cp_cake_set = {name = "ケーキセット", text = {
-        "{C:attention}ワンペア{}の得点中のみ、",
-        "ボスの{C:attention}スートによる",
+        "プレイしたハンドが{C:attention}ペア{}を含む場合、",
+        "得点中のボスの{C:attention}スートによる",
         "{C:attention}カード無効化{}を解除",
+        "ラウンド終了時に",
+        "{C:green}#2#分の#1#{}の確率で食べられる",
       }},
       j_cp_satan = {name = "サタン", text = {
         "ジョーカースロット{C:attention}+#1#{}、倍率{X:mult,C:white}X#2#{}",

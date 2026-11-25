@@ -51,6 +51,12 @@ dofile(TEST_ROOT..'/fixtures/practice.lua')
 local cp=SMODS.current_mod.cafeparade
 eq(defs.goldpeople.rarity,3); eq(defs.goldpeople.cost,8)
 eq(defs.goldpeople.blueprint_compat,false)
+for _,id in ipairs({'cake_set','plain_cakeroll'}) do
+    eq(defs[id].pools.Food,true)
+    eq(defs[id].eternal_compat,false)
+    eq(defs[id].perishable_compat,true)
+end
+eq(defs.makio.eternal_compat,true,'other Jokers keep the registration default')
 eq(defs.plain_cakeroll.rarity,1)
 eq(defs.plain_cakeroll.cost,4)
 eq(defs.plain_cakeroll.pos.x,3); eq(defs.plain_cakeroll.pos.y,1)
@@ -356,15 +362,15 @@ local played={a,b,c,d,e}
 local total=0
 for _,target in ipairs(pair) do
     local effect=roll_score(target,pair,G.play,{full_hand=played})
-    eq(effect.chips,30,'two scored cards qualify even when five cards were played')
+    eq(effect.chips,50,'two scored cards qualify even when five cards were played')
     total=total+effect.chips
 end
-eq(total,60,'each scored card gets its own chips')
+eq(total,100,'each scored card gets its own chips')
 for size=0,5 do
     local scoring={}
     for i=1,size do scoring[i]=played[i] end
     local effect=roll_score(a,scoring)
-    if size==2 then eq(effect.chips,30) else eq(effect,nil,'exactly two scored cards required') end
+    if size==2 then eq(effect.chips,50) else eq(effect,nil,'exactly two scored cards required') end
 end
 eq(roll_score(a,nil),nil)
 eq(roll_score(a,pair,G.hand),nil,'held cards do not receive chips')
@@ -374,15 +380,15 @@ for _,context in ipairs({{before=true},{after=true},{joker_main=true},{repetitio
     context.cardarea=G.play; context.scoring_hand=pair; context.other_card=a
     eq(calc('plain_cakeroll',roll,context),nil,'only individual scoring grants chips')
 end
-eq(roll_score(a,pair,G.play,{blueprint=1}).chips,30,'Blueprint copies the card-scoring effect')
+eq(roll_score(a,pair,G.play,{blueprint=1}).chips,50,'Blueprint copies the card-scoring effect')
 local retrigger_total=0
 for _=1,3 do retrigger_total=retrigger_total+roll_score(a,pair).chips end
-eq(retrigger_total,90,'each scoring retrigger grants another thirty chips')
+eq(retrigger_total,150,'each scoring retrigger grants another fifty chips')
 local stone=play(7); stone.stone=true
-eq(roll_score(stone,{a,stone}).chips,30,'two scored cards need not be a Pair')
+eq(roll_score(stone,{a,stone}).chips,50,'two scored cards need not be a Pair')
 eq(roll_score(a,{a,d,stone}),nil,'a third scored Stone Card prevents activation')
 roll.debuff=true; eq(roll_score(a,pair),nil,'debuffed Joker is inactive')
-roll.debuff=nil; eq(roll_score(a,pair).chips,30)
+roll.debuff=nil; eq(roll_score(a,pair).chips,50)
 G.jokers.cards={roll}
 eq(cp.members(),0,'roll cake does not count as an idol member')
 local saki=joker('saki')

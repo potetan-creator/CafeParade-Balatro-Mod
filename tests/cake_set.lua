@@ -69,6 +69,9 @@ local function before(name, extra)
     local context=extra or {}
     context.before=true; context.scoring_name=name
     context.scoring_hand=G.play.cards
+    if not context.poker_hands then
+        context.poker_hands={Pair=name=='Pair' and {G.play.cards} or {}}
+    end
     return defs.cake_set:calculate(G.jokers.cards[1],context)
 end
 local function after()
@@ -100,10 +103,16 @@ for key,suit in pairs({bl_club='Clubs',bl_goad='Spades',bl_window='Diamonds',bl_
     eq(held.debuff,true,'restore held-card restrictions too')
 end
 
-for _,name in ipairs({'High Card','Two Pair','Three of a Kind','Straight','Flush','Full House',
-    'Four of a Kind','Straight Flush','Five of a Kind','Flush House','Flush Five','Custom Pair'}) do
+for _,name in ipairs({'Two Pair','Three of a Kind','Full House',
+    'Four of a Kind','Five of a Kind','Flush House','Flush Five','Custom Pair'}) do
     local normal,wild=setup('bl_head','Hearts')
-    eq(before(name,{poker_hands={Pair={{normal,wild}}}}),nil,name..' must not activate')
+    eq(before(name,{poker_hands={Pair={{normal,wild}}}}).message,'k_cp_suit_relief',name..' contains a Pair')
+    eq(wild.debuff,false)
+    after(); flush(); eq(wild.debuff,true)
+end
+for _,name in ipairs({'High Card','Straight','Flush','Straight Flush','Custom Hand','Pair'}) do
+    local normal,wild=setup('bl_head','Hearts')
+    eq(before(name,{poker_hands={Pair={}}}),nil,name..' without an evaluated Pair must not activate')
     eq(wild.debuff,true)
     eq(cp.cake_set_hand,nil)
 end
@@ -151,7 +160,7 @@ eq(before('Pair',{blueprint=1}),nil)
 eq(before('Pair',{retrigger_joker=true}),nil)
 eq(wild.debuff,true)
 G.jokers.cards={joker('saki')}
-eq(cp.begin_cake_set({scoring_name='Pair'}),false,'Cake must actually be held')
+eq(cp.begin_cake_set({scoring_name='Pair',poker_hands={Pair={{normal,wild}}}}),false,'Cake must actually be held')
 
 local first,second=joker('cake_set'),joker('cake_set')
 normal,wild=setup('bl_head','Hearts',{first,second})

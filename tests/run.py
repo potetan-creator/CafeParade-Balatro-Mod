@@ -28,7 +28,7 @@ for directory in (ROOT, TESTS):
     for path in directory.rglob('*.lua'):
         syntax.execute('assert(loadfile(...))', str(path))
 print('Lua 5.1 syntax: all runtime and test files passed')
-for name in ('contracts.lua', 'cake_set.lua', 'goldpeople.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
+for name in ('contracts.lua', 'cake_set.lua', 'food.lua', 'goldpeople.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
     run_lua(name)
 
 metadata = json.loads((ROOT / 'Cafetro.json').read_text(encoding='utf-8'))

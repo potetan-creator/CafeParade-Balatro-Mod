@@ -48,7 +48,8 @@ return function(cp)
 
     function cp.begin_cake_set(context)
         local blind = G.GAME.blind
-        if context.scoring_name ~= 'Pair' or not suit_boss(blind) or not available() then
+        if not next(context.poker_hands and context.poker_hands.Pair or {})
+            or not suit_boss(blind) or not available() then
             cp.end_cake_set(false)
             return false
         end
