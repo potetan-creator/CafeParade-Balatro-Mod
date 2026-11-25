@@ -4,7 +4,7 @@
 
 ## 構成
 
-- `Cafetro/`: 配布するMOD本体。ジョーカー14種、ソロお題5種＋最終お題＋雨彦の動作確認用お題、水嶋咲のトランプスキン。
+- `Cafetro/`: 配布するMOD本体。ジョーカー15種、Chun-Chunシール、ソロお題5種＋最終お題＋動作確認用お題2種、水嶋咲のトランプスキン。
 - `art/source/`: ジョーカーとアイコンの原稿。`art/COLOR_PALETTE.json` に画像の順序・座標を記載。
 - `tools/`: アトラス生成とリリースZIP作成。
 - `tests/`: Lua 5.1の能力検証、画像・配布パッケージ検証。`fixtures/practice.lua` は旧お試しライブの検証データ。
@@ -37,3 +37,22 @@ python tools/build_release.py
 - 配布手順: [RELEASING.md](RELEASING.md)
 
 本体・Lovely・Steamoddedを起動する環境はなく、描画・セーブの実エンジン動作・お題の難易度は未確認です。自動検証の通過と実ゲームの受け入れ確認を区別してください。
+
+## ネガティブ枚数の連携
+
+Cafetro! の読み込み後、`SMODS.Mods.CafeParade.cafeparade` から取得できます。
+
+```lua
+local cafetro = SMODS.Mods.CafeParade
+local api = cafetro and cafetro.cafeparade
+if api then
+    local counts_as_negative = api.is_negative_equivalent(card)
+    local owned_count = api.count_negative_equivalent()
+end
+```
+
+- `is_negative_equivalent(card)` は1枚を判定します。エディションのネガティブフラグ、原作のキーとタイプ、Chun-Chunシールを扱います。
+- `count_negative_equivalent()` はジョーカー・消耗品・所持トランプから重複を除いて数えます。既存の `negative_count()` は同じ関数を指します。
+- 独自キーでネガティブを定義するMODは `api.register_negative_edition('e_example_negative')` で連携できます。
+- `card.edition.negative` を直接読む他MODのジョーカーには、このAPIへ切り替える個別互換パッチが必要です。標準の `copy_card` を通らない複製処理も、複製先で一時シールを除去する個別対応が必要です。
+- JokerDisplayが先に読み込まれていれば、想楽はそのラウンドの残り付与枚数、雨彦は現在倍率を表示します。標準のJokerDisplayはCafetro!より先に読み込まれます。

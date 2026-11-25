@@ -12,6 +12,13 @@ return {
       }},
     },
     Joker = {
+      j_cp_sora = {name = "Sora Kitamura", text = {
+        "After scoring, add a {C:attention}Chun-Chun Seal{} to",
+        "{C:attention}unplayed cards{} of the leftmost card's {C:attention}rank{}",
+        "and of {C:attention}different suits{}",
+        "{C:inactive}(One per rank and suit)",
+        "{C:inactive}(Up to #1# per round)",
+      }},
       j_cp_amehiko = {name = "Amehiko Kuzunoha", text = {
         "Gives {X:mult,C:white} X#1# {} Mult for each",
         "{C:dark_edition}Negative{} card you own",
@@ -92,6 +99,11 @@ return {
       }},
     },
     Other = {
+      cp_chun_chun_seal = {name = "Chun-Chun Seal", text = {
+        "{C:mult}+#1#{} Mult when scored",
+        "Counts as {C:dark_edition}Negative{}",
+        "Expires at end of round",
+      }},
       cp_suits = {name = "Counting suits", text = {"Each Wild counts as one suit", "Suit changes are respected"}},
       cp_pair = {name = "Scored pairs", text = {"Two or more scored cards of one rank", "Stone Cards excluded"}},
       cp_makio = {name = "Retrigger targets", text = {"Use the leftmost matching rank", "Up to two cards total"}},
@@ -99,14 +111,17 @@ return {
     },
   },
   misc = {
+    labels = {cp_chun_chun_seal = "Chun-Chun Seal"},
     v_dictionary = {a_cp_growth = "Upgraded! X#1#"},
     dictionary = {
+      k_cp_chun_chun = "Chun-Chun!",
       k_cp_wild = "Makeup!",
       k_cp_suit_relief = "Suit debuffs lifted",
       k_cp_unused = "Ready",
       k_cp_used = "Used",
     },
     challenge_names = {
+      c_cp_sora_test = "Sora Kitamura: Chun-Chun Test",
       c_cp_amehiko_test = "Amehiko Kuzunoha: Negative Test",
       c_cp_solo_kamiya = "Kamiya: Three-Suit Hospitality",
       c_cp_solo_shinonome = "Shinonome: A Pair at a Time",
@@ -116,6 +131,11 @@ return {
       c_cp_finale = "Café Parade: Devil's Full Course",
     },
     v_text = {
+      ch_c_cp_sora_test = {
+        "Play the 2, 3, and 4 of Hearts separately",
+        "Check three seals per hand, up to nine",
+        "Check Amehiko and seal expiry",
+      },
       ch_c_cp_amehiko_test = {
         "{C:attention}Test run{}: start with {C:attention}5 Negative cards{}",
         "Amehiko starts at {X:mult,C:white} X2.25 {} Mult",

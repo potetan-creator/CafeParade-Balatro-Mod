@@ -27,7 +27,7 @@ end
 SMODS = {current_mod={},Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}},
     load_file=function(path) return loadfile(ROOT..'/'..path) end,
     Atlas=function() end,DeckSkin=function() end,Challenge=function() end,
-    DrawStep=function() end,
+    DrawStep=function() end, Seal=function() end,
     Joker=function(def) defs[def.key]=def end,
     recalc_debuff=function(card) return G.GAME.blind:debuff_card(card) end,
     get_enhancements=function(card) return card.enhanced and {[card.enhanced]=true} or {} end,
@@ -39,6 +39,7 @@ function localize(key) return key end
 local function flush()
     while #queue>0 do local event=table.remove(queue,1); assert(event.func()) end
 end
+function HEX(value) return value end
 dofile(ROOT..'/main.lua')
 local cp=SMODS.current_mod.cafeparade
 local function joker(id)

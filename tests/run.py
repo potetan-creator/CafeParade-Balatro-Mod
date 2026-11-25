@@ -28,7 +28,7 @@ for directory in (ROOT, TESTS):
     for path in directory.rglob('*.lua'):
         syntax.execute('assert(loadfile(...))', str(path))
 print('Lua 5.1 syntax: all runtime and test files passed')
-for name in ('contracts.lua', 'cake_set.lua', 'food.lua', 'goldpeople.lua', 'amehiko.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
+for name in ('contracts.lua', 'cake_set.lua', 'food.lua', 'goldpeople.lua', 'amehiko.lua', 'chun_chun.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
     run_lua(name)
 
 metadata = json.loads((ROOT / 'Cafetro.json').read_text(encoding='utf-8'))
@@ -36,7 +36,7 @@ assert metadata['name'] == 'Cafetro!'
 assert metadata['id'] == 'CafeParade' and metadata['prefix'] == 'cp'
 assert (ROOT / metadata['main_file']).is_file()
 palette = json.loads((PROJECT / 'art/COLOR_PALETTE.json').read_text(encoding='utf-8'))
-assert len(palette['jokers']) == 14
+assert len(palette['jokers']) == 15
 columns = palette['atlas_columns']
 assert columns == 5
 for index, spec in enumerate(palette['jokers']):
@@ -74,6 +74,15 @@ with tempfile.TemporaryDirectory(prefix='cafetro-assets-') as directory:
                 with Image.open(project / 'art/source/amehiko_front.png') as source:
                     expected = source.convert('RGBA').resize(front.size, resampling)
                 assert front.tobytes() == expected.tobytes(), 'Amehiko foreground retains the original colors and full canvas'
+            name = 'cafeparade_chun_chun.png'
+            with Image.open(project / 'art/source/chun_chun.png') as source:
+                expected = source.convert('RGBA').resize((71 * scale, 95 * scale), resampling)
+            with Image.open(target / f'assets/{scale}x/{name}') as seal:
+                assert seal.size == expected.size and seal.mode == 'RGBA'
+                assert seal.tobytes() == expected.tobytes(), 'preserve seal position within the card'
+                if mode == 'nearest':
+                    with Image.open(ROOT / f'assets/{scale}x/{name}') as committed:
+                        assert seal.tobytes() == committed.tobytes()
             with Image.open(project / 'art/source/icon.png') as source:
                 expected = source.convert('RGBA').resize((34 * scale, 34 * scale), resampling)
             with Image.open(target / f'assets/{scale}x/cafeparade_icon.png') as icon:

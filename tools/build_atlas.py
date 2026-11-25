@@ -44,6 +44,7 @@ def build(mode):
         save(top, assets / 'cafeparade_satan_top.png')
         amehiko_front = frame('amehiko_front', (width, height), resampling)
         save(amehiko_front, assets / 'cafeparade_amehiko_front.png')
+        save(frame('chun_chun', (width, height), resampling), assets / 'cafeparade_chun_chun.png')
         icon = frame('icon', (34 * scale, 34 * scale), resampling)
         save(icon, assets / 'cafeparade_icon.png')
         with Image.open(SOURCE / 'icon.png') as original:

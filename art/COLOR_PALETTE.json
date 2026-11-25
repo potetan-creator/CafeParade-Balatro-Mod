@@ -184,6 +184,19 @@
         "y": 2
       },
       "role": "negative_xmult"
+    },
+    {
+      "id": "sora",
+      "display_name_ja": "北村想楽",
+      "name_short": "SORA",
+      "color_hex": "#D4D8E4",
+      "rarity": "Uncommon",
+      "cost": 6,
+      "atlas_pos": {
+        "x": 4,
+        "y": 2
+      },
+      "role": "temporary_seal"
     }
   ],
   "atlas_columns": 5

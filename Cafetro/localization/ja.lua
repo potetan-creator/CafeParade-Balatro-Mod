@@ -13,6 +13,13 @@ return {
       }},
     },
     Joker = {
+      j_cp_sora = {name = "北村想楽", text = {
+        "ハンドの得点後、左端と{C:attention}同ランク{}の",
+        "{C:attention}未プレイ・別スート{}のカードに",
+        "{C:attention}Chun-Chunシール{}を付ける",
+        "{C:inactive}（ランク・スートごとに1枚）",
+        "{C:inactive}（ラウンドにつき最大#1#枚）",
+      }},
       j_cp_amehiko = {name = "葛之葉雨彦", text = {
         "所持する{C:dark_edition}ネガティブ{}カード",
         "1枚につき倍率{X:mult,C:white}X#1#{}を得る",
@@ -93,6 +100,11 @@ return {
       }},
     },
     Other = {
+      cp_chun_chun_seal = {name = "Chun-Chunシール", text = {
+        "得点時、倍率{C:mult}+#1#{}",
+        "{C:dark_edition}ネガティブ{}として数える",
+        "ラウンド終了時に消える",
+      }},
       cp_suits = {name = "スーツの数え方", text = {"ワイルド1枚は1スーツ分", "スーツ変更の効果も反映"}},
       cp_pair = {name = "得点したペア", text = {"得点カードに同ランク2枚以上", "ストーンは除外"}},
       cp_makio = {name = "再発動の対象", text = {"左端のペアの組から2枚まで", "ツーペアでも合計2枚"}},
@@ -100,14 +112,17 @@ return {
     },
   },
   misc = {
+    labels = {cp_chun_chun_seal = "Chun-Chunシール"},
     v_dictionary = {a_cp_growth = "成長！X#1#"},
     dictionary = {
+      k_cp_chun_chun = "Chun-Chun!",
       k_cp_wild = "Makeup!",
       k_cp_suit_relief = "スート制限解除",
       k_cp_unused = "未使用",
       k_cp_used = "使用済み",
     },
     challenge_names = {
+      c_cp_sora_test = "北村想楽：Chun-Chun動作確認",
       c_cp_amehiko_test = "葛之葉雨彦：ネガティブ動作確認",
       c_cp_solo_kamiya = "神谷幸広：三色のおもてなし",
       c_cp_solo_shinonome = "東雲荘一郎：一対ずつの積み重ね",
@@ -117,6 +132,11 @@ return {
       c_cp_finale = "Café Parade：悪魔のフルコース",
     },
     v_text = {
+      ch_c_cp_sora_test = {
+        "ハートの2・3・4を1枚ずつプレイ",
+        "シールが3枚ずつ付き、最大9枚",
+        "雨彦の倍率とラウンド終了時の消滅を確認",
+      },
       ch_c_cp_amehiko_test = {
         "{C:attention}動作確認用{}：初期ネガティブは{C:attention}5枚{}",
         "雨彦の初期倍率は{X:mult,C:white}X2.25{}",

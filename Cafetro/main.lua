@@ -16,12 +16,14 @@ SMODS.Atlas {key = 'jokers', path = 'cafeparade_jokers.png', px = 71, py = 95}
 SMODS.Atlas {key = 'satan_top', path = 'cafeparade_satan_top.png', px = 71, py = 95}
 SMODS.Atlas {key = 'amehiko_front', path = 'cafeparade_amehiko_front.png', px = 71, py = 95}
 SMODS.Atlas {key = 'modicon', path = 'cafeparade_icon.png', px = 34, py = 34}
+SMODS.Atlas {key = 'chun_chun', path = 'cafeparade_chun_chun.png', px = 71, py = 95}
+load('chun_chun.lua')(cp, mod)
 
 local atlas_columns = 5
 local joker_ids = {
     'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan',
     'cake_set', 'chocolate_spacial', 'plain_cakeroll', 'three_one_five',
-    'embossing', 'sunsun', 'goldpeople', 'amehiko',
+    'embossing', 'sunsun', 'goldpeople', 'amehiko', 'sora',
 }
 for i, id in ipairs(joker_ids) do
     local def = load('jokers/' .. id .. '.lua')(cp)
@@ -37,4 +39,5 @@ end
 
 load('challenges/member_challenges.lua')
 load('challenges/amehiko_test.lua')
+load('challenges/sora_test.lua')
 load('deck_skins.lua')()

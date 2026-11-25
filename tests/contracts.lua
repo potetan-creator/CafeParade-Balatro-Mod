@@ -28,6 +28,8 @@ SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}
     pseudorandom_probability=function() return true end,
     add_card=function() table.insert(G.consumeables.cards,{}) end}
 local localization = dofile(ROOT .. '/localization/ja.lua').misc
+function HEX(value) return value end
+SMODS.Seal = function() end
 function localize(key)
     if type(key)=='table' then
         local text=assert(localization.v_dictionary[key.key])
@@ -71,7 +73,7 @@ eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
 eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
 eq(defs.three_one_five.blueprint_compat,true)
-for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko'}) do
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko','sora'}) do
     eq(defs[id].pos.x,(i-1)%5,'registration column')
     eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
 end

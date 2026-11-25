@@ -15,7 +15,7 @@
 3. 画像を更新したときだけ `python tools/build_atlas.py --filter nearest` を実行する。
 4. `python tests/run.py` で能力・画像・配布ZIPを検証する。
 5. `python tools/build_release.py` を実行する。`dist/Cafetro-v1.2.0.zip` と `dist/Cafetro-v1.2.0.sha256` を生成する。バージョン部分はメタデータに従う。
-6. ZIPの最上位は `Cafetro/` ひとつで、その直下に `Cafetro.json` と `main.lua` がある。現在はREADME.txt・依頼された雨彦の確認用お題を含む41ファイル。
+6. ZIPの最上位は `Cafetro/` ひとつで、その直下に `Cafetro.json` と `main.lua` がある。現在はREADME.txtと確認用チャレンジ2種を含む46ファイル。
 7. GitHub Releaseの下書きにZIPとSHA-256を添付する。READMEを追加・変更したら再ビルドし、両方の添付を更新する。
 8. 実ゲーム確認・README・リリース説明の準備ができたら下書きを公開する。
 

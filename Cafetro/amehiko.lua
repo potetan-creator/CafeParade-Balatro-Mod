@@ -1,28 +1,36 @@
 return function(cp)
-    function cp.negative_count()
+    local negative_editions = {e_negative = true}
+
+    function cp.register_negative_edition(key)
+        negative_editions[key] = true
+    end
+
+    function cp.is_negative_equivalent(card)
+        if not card then return false end
+        if card.seal == cp.chun_chun_seal then return true end
+        local edition = card.edition
+        if not edition then return false end
+        local prototype = G and G.P_CENTERS and G.P_CENTERS[edition.key]
+        return not not (edition.negative or edition.type == 'negative' or negative_editions[edition.key]
+            or (prototype and (prototype.negative or (prototype.config and prototype.config.negative))))
+    end
+
+    function cp.count_negative_equivalent()
         local seen, count = {}, 0
-        local function scan(cards)
-            for _, card in ipairs(cards or {}) do
-                if not seen[card] then
-                    seen[card] = true
-                    local edition = card.edition
-                    if edition and (edition.negative or edition.key == 'e_negative')
-                        and not card.removed and not card.destroyed and not card.shattered
-                        and not card.getting_sliced then count = count + 1 end
-                end
+        local function tally(card)
+            if not seen[card] then
+                seen[card] = true
+                if cp.card_present(card) and cp.is_negative_equivalent(card) then count = count + 1 end
             end
         end
         if not G then return 0 end
-        scan(G.jokers and G.jokers.cards)
-        scan(G.consumeables and G.consumeables.cards)
-        scan(G.playing_cards)
-        -- Standard cards live in playing_cards; scan owned areas too for mods
-        -- that register cards late. Never scan shops, packs or UI previews.
-        for _, key in ipairs({'deck', 'hand', 'play', 'discard'}) do
-            scan(G[key] and G[key].cards)
+        for _, area in ipairs({'jokers', 'consumeables'}) do
+            for _, card in ipairs(G[area] and G[area].cards or {}) do tally(card) end
         end
+        cp.each_playing_card(tally)
         return count
     end
+    cp.negative_count = cp.count_negative_equivalent
 
     -- Use the normal setter for all capacity, cost and Edition callbacks.
     -- Also handles copies and generators that explicitly request an edition.

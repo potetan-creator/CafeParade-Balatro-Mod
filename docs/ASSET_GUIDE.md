@@ -17,7 +17,7 @@ python tools/build_atlas.py --filter lanczos
 
 ## 5列のアトラス
 
-カード数に応じて段数を増やします。現在は14枚・5列×3段で、1xが355×285、2xが710×570。1セルは71×95／142×190です。
+カード数に応じて段数を増やします。現在は15枚・5列×3段で、1xが355×285、2xが710×570。1セルは71×95／142×190です。
 
 |ID|x|y|
 |---|---:|---:|
@@ -35,6 +35,7 @@ python tools/build_atlas.py --filter lanczos
 |sunsun|1|2|
 |goldpeople|2|2|
 |amehiko|3|2|
+|sora|4|2|
 
 画像の順序・列数は `art/COLOR_PALETTE.json`、ゲームでの登録は `Cafetro/main.lua` にあります。追加時は両方をそろえ、テストで全座標と全画素を確認します。
 
@@ -55,3 +56,7 @@ python tools/build_atlas.py --filter lanczos
 ベースは共通アトラスの `x=3,y=2`、前景は別アトラス `cafeparade_amehiko_front.png`（1x:71×95、2x:142×190）です。ベースのネガティブ・negative_shine描画後、シール・ステッカーより前のDrawStep（order=25）で前景を描きます。`soul_pos` は使わず、前景はカードへGluedで結び、dissolveのみ・追加スケール0・追加回転0・オフセットなしで表示します。`custom_draw` で自動二重描画を防ぎます。
 
 開発用画像一覧は原稿のベース＋前景を合成したものです。ゲームのネガティブシェーダーは一覧PNGでは再現していません。
+
+## Chun-Chunシール
+
+シール原稿は `art/source/chun_chun.png`。71×95の透過キャンバス全体を維持し、`cafeparade_chun_chun.png` を1x／2xに生成します。想楽の原稿は `art/source/sora.png` です。

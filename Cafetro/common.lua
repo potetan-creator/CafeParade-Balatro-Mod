@@ -1,4 +1,26 @@
 local M = {}
+M.chun_chun_seal = 'cp_chun_chun'
+
+function M.card_present(card)
+    return not (card.removed or card.destroyed or card.shattered or card.getting_sliced)
+end
+
+function M.each_playing_card(visit)
+    if not G then return end
+    local seen = {}
+    local function scan(cards)
+        for _, card in ipairs(cards or {}) do
+            if not seen[card] then
+                seen[card] = true
+                if visit(card) then return true end
+            end
+        end
+    end
+    if scan(G.playing_cards) then return end
+    for _, area in ipairs({'deck', 'hand', 'play', 'discard'}) do
+        if scan(G[area] and G[area].cards) then return end
+    end
+end
 local members = {
     j_cp_kamiya = true,
     j_cp_shinonome = true,
