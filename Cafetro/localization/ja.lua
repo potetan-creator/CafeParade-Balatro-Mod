@@ -25,8 +25,8 @@ return {
         "出現しなくなる",
       }},
       j_cp_embossing = {name = "エンボスジョーカー", text = {
-        "プレイした{C:attention}強化カード{}は",
-        "得点時に倍率{C:mult}+#1#{}を得る",
+        "{C:attention}強化カード{}は得点時に",
+        "倍率{C:mult}+#1#{}を得る",
       }},
       j_cp_sunsun = {name = "スンスン", text = {
         "プレイした{C:attention}6{}のカードを",
@@ -87,10 +87,8 @@ return {
       }},
       j_cp_satan = {name = "サタン", text = {
         "ジョーカースロット{C:attention}+#1#{}、倍率{X:mult,C:white}X#2#{}",
-        "メンバー1人につき",
-        "倍率{X:mult,C:white}X#3#{}を得る",
-        "{C:attention}ボスブラインド{}撃破時、1人につき",
-        "倍率{X:mult,C:white}X#4#{}を得る",
+        "メンバー1人につき倍率{X:mult,C:white}X#3#{}を得る",
+        "{C:attention}ボス{}撃破時、1人につき倍率{X:mult,C:white}X#4#{}を得る",
         "{C:inactive}（現在 倍率{X:mult,C:white}X#5#{C:inactive}）",
       }},
     },

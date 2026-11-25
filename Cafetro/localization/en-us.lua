@@ -23,8 +23,8 @@ return {
         "appear in {C:attention}Buffoon Packs{}",
       }},
       j_cp_embossing = {name = "Embossing Joker", text = {
-        "Each played {C:attention}Enhanced{} card",
-        "gives {C:mult}+#1#{} Mult when scored",
+        "Each scored {C:attention}Enhanced{} card",
+        "gives {C:mult}+#1#{} Mult",
       }},
       j_cp_sunsun = {name = "SUNSUN", text = {
         "Retrigger each played",
@@ -86,10 +86,8 @@ return {
       }},
       j_cp_satan = {name = "Satan", text = {
         "{C:attention}+#1#{} Joker slot; base {X:mult,C:white} X#2# {} Mult",
-        "Gives {X:mult,C:white} X#3# {} Mult per",
-        "{C:attention}Café Parade{} member",
-        "Defeat a {C:attention}Boss Blind{}: gain",
-        "{X:mult,C:white} X#4# {} Mult per member",
+        "Gives {X:mult,C:white} X#3# {} Mult per {C:attention}Café Parade{} member",
+        "Defeat a {C:attention}Boss{}: gain {X:mult,C:white} X#4# {} Mult per member",
         "{C:inactive}(Currently {X:mult,C:white} X#5# {C:inactive} Mult)",
       }},
     },
