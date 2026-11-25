@@ -26,7 +26,7 @@ return {
       }},
       j_cp_embossing = {name = "エンボスジョーカー", text = {
         "{C:attention}強化カード{}は得点時に",
-        "倍率{C:mult}+#1#{}を得る",
+        "倍率{C:mult}+#1#{}",
       }},
       j_cp_sunsun = {name = "スンスン", text = {
         "プレイした{C:attention}6{}のカードを",
