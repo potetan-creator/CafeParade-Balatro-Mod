@@ -10,11 +10,11 @@ from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME_FILES = (
     'Cafetro.json', 'main.lua', 'config.lua', 'common.lua', 'badges.lua',
-    'cake_set.lua', 'goldpeople.lua', 'food.lua', 'deck_skins.lua', 'README.txt',
-    'challenges/member_challenges.lua',
+    'cake_set.lua', 'goldpeople.lua', 'food.lua', 'amehiko.lua', 'deck_skins.lua', 'README.txt',
+    'challenges/member_challenges.lua', 'challenges/amehiko_test.lua',
     'localization/ja.lua', 'localization/en-us.lua',
 )
-ASSETS = ('cafeparade_jokers', 'cafeparade_satan_top', 'cafeparade_icon',
+ASSETS = ('cafeparade_jokers', 'cafeparade_satan_top', 'cafeparade_amehiko_front', 'cafeparade_icon',
           'saki_cards_lc', 'saki_cards_hc')
 OPTIONAL_FILES = ('README.md', 'ReadMe.txt', 'LICENSE', 'LICENSE.txt')
 

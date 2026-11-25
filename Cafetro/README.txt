@@ -16,6 +16,11 @@ MOD Creator / Art: Potetan
 
 ### v1.2.0の変更
 
+- 葛之葉雨彦（レア・基本価格$8）を追加。必ずネガティブ加工で出現します。
+  基礎倍率X1に、所持するネガティブ1枚につきX0.25を加算。
+  自身・消耗品・トランプも対象です。キャラクターは元の色のまま、固定の前景に表示します。
+- 動作確認用チャレンジ「葛之葉雨彦：ネガティブ動作確認」を追加。
+  全8枚が初手にそろい、ネガティブ5枚・雨彦X2.25から変化を確認できます。
 - ケーキセット：ペアを含む役にも対応。ラウンド終了時に1/5の確率で食べられます。
 - ロールケーキ：得点カードがちょうど2枚のとき、各+50チップへ調整。
   ラウンド終了時に1/10の確率で食べられます。
@@ -43,14 +48,15 @@ MOD Creator / Art: Potetan
 - **トランプ着せ替え「水嶋咲」**
   過去に配布したMODを、ゲーム内の「デッキのカスタマイズ」から
   見た目を切り替えられる形で再実装しています。
-- **特別なチャレンジ6つ**
+- **特別なチャレンジ6つ＋動作確認用1つ**
   CafeParadeの5人が活躍する、個性に合わせたお題を収録しています。
-- **新ジョーカー13枚**
+- **新ジョーカー14枚**
   - CafeParadeの5人をモチーフとしたジョーカー：5枚
   - レジェンダリージョーカー「サタン」：1枚
   - メンバーを活かすためのサポートジョーカー：3枚
   - アイドルマスターSideM×FiFS展をモチーフとしたジョーカー：1枚
   - エンボスジョーカー・スンスン・金人間：各1枚
+  - 葛之葉雨彦：1枚
 
 ### 制作について
 
@@ -126,6 +132,12 @@ It adds new content inspired by **Café Parade**, an idol unit from
 
 ### Changes in v1.2.0
 
+- Added Amehiko Kuzunoha (Rare, base cost $8), who always appears Negative.
+  Base X1 Mult, increased by X0.25 for each owned Negative card, including
+  himself, consumables and playing cards. His portrait retains its original
+  colors in a fixed foreground layer.
+- Added the "Amehiko Kuzunoha: Negative Test" challenge: all eight playing
+  cards fit in the first hand; start with five Negative cards and X2.25 Mult.
 - Cake Set now works with any hand containing a Pair and has a 1 in 5 chance
   to be eaten at the end of each round.
 - Plain cakeroll now gives +50 Chips per card when exactly two cards score,
@@ -153,14 +165,15 @@ It adds new content inspired by **Café Parade**, an idol unit from
 - **Playing Card Skin: Saki Mizushima**
   A reimplementation of my previously released mod, now integrated into
   the in-game Customize Deck menu so you can switch between card designs.
-- **6 Special Challenges**
+- **6 Special Challenges + 1 Test Challenge**
   Challenges designed to let all five members of Café Parade shine.
-- **13 New Jokers**
+- **14 New Jokers**
   - 5 Jokers inspired by the five members of Café Parade
   - 1 Legendary Joker featuring Satan
   - 3 support Jokers designed to complement the members
   - 1 Joker inspired by THE IDOLM@STER SideM × FiFS Exhibition
   - Embossing Joker, SUNSUN and Goldpeople: 1 each
+  - Amehiko Kuzunoha: 1
 
 ### Development Notes
 

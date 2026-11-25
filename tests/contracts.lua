@@ -11,6 +11,7 @@ end
 local defs, events, challenges, atlases = {}, {}, {}, {}
 local growth_feedback, sounds = {}, {}
 Blind = {debuff_card = function() end}
+Card = {set_edition = function() end}
 G = {GAME={round_resets={ante=1},round=1,hands_played=1,
     blind={config={blind={key='bl_small'}}},consumeable_buffer=0},
     jokers={cards={},config={card_limit=5}}, play={}, hand={},
@@ -18,6 +19,7 @@ G = {GAME={round_resets={ante=1},round=1,hands_played=1,
 SMODS = {current_mod={}, Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}},
     load_file=function(path) return loadfile(ROOT..'/'..path) end,
     Atlas=function(d) atlases[d.key]=d end, DeckSkin=function() end, Joker=function(d) defs[d.key]=d end,
+    DrawStep=function() end,
     Challenge=function(d) challenges[d.key]=d end,
     has_no_rank=function(c) return c.stone end, has_no_suit=function(c) return c.stone end,
     get_enhancements=function(c) return c.enhanced and {[c.enhanced]=true} or {} end,
@@ -69,7 +71,7 @@ eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
 eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
 eq(defs.three_one_five.blueprint_compat,true)
-for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople'}) do
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko'}) do
     eq(defs[id].pos.x,(i-1)%5,'registration column')
     eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
 end

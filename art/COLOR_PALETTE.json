@@ -171,6 +171,19 @@
         "y": 2
       },
       "role": "buffoon_rarity_filter"
+    },
+    {
+      "id": "amehiko",
+      "display_name_ja": "葛之葉雨彦",
+      "name_short": "AMEHIKO",
+      "color_hex": "#537477",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 3,
+        "y": 2
+      },
+      "role": "negative_xmult"
     }
   ],
   "atlas_columns": 5

@@ -28,7 +28,7 @@ for directory in (ROOT, TESTS):
     for path in directory.rglob('*.lua'):
         syntax.execute('assert(loadfile(...))', str(path))
 print('Lua 5.1 syntax: all runtime and test files passed')
-for name in ('contracts.lua', 'cake_set.lua', 'food.lua', 'goldpeople.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
+for name in ('contracts.lua', 'cake_set.lua', 'food.lua', 'goldpeople.lua', 'amehiko.lua', 'chocolate_spacial.lua', 'challenges.lua', 'deck_skins.lua'):
     run_lua(name)
 
 metadata = json.loads((ROOT / 'Cafetro.json').read_text(encoding='utf-8'))
@@ -36,7 +36,7 @@ assert metadata['name'] == 'Cafetro!'
 assert metadata['id'] == 'CafeParade' and metadata['prefix'] == 'cp'
 assert (ROOT / metadata['main_file']).is_file()
 palette = json.loads((PROJECT / 'art/COLOR_PALETTE.json').read_text(encoding='utf-8'))
-assert len(palette['jokers']) == 13
+assert len(palette['jokers']) == 14
 columns = palette['atlas_columns']
 assert columns == 5
 for index, spec in enumerate(palette['jokers']):
@@ -68,6 +68,12 @@ with tempfile.TemporaryDirectory(prefix='cafetro-assets-') as directory:
                 with Image.open(project / 'art/source/satan_top.png') as source:
                     expected = source.convert('RGBA').resize(top.size, resampling)
                 assert top.tobytes() == expected.tobytes(), 'foreground retains full canvas and alpha'
+            with Image.open(target / f'assets/{scale}x/cafeparade_amehiko_front.png') as front:
+                assert front.size == (71 * scale, 95 * scale) and front.mode == 'RGBA'
+                assert front.getchannel('A').getextrema() == (0, 255)
+                with Image.open(project / 'art/source/amehiko_front.png') as source:
+                    expected = source.convert('RGBA').resize(front.size, resampling)
+                assert front.tobytes() == expected.tobytes(), 'Amehiko foreground retains the original colors and full canvas'
             with Image.open(project / 'art/source/icon.png') as source:
                 expected = source.convert('RGBA').resize((34 * scale, 34 * scale), resampling)
             with Image.open(target / f'assets/{scale}x/cafeparade_icon.png') as icon:
@@ -75,7 +81,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-assets-') as directory:
                 assert icon.tobytes() == expected.tobytes()
                 assert icon.getchannel('A').getextrema() == (0, 255)
             if mode == 'nearest':
-                for name in ('cafeparade_jokers', 'cafeparade_satan_top', 'cafeparade_icon'):
+                for name in ('cafeparade_jokers', 'cafeparade_satan_top', 'cafeparade_amehiko_front', 'cafeparade_icon'):
                     with Image.open(target / f'assets/{scale}x/{name}.png') as rebuilt:
                         with Image.open(ROOT / f'assets/{scale}x/{name}.png') as committed:
                             assert rebuilt.size == committed.size and rebuilt.tobytes() == committed.tobytes()
@@ -84,6 +90,9 @@ with tempfile.TemporaryDirectory(prefix='cafetro-assets-') as directory:
         satan = next(spec for spec in palette['jokers'] if spec['id'] == 'satan')['atlas_pos']
         with Image.open(target / 'assets/2x/cafeparade_satan_top.png') as top:
             expected.alpha_composite(top, (satan['x'] * 142, satan['y'] * 190))
+        amehiko = next(spec for spec in palette['jokers'] if spec['id'] == 'amehiko')['atlas_pos']
+        with Image.open(target / 'assets/2x/cafeparade_amehiko_front.png') as front:
+            expected.alpha_composite(front, (amehiko['x'] * 142, amehiko['y'] * 190))
         with Image.open(project / 'docs/images/cafetro_cards.png') as preview:
             assert preview.size == (710, 570) and preview.tobytes() == expected.tobytes()
 print('Metadata, all atlas cells, icons, alpha, both resamplers and committed runtime images: passed')

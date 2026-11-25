@@ -3,7 +3,7 @@
 現行の数値は `Cafetro/config.lua` に集約する。v1.1.0では依頼に基づき神谷とサタンを上方調整。比較資料と判断理由は `BALANCE_NOTES.md` を参照。
 
 ## 共通定義
-- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` / `embossing` / `sunsun` / `goldpeople` の13種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
+- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` / `embossing` / `sunsun` / `goldpeople` / `amehiko` の14種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
 - 「Café Paradeメンバー」は **神谷・東雲・アスラン・巻緒・咲の5種のみ**。サタンは6枚目だがメンバー数には数えない。異なるメンバーを数えるときは種類ごとに最大1、同名2枚を所持しても1人。
 - 「所持している」はジョーカー領域に存在する有効（非debuff）のカードを意味する。Blueprint / Brainstormによる能力コピーは所持人数を増やさない。デッキにカードがあってもジョーカー領域になければ対象外。
 - 「得点したカード」はスコア計算に参加したカード。捨て札、得点に不参加の手札、手札に残るスチールカード等は対象外。
@@ -169,3 +169,17 @@ v1.2.0は原作のEven Steven／Hack／Hanging Chadと同様、カードの得�
 - 日英の説明には主効果のみを記載し、他MODのパックに関する補足は表示しない。日本語のパック名は原作の「道化師パック」に合わせる。
 
 API参照: Steamodded 26.1002.0（`af0fdb1eb2c9e191262c128bc88bbc4da991e12d`）の `src/utils.lua`（create_card / poll_rarity）、`src/utils/weights.lua`（poll_object）、`src/game_object.lua`（標準Buffoon定義）、`lovely/booster.toml`（OPENED_BOOSTER）、`lovely/pool.toml`（プール条件と枯渇時の補充）。グローバルな抽選重みは変更せず、標準パック内のカード生成の引数だけを複製・変更する。
+
+## 14. 葛之葉雨彦 / Amehiko Kuzunoha
+
+- レア・基本価格$8。ネガティブ加工による追加価格は原作の価格計算に従う。画像は `Amehiko_base.png` / `Amehiko_joker.png` をバイト単位で保持して正規化した原稿を使用。
+- 得点時の倍率は **X(1 + 0.25 × 所持ネガティブカードの枚数)**。永続成長ではなく現在の所持数へ連動し、売却・消費・除去で減少する。本人も含めることをユーザーに確認済みで、単独所持ならX1.25。
+- 対象は `G.jokers.cards`・`G.consumeables.cards`・`G.playing_cards` の和集合。MODが登録を遅らせるトランプ用に、deck・hand・play・discard領域も集計する。同一実体は1回だけ数え、ショップ・パック・コレクションの未所持プレビューを含めない。
+- editionのnegativeフラグか正規キーe_negativeで判定。スロット追加だけの別加工は対象外。デバフ中も加工と所持が残るカードは数える。removed・destroyed・shattered・getting_sliced状態は数えない。
+- `context.joker_main` のXMultにBlueprint/Brainstormが対応。複数の雨彦も物理カードとして各1枚数え、各ジョーカーが現在数から倍率を計算する。CafeParadeメンバー数には含めず、カテゴリはCafetro!。
+- `set_ability` で先にネガティブを設定し、原作の生成時再抽選を抑止。対象キー限定のCard:set_editionラッパーで、明示的な別加工・コピー・加工の除去でも必ずネガティブを維持する。他のカードへの呼び出しは元の引数をそのまま渡す。
+- 枠・価格・Editionコールバックは標準setterに任せ、枠を手動加算しない。加工が保存され、前景は保存後の描画時にも作り直せる構成。
+- キャラクターは専用DrawStepで、背景のネガティブ描画後に無加工の固定前景として重ねる。soul_pos・浮遊・追加回転・前景への加工シェーダーは使わない。裏向き・vortex・未発見状態では前景を描かない。
+- 日英本文はネガティブ1枚あたりのX0.25・ネガティブ固定・末尾の現在倍率。加工増加量と現在倍率は赤枠で表記し、追加の補足ツールチップは設けない。
+
+参照：Steamodded 26.1002.0（`af0fdb1eb2c9e191262c128bc88bbc4da991e12d`）の `src/card_draw.lua`（edition=20、seal=30、floating_sprite=60、others=90）、`lovely/edition.toml`（加工済みカードの生成時再抽選抑止）、`lovely/center.toml`（set_ability）、原作Card:set_spritesのGlued方式。自動検証は描画呼び出し・レイヤー順・画像を対象とし、実ゲームのGPU描画は未確認。

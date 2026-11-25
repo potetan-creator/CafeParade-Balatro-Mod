@@ -26,7 +26,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
     with ZipFile(archive) as package:
         assert package.testzip() is None
         paths = package.namelist()
-        assert len(paths) == len(set(paths)) == 36 + len(optional)
+        assert len(paths) == len(set(paths)) == 41 + len(optional)
         assert all(path.startswith('Cafetro/') and '..' not in Path(path).parts for path in paths)
         assert not any(part in {'art', 'docs', 'tests', 'tools', 'previews', '__pycache__'}
                        for path in paths for part in Path(path).parts)
@@ -49,12 +49,14 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
     lua = LuaRuntime(unpack_returned_tuples=True)
     lua.globals().ROOT = str(installed)
     lua.execute('''
-        registered = {jokers={}, challenges={}, atlases={}, skins={}}
+        registered = {jokers={}, challenges={}, atlases={}, skins={}, drawsteps={}}
         Blind = {debuff_card=function() end}
+        Card = {set_edition=function() end}
         SMODS = {
             current_mod={},
             load_file=function(path) return loadfile(ROOT .. '/' .. path) end,
             Atlas=function(def) registered.atlases[def.key]=def end,
+            DrawStep=function(def) registered.drawsteps[def.key]=def end,
             Joker=function(def) registered.jokers[def.key]=def end,
             Challenge=function(def) registered.challenges[def.key]=def end,
             DeckSkin=function(def) registered.skins[def.key]=def end,
@@ -64,8 +66,9 @@ with tempfile.TemporaryDirectory(prefix='cafetro-release-') as directory:
         assert(registered.challenges.finale:unlocked() == false)
     ''')
     definitions = lua.globals().registered
-    assert len(list(definitions.jokers.items())) == 13
-    assert len(list(definitions.challenges.items())) == 6
+    assert len(list(definitions.jokers.items())) == 14
+    assert len(list(definitions.drawsteps.items())) == 1
+    assert len(list(definitions.challenges.items())) == 7
     assert len(list(definitions.skins.items())) == 4
     for _, atlas in definitions.atlases.items():
         for scale in (1, 2):

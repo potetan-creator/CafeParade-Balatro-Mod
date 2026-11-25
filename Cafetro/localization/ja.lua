@@ -13,6 +13,12 @@ return {
       }},
     },
     Joker = {
+      j_cp_amehiko = {name = "葛之葉雨彦", text = {
+        "所持する{C:dark_edition}ネガティブ{}カード",
+        "1枚につき倍率{X:mult,C:white}X#1#{}を得る",
+        "必ず{C:dark_edition}ネガティブ{}加工で出現",
+        "{C:inactive}（現在 倍率{X:mult,C:white}X#2#{C:inactive}）",
+      }},
       j_cp_goldpeople = {name = "金人間", text = {
         "{C:attention}道化師パック{}に",
         "{C:blue}コモン{}ジョーカーが",
@@ -104,6 +110,7 @@ return {
       k_cp_used = "使用済み",
     },
     challenge_names = {
+      c_cp_amehiko_test = "葛之葉雨彦：ネガティブ動作確認",
       c_cp_solo_kamiya = "神谷幸広：三色のおもてなし",
       c_cp_solo_shinonome = "東雲荘一郎：一対ずつの積み重ね",
       c_cp_solo_aslan = "アスラン：闇のパティスリー",
@@ -112,6 +119,12 @@ return {
       c_cp_finale = "Café Parade：悪魔のフルコース",
     },
     v_text = {
+      ch_c_cp_amehiko_test = {
+        "{C:attention}動作確認用{}：初期ネガティブは{C:attention}5枚{}",
+        "雨彦の初期倍率は{X:mult,C:white}X2.25{}",
+        "全{C:attention}8枚{}が初手にそろう",
+        "売却・使用・破壊で{C:attention}倍率の変化{}を確認",
+      },
       ch_c_cp_solo_member = {
         "主役は{C:attention}エターナル{}",
         "他のメンバーとサタンは出現しない",

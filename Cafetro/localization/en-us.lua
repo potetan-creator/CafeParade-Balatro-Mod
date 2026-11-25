@@ -12,6 +12,12 @@ return {
       }},
     },
     Joker = {
+      j_cp_amehiko = {name = "Amehiko Kuzunoha", text = {
+        "Gives {X:mult,C:white} X#1# {} Mult for each",
+        "{C:dark_edition}Negative{} card you own",
+        "Always appears {C:dark_edition}Negative{}",
+        "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+      }},
       j_cp_goldpeople = {name = "Goldpeople", text = {
         "{C:blue}Common{} Jokers no longer",
         "appear in {C:attention}Buffoon Packs{}",
@@ -103,6 +109,7 @@ return {
       k_cp_used = "Used",
     },
     challenge_names = {
+      c_cp_amehiko_test = "Amehiko Kuzunoha: Negative Test",
       c_cp_solo_kamiya = "Kamiya: Three-Suit Hospitality",
       c_cp_solo_shinonome = "Shinonome: A Pair at a Time",
       c_cp_solo_aslan = "Aslan: Dark Patisserie",
@@ -111,6 +118,12 @@ return {
       c_cp_finale = "Café Parade: Devil's Full Course",
     },
     v_text = {
+      ch_c_cp_amehiko_test = {
+        "{C:attention}Test run{}: start with {C:attention}5 Negative cards{}",
+        "Amehiko starts at {X:mult,C:white} X2.25 {} Mult",
+        "All {C:attention}8 playing cards{} fit in the first hand",
+        "Sell, use or destroy cards to check {C:attention}Mult changes{}",
+      },
       ch_c_cp_solo_member = {
         "Your featured member is {C:attention}Eternal{}",
         "Other members and Satan cannot appear",

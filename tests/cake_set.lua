@@ -8,6 +8,7 @@ local defs, queue = {}, {}
 G = {GAME={round=1,hands_played=1,round_resets={ante=1}},
     jokers={cards={}},play={cards={}},hand={cards={}},playing_cards={}}
 Blind = {}
+Card = {set_edition = function() end}
 function Blind:debuff_card(card, from_blind)
     if card.fail then error('original pipeline failure') end
     card.pipeline_calls = (card.pipeline_calls or 0) + 1
@@ -26,6 +27,7 @@ end
 SMODS = {current_mod={},Suit={obj_buffer={'Hearts','Diamonds','Clubs','Spades'}},
     load_file=function(path) return loadfile(ROOT..'/'..path) end,
     Atlas=function() end,DeckSkin=function() end,Challenge=function() end,
+    DrawStep=function() end,
     Joker=function(def) defs[def.key]=def end,
     recalc_debuff=function(card) return G.GAME.blind:debuff_card(card) end,
     get_enhancements=function(card) return card.enhanced and {[card.enhanced]=true} or {} end,

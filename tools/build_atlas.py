@@ -42,6 +42,8 @@ def build(mode):
         # Preserve the full-card canvas so the native soul layer stays aligned.
         top = frame('satan_top', (width, height), resampling)
         save(top, assets / 'cafeparade_satan_top.png')
+        amehiko_front = frame('amehiko_front', (width, height), resampling)
+        save(amehiko_front, assets / 'cafeparade_amehiko_front.png')
         icon = frame('icon', (34 * scale, 34 * scale), resampling)
         save(icon, assets / 'cafeparade_icon.png')
         with Image.open(SOURCE / 'icon.png') as original:
@@ -52,6 +54,9 @@ def build(mode):
             preview = atlas.copy()
             satan = names.index('satan')
             preview.alpha_composite(top, (width * (satan % columns), height * (satan // columns)))
+            amehiko = names.index('amehiko')
+            preview.alpha_composite(amehiko_front,
+                (width * (amehiko % columns), height * (amehiko // columns)))
             save(preview, ROOT / 'docs/images/cafetro_cards.png')
 
 
