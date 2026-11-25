@@ -32,7 +32,7 @@ return function(cp, mod)
         end
     end
 
-    function cp.stamp_chun_chun(hand)
+    function cp.prepare_chun_chun(hand, sora)
         if not hand or not hand[1] then return end
         local state = round_state()
         if state.finished then return end
@@ -48,22 +48,50 @@ return function(cp, mod)
         local rank_key = tostring(rank)
         local stamped = state.stamped[rank_key] or {}
         state.stamped[rank_key] = stamped
-        local added = false
+        local targets, selected = {}, {}
         cp.each_playing_card(function(card)
-            if state.count >= c.round_limit then return true end
+            if state.count + #targets >= c.round_limit then return true end
             if not cp.card_present(card) or not card.playing_card or card.seal
                 or state.played[tostring(card.playing_card)] then return end
             local other_rank, other_suit = rank_and_suit(card)
-            if rank == other_rank and suit ~= other_suit and not stamped[other_suit] then
-                card:set_seal(seal_key, true, true)
-                if card.seal == seal_key then
-                    stamped[other_suit] = true
-                    state.count = state.count + 1
-                    added = true
-                end
+            if rank == other_rank and suit ~= other_suit and not stamped[other_suit] and not selected[other_suit] then
+                selected[other_suit] = true
+                targets[#targets + 1] = {card = card, suit = other_suit}
             end
         end)
-        return added
+        if #targets == 0 then return end
+
+        local game = G.GAME
+        local queued = false
+        return {func = function()
+            if queued then return end
+            queued = true
+            G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.75, func = function()
+                if G.GAME ~= game or state.finished or cp.blind_id() ~= state.round then return true end
+                local added = false
+                for _, target in ipairs(targets) do
+                    if state.count >= c.round_limit then break end
+                    local card = target.card
+                    if cp.card_present(card) and not card.seal and not stamped[target.suit]
+                        and not state.played[tostring(card.playing_card)] then
+                        -- The native setter reveals the seal, shakes the card and plays its sound now.
+                        card:set_seal(seal_key, false, true)
+                        if card.seal == seal_key then
+                            stamped[target.suit] = true
+                            state.count = state.count + 1
+                            added = true
+                        end
+                    end
+                end
+                if added and cp.card_present(sora) then
+                    -- Blueprint rewrites effect.card, but the source here is the real Sora.
+                    card_eval_status_text(sora, 'extra', nil, nil, nil, {
+                        message = localize('k_cp_chun_chun'), instant = true,
+                    })
+                end
+                return true
+            end}))
+        end}
     end
 
     -- The mod receives these contexts even when Sora is absent or debuffed.

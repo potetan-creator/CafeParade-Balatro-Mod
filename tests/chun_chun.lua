@@ -18,7 +18,21 @@ local function clone(t)
     for k, v in pairs(t) do copy[k] = clone(v) end
     return copy
 end
-local function set_seal(self, key) self.seal = key end
+local events, animations, current_event = {}, {}, nil
+local real_sora, blueprint_card = {}, {}
+function Event(args) return args end
+function card_eval_status_text(card, kind, amt, percent, dir, args)
+    assert(args.instant and args.message == 'k_cp_chun_chun')
+    assert(card == real_sora, 'show Chun-Chun on the copied Sora, never on Blueprint')
+    animations[#animations + 1] = {kind = 'popup', event = current_event}
+end
+local function set_seal(self, key, silent, immediate)
+    self.seal = key
+    if key == cp.chun_chun_seal then
+        assert(silent == false and immediate == true, 'use the immediate native seal animation')
+        animations[#animations + 1] = {kind = 'seal', event = current_event, card = self}
+    end
+end
 local function get_id(self) return self.rank end
 local function playing(id, rank, suit, seal_key, edition)
     return {playing_card = id, rank = rank, base = {suit = suit}, seal = seal_key, edition = edition,
@@ -40,16 +54,34 @@ local amehiko = dofile(ROOT..'/jokers/amehiko.lua')(cp)
 dofile(ROOT..'/challenges/sora_test.lua')
 local key = cp.chun_chun_seal
 local function start_round()
+    events, animations = {}, {}
     G = {
         GAME = {round = 1, hands_played = 0, round_resets = {ante = 1},
             blind = {config = {blind = {key = 'bl_small'}}}},
         playing_cards = {}, jokers = {cards = {{edition = {negative = true}}}},
+        E_MANAGER = {add_event = function(self, event) events[#events + 1] = event end},
         P_CENTERS = {}, play = {cards = {}}, hand = {cards = {}}, deck = {cards = {}}, discard = {cards = {}},
     }
 end
-local function stamp(hand, blueprint)
+local function evaluate(hand, blueprint)
     G.play.cards = hand
-    return sora:calculate(nil, {after = true, full_hand = hand, blueprint = blueprint})
+    local effect = sora:calculate(real_sora, {
+        after = true, full_hand = hand, blueprint = blueprint, blueprint_card = blueprint and blueprint_card,
+    })
+    if effect and blueprint then effect.card = blueprint_card end -- SMODS.blueprint_effect
+    return effect
+end
+local function run_event()
+    current_event = assert(table.remove(events, 1))
+    assert(current_event.func())
+    current_event = nil
+end
+local function stamp(hand, blueprint)
+    local effect = evaluate(hand, blueprint)
+    if not effect then return end
+    effect.func()
+    run_event()
+    return true
 end
 local function advance() G.GAME.hands_played = G.GAME.hands_played + 1 end
 local function finish()
@@ -81,7 +113,19 @@ local saved = clone(G.GAME)
 G.GAME = clone(saved)
 advance()
 assert(not sora:calculate(nil, {before = true, full_hand = {left}}) and not target.seal)
-assert(stamp({left, current, wrong_rank}, 1), 'Blueprint can resolve before the original Joker')
+local hand = {left, current, wrong_rank}
+local effect = assert(evaluate(hand, 1), 'Blueprint can resolve before the original Joker')
+assert(not effect.message, 'do not let SMODS route a popup to the copier')
+assert(not evaluate(hand), 'original and copy share this hand before the animation')
+effect.func()
+effect.func()
+assert(#events == 1 and #animations == 0 and not target.seal and not area_only.seal)
+assert(cp.chun_chun_remaining() == 9, 'seals are applied at the animation, not during evaluation')
+local presentation = events[1]
+run_event()
+assert(#animations == 3 and animations[1].kind == 'seal' and animations[2].kind == 'seal'
+    and animations[3].kind == 'popup')
+for _, animation in ipairs(animations) do assert(animation.event == presentation) end
 assert(target.seal == key and area_only.seal == key and cp.chun_chun_remaining() == 7)
 assert(not stamp({left, current, wrong_rank}), 'original and copy share this hand')
 for _, card in ipairs({previous, current, duplicate, same_suit, wrong_rank, stone, formerly_played}) do
@@ -160,6 +204,21 @@ assert(G.hand.cards[13].seal == 'Red' and cp.count_negative_equivalent() == 2)
 assert(not stamp({extra_left}), 'no late stamping after end of round')
 G.GAME.round = 2
 assert(stamp({extra_left}) and extra_target.seal == key and cp.chun_chun_remaining() == 8)
+
+start_round()
+local fresh_left = playing(200, 8, 'Hearts')
+local claimed = playing(201, 8, 'Spades')
+G.playing_cards = {fresh_left, claimed}
+assert(evaluate({fresh_left})).func()
+claimed:set_seal('other_mod_seal')
+run_event()
+assert(claimed.seal == 'other_mod_seal' and #animations == 0 and cp.chun_chun_remaining() == 9)
+claimed:set_seal(nil)
+advance()
+assert(evaluate({fresh_left})).func()
+finish()
+run_event()
+assert(not claimed.seal and #animations == 0, 'pending animation cannot stamp after round cleanup')
 
 for _, lang in ipairs({'ja', 'en-us'}) do
     local loc = dofile(ROOT..'/localization/'..lang..'.lua')

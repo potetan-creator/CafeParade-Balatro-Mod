@@ -18,8 +18,8 @@ return function(cp)
             return {vars = {cp.config.sora.round_limit}}
         end,
         calculate = function(self, card, context)
-            if context.after and not context.retrigger_joker and cp.stamp_chun_chun(context.full_hand) then
-                return {message = localize('k_cp_chun_chun')}
+            if context.after and not context.retrigger_joker then
+                return cp.prepare_chun_chun(context.full_hand, card)
             end
         end,
     }
