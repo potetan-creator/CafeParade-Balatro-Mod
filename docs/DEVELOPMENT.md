@@ -13,7 +13,7 @@
 
 表示名は **Cafetro!**。既存セーブとの互換性のため、内部MOD ID `CafeParade`、prefix `cp`、ジョーカー・お題・スキンの内部キー、アトラスキーは維持します。`Cafetro.json` のファイル名とインストールフォルダ名は変更しています。
 
-MOD一覧の説明は `Cafetro/localization/{ja,en-us}.lua` の `descriptions.Mod.CafeParade` に行ごとに定義します。メタデータの `description` はフォールバックです。カードのカテゴリは `badges.lua` で5人＋サタンだけをCafeParade、他のカードをCafetro!とし、MOD自体の表示名は変更しません。
+MOD一覧の説明は `Cafetro/localization/{ja,en-us}.lua` の `descriptions.Mod.CafeParade` に行ごとに定義します。メタデータの `description` はフォールバックです。カードのカテゴリは `badges.lua` で、5人とサタンをCafeParade、北村想楽・古論クリス・葛之葉雨彦をLegenders、その他をCafetro!とします。Legendersの背景色 `#6880A0` はASOBISTAGE由来のユニットカラーに合わせています。 [アイマスDBのイメージカラー一覧](https://imas-db.jp/misc/color.html)
 
 通常の追加・調整は開発版に蓄積し、バージョン番号を据え置きます。未公開の変更は [CHANGELOG.md](CHANGELOG.md) にまとめ、ユーザーのリリース指示を受けた時点で番号を確定して公開します。
 

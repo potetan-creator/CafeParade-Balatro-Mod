@@ -725,7 +725,7 @@ for _,lang in ipairs({'ja','en-us'}) do
         '{C:inactive,s:0.6}アイドルマスターSideM×FiFS展 THREE ONE FIVE','small gray source footer')
 end
 
--- Unit badges are scoped to the six character Jokers, without renaming the MOD.
+-- Unit badges are scoped to their respective Jokers.
 local badge_mod=SMODS.current_mod
 badge_mod.id='CafeParade'
 badge_mod.display_name='Cafetro!'
@@ -738,11 +738,13 @@ SMODS.create_mod_badge=function(def,obj)
     return {badge=def,obj=obj}
 end
 local character_badges={kamiya=true,shinonome=true,aslan=true,makio=true,saki=true,satan=true}
+local legenders_badges={sora=true,koron=true,amehiko=true}
 for id in pairs(defs) do
     local obj={key='j_cp_'..id,set='Joker'}
     local rows=badge_mod:set_mod_badge(obj).nodes
-    eq(rows[1].badge.display_name,character_badges[id] and 'CafeParade' or 'Cafetro!','category for '..id)
-    eq(rows[1].badge.badge_colour,'unit-purple','unit colour preserved')
+    local category=legenders_badges[id] and 'Legenders' or (character_badges[id] and 'CafeParade' or 'Cafetro!')
+    eq(rows[1].badge.display_name,category,'category for '..id)
+    eq(rows[1].badge.badge_colour,legenders_badges[id] and '6880A0' or 'unit-purple','background for '..id)
     eq(rows[2].badge.display_name,'Art:Potetan','artist badge preserved')
     eq(rows[2].badge.badge_colour,'D6AA60','artist badge background preserved')
     eq(rows[2].obj,obj,'same card passed through')
