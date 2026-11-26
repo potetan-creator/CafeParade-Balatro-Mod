@@ -13,6 +13,10 @@ return {
       }},
     },
     Joker = {
+      j_cp_koron = {name = "古論クリス", text = {
+        "{C:attention}シール付きカード{}が",
+        "得点になるたび、チップ{C:chips}+#1#{}",
+      }},
       j_cp_sora = {name = "北村想楽", text = {
         "ハンドの得点後、左端と{C:attention}同ランク{}の",
         "{C:attention}未プレイ・別スート{}のカードに",

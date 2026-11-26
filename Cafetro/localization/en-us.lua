@@ -12,6 +12,10 @@ return {
       }},
     },
     Joker = {
+      j_cp_koron = {name = "Koron Chris", text = {
+        "Each scored card with a {C:attention}Seal{}",
+        "gives {C:chips}+#1#{} Chips",
+      }},
       j_cp_sora = {name = "Sora Kitamura", text = {
         "After scoring, add a {C:attention}Chun-Chun Seal{} to",
         "{C:attention}unplayed cards{} of the leftmost card's {C:attention}rank{}",

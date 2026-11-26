@@ -16,6 +16,8 @@ MOD Creator / Art: Potetan
 
 ### v1.2.0の変更
 
+- 古論クリス（アンコモン）を追加。シール付きカードが得点になるたび、チップ+35。
+
 - 北村想楽とChun-Chunシールを追加。シールの得点時は倍率+5で、雨彦がネガティブ相当として数えます。
 - 「北村想楽：Chun-Chun動作確認」で、想楽・Blueprint・雨彦の連携を試せます。
 
@@ -34,7 +36,7 @@ MOD Creator / Art: Potetan
 - スンスン（アンコモン・$6）を追加。
   得点する6のカードを2回追加で再発動します。
   [Fan art of PUPPET SUNSUN (Unofficial)]
-- ジョーカー画像を5列×3段へ拡張しました。
+- ジョーカー画像を5列×4段へ拡張しました。
 
 ### v1.1.0の変更
 
@@ -53,13 +55,13 @@ MOD Creator / Art: Potetan
   見た目を切り替えられる形で再実装しています。
 - **特別なチャレンジ6つ＋動作確認用2つ**
   CafeParadeの5人が活躍する、個性に合わせたお題を収録しています。
-- **新ジョーカー15枚**
+- **新ジョーカー16枚**
   - CafeParadeの5人をモチーフとしたジョーカー：5枚
   - レジェンダリージョーカー「サタン」：1枚
   - メンバーを活かすためのサポートジョーカー：3枚
   - アイドルマスターSideM×FiFS展をモチーフとしたジョーカー：1枚
   - エンボスジョーカー・スンスン・金人間：各1枚
-  - 葛之葉雨彦・北村想楽：各1枚
+  - 葛之葉雨彦・北村想楽・古論クリス：各1枚
 
 ### 制作について
 
@@ -135,6 +137,8 @@ It adds new content inspired by **Café Parade**, an idol unit from
 
 ### Changes in v1.2.0
 
+- Added Koron Chris (Uncommon). Each scored card with a Seal gives +35 Chips.
+
 - Added Sora Kitamura and his Chun-Chun Seal. It gives +5 Mult when scored and counts as Negative for Amehiko.
 - Use the Sora Kitamura: Chun-Chun Test challenge to try Sora, Blueprint, and Amehiko together.
 
@@ -154,7 +158,7 @@ It adds new content inspired by **Café Parade**, an idol unit from
   +4 Mult when scored, including retriggers.
 - Added SUNSUN (Uncommon, $6): retrigger each played 6 two additional times.
   [Fan art of PUPPET SUNSUN (Unofficial)]
-- Expanded the Joker atlas to five columns and three rows.
+- Expanded the Joker atlas to five columns and four rows.
 
 ### Changes in v1.1.0
 
@@ -173,13 +177,13 @@ It adds new content inspired by **Café Parade**, an idol unit from
   the in-game Customize Deck menu so you can switch between card designs.
 - **6 Special Challenges + 2 Test Challenges**
   Challenges designed to let all five members of Café Parade shine.
-- **15 New Jokers**
+- **16 New Jokers**
   - 5 Jokers inspired by the five members of Café Parade
   - 1 Legendary Joker featuring Satan
   - 3 support Jokers designed to complement the members
   - 1 Joker inspired by THE IDOLM@STER SideM × FiFS Exhibition
   - Embossing Joker, SUNSUN and Goldpeople: 1 each
-  - Amehiko Kuzunoha and Sora Kitamura: 1 each
+  - Amehiko Kuzunoha, Sora Kitamura and Koron Chris: 1 each
 
 ### Development Notes
 

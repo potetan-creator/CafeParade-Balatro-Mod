@@ -197,6 +197,19 @@
         "y": 2
       },
       "role": "temporary_seal"
+    },
+    {
+      "id": "koron",
+      "display_name_ja": "古論クリス",
+      "name_short": "KORON",
+      "color_hex": "#5187B5",
+      "rarity": "Uncommon",
+      "cost": 6,
+      "atlas_pos": {
+        "x": 0,
+        "y": 3
+      },
+      "role": "seal_chips"
     }
   ],
   "atlas_columns": 5

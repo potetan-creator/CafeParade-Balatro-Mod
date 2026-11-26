@@ -36,7 +36,7 @@ assert metadata['name'] == 'Cafetro!'
 assert metadata['id'] == 'CafeParade' and metadata['prefix'] == 'cp'
 assert (ROOT / metadata['main_file']).is_file()
 palette = json.loads((PROJECT / 'art/COLOR_PALETTE.json').read_text(encoding='utf-8'))
-assert len(palette['jokers']) == 15
+assert len(palette['jokers']) == 16
 columns = palette['atlas_columns']
 assert columns == 5
 for index, spec in enumerate(palette['jokers']):
@@ -103,7 +103,7 @@ with tempfile.TemporaryDirectory(prefix='cafetro-assets-') as directory:
         with Image.open(target / 'assets/2x/cafeparade_amehiko_front.png') as front:
             expected.alpha_composite(front, (amehiko['x'] * 142, amehiko['y'] * 190))
         with Image.open(project / 'docs/images/cafetro_cards.png') as preview:
-            assert preview.size == (710, 570) and preview.tobytes() == expected.tobytes()
+            assert preview.size == expected.size and preview.tobytes() == expected.tobytes()
 print('Metadata, all atlas cells, icons, alpha, both resamplers and committed runtime images: passed')
 
 hashes = json.loads((TESTS / 'asset_hashes.json').read_text(encoding='utf-8'))

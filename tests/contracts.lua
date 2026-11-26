@@ -73,7 +73,7 @@ eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
 eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
 eq(defs.three_one_five.blueprint_compat,true)
-for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko','sora'}) do
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko','sora','koron'}) do
     eq(defs[id].pos.x,(i-1)%5,'registration column')
     eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
 end
@@ -104,6 +104,39 @@ local function calc(id,card,ctx)
     if card.debuff then return end -- engine dispatch guard
     return defs[id]:calculate(card,ctx)
 end
+-- Koron uses the standard Card:get_seal result for each scoring pass.
+eq(defs.koron.rarity,2); eq(defs.koron.cost,6); eq(defs.koron.blueprint_compat,true)
+local koron=joker('koron')
+local sealed=play(6)
+function sealed:get_seal()
+    if not self.debuff then return self.seal end
+end
+local seal_context={individual=true,cardarea=G.play,other_card=sealed}
+for _,key in ipairs({'Red','Blue','Gold','Purple',cp.chun_chun_seal,'other_mod_custom'}) do
+    sealed.seal=key
+    eq(calc('koron',koron,seal_context).chips,35,key..' gives chips')
+    eq(sealed.seal,key,'scoring preserves the seal')
+end
+sealed.seal='Red'
+local red_total=0
+for pass=1,2 do red_total=red_total+calc('koron',koron,seal_context).chips end
+eq(red_total,70,'base score plus Red Seal retrigger')
+for _,copy in ipairs({'j_blueprint','j_brainstorm'}) do
+    eq(calc('koron',koron,{individual=true,cardarea=G.play,other_card=sealed,
+        blueprint=1,blueprint_card={config={center={key=copy}}}}).chips,35,copy)
+end
+eq(calc('koron',koron,{repetition=true,cardarea=G.play,other_card=sealed}),nil,'no chips when asking for retriggers')
+for _,area in ipairs({G.hand,'unscored'}) do
+    eq(calc('koron',koron,{individual=true,cardarea=area,other_card=sealed}),nil)
+end
+sealed.debuff=true
+eq(calc('koron',koron,seal_context),nil,'debuffed playing card')
+sealed.debuff=nil
+koron.debuff=true
+eq(calc('koron',koron,seal_context),nil,'debuffed Joker')
+koron.debuff=nil
+sealed.seal=nil; sealed.enhanced='m_glass'; sealed.edition={negative=true}
+eq(calc('koron',koron,seal_context),nil,'an enhancement or edition alone does not count')
 -- Embossing gives +4 on each scored Enhanced-card hit.
 eq(defs.embossing.rarity,1); eq(defs.embossing.cost,4)
 eq(defs.embossing.blueprint_compat,true)
