@@ -41,7 +41,7 @@ SMODS = {
 }
 dofile(ROOT..'/food.lua')(cp)
 local defs={}
-for _,id in ipairs({'cake_set','plain_cakeroll','makio'}) do
+for _,id in ipairs({'cake_set','plain_cakeroll','makio','california_gurls'}) do
     defs[id]=dofile(ROOT..'/jokers/'..id..'.lua')(cp)
 end
 local function card(id, extra)
@@ -50,6 +50,51 @@ end
 local function round()
     G.GAME.round=G.GAME.round+1
     return {end_of_round=true,main_eval=true,game_over=false}
+end
+
+-- California Gurls draws at press_play and reuses that result at scoring.
+local california=defs.california_gurls
+local traveler=card('california_gurls',{})
+G.GAME.hands_played=1
+local before=#rolls
+eq(california:calculate(traveler,{joker_main=true}),nil)
+eq(#rolls,before,'no draw at scoring')
+success=true
+california:calculate(traveler,{press_play=true,blueprint=1})
+eq(#rolls,before,'only the original draws on submission')
+california:calculate(traveler,{press_play=true})
+eq(#rolls,before+1)
+local chip_roll=rolls[#rolls]
+eq(chip_roll.n,1); eq(chip_roll.d,4)
+success=false
+california:calculate(traveler,{press_play=true})
+eq(#rolls,before+1,'re-evaluating the same submission reuses the result')
+eq(california:calculate(traveler,{joker_main=true}).chips,922)
+eq(california:calculate(traveler,{joker_main=true,blueprint=1}).chips,922)
+eq(traveler.destroyed,nil,'chips do not trigger departure')
+G.GAME.hands_played=2
+eq(california:calculate(traveler,{joker_main=true}),nil,'previous hand result is stale')
+california:calculate(traveler,{press_play=true})
+eq(#rolls,before+2)
+eq(california:calculate(traveler,{joker_main=true}),nil,'failed chip roll')
+success=true
+local end_round=round()
+eq(california:calculate(traveler,{end_of_round=true,main_eval=true,blueprint=1}),nil)
+eq(#rolls,before+2,'copy cannot cause a departure')
+eq(california:calculate(traveler,end_round).message,'k_cp_departed')
+eq(#rolls,before+3); eq(traveler.destroyed,true)
+local exit_roll=rolls[#rolls]
+eq(exit_roll.n,1); eq(exit_roll.d,4)
+eq(exit_roll.seed~=chip_roll.seed,true,'independent draws')
+eq(california:calculate(traveler,end_round),nil); eq(#rolls,before+3)
+multiplier=2
+local chance=california:loc_vars({},traveler).vars
+eq(chance[1],922); eq(chance[2],2); eq(chance[3],4); eq(chance[4],2); eq(chance[5],4)
+multiplier=1
+for _,locale in ipairs({'ja','en-us'}) do
+    local loc=dofile(ROOT..'/localization/'..locale..'.lua')
+    local lines=loc.descriptions.Joker.j_cp_california_gurls.text
+    eq(lines[#lines],'{C:inactive,s:0.6}ｶﾘﾌｫ')
 end
 
 for id,odds in pairs({cake_set=5,plain_cakeroll=10}) do

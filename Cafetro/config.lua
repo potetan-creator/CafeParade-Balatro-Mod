@@ -20,4 +20,5 @@ return {
     sora = {rarity = 2, cost = 6, round_limit = 9, seal_mult = 5},
     koron = {rarity = 2, cost = 6, chips = 35},
     hazama = {rarity = 3, cost = 8, rank_total = 35, xmult = 2},
+    california_gurls = {rarity = 1, cost = 4, chips = 922, odds = 4},
 }

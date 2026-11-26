@@ -1,5 +1,5 @@
 return function(cp)
-    function cp.food_decay(card, context, odds, seed)
+    function cp.food_decay(card, context, odds, seed, message)
         if not (context.end_of_round and context.main_eval and cp.original(context))
             or context.individual or context.repetition or context.game_over or card.debuff
             or card.removed or card.destroyed or card.getting_sliced or card.ability.eternal then return end
@@ -10,7 +10,7 @@ return function(cp)
         if SMODS.pseudorandom_probability(card, seed, 1, odds, seed) then
             local destroyed = SMODS.destroy_cards({card}, {pinch_anim = true})
             if destroyed and #destroyed > 0 then
-                return {message = localize('k_eaten_ex'), colour = G.C.FILTER}
+                return {message = localize(message or 'k_eaten_ex'), colour = G.C.FILTER}
             end
         end
     end

@@ -12,6 +12,13 @@ return {
       }},
     },
     Joker = {
+      j_cp_california_gurls = {name = "California Gurls", text = {
+        "{C:green}#2# in #3#{} chance for {C:chips}+#1#{} Chips",
+        "when you play a hand",
+        "{C:green}#4# in #5#{} chance to leave",
+        "at end of round",
+        "{C:inactive,s:0.6}ｶﾘﾌｫ",
+      }},
       j_cp_hazama = {name = "Michio Hazama", text = {
         "{X:mult,C:white} X#1# {} Mult if played",
         "card ranks total {C:attention}#2#{}",
@@ -123,6 +130,7 @@ return {
     labels = {cp_chun_chun_seal = "Chun-Chun Seal"},
     v_dictionary = {a_cp_growth = "Upgraded! X#1#"},
     dictionary = {
+      k_cp_departed = "Departed!",
       k_cp_chun_chun = "Chun-Chun!",
       k_cp_wild = "Makeup!",
       k_cp_suit_relief = "Suit debuffs lifted",

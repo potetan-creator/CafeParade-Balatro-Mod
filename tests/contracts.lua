@@ -73,10 +73,12 @@ eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
 eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
 eq(defs.three_one_five.blueprint_compat,true)
-for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko','sora','koron','hazama'}) do
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko','sora','koron','hazama','california_gurls'}) do
     eq(defs[id].pos.x,(i-1)%5,'registration column')
     eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
 end
+eq(defs.california_gurls.rarity,1); eq(defs.california_gurls.cost,4)
+eq(defs.california_gurls.eternal_compat,false)
 eq(defs.satan.soul_atlas,'satan_top','foreground uses a separate native soul atlas')
 eq(defs.satan.soul_pos.x,0); eq(defs.satan.soul_pos.y,0)
 eq(defs.satan.soul_pos.draw,nil,'use the standard legendary floating draw step')

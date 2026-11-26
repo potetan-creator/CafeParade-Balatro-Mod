@@ -223,6 +223,19 @@
         "y": 3
       },
       "role": "rank_total_xmult"
+    },
+    {
+      "id": "california_gurls",
+      "display_name_ja": "California Gurls",
+      "name_short": "CALIFORNIA GURLS",
+      "color_hex": "#D6A4C9",
+      "rarity": "Common",
+      "cost": 4,
+      "atlas_pos": {
+        "x": 2,
+        "y": 3
+      },
+      "role": "chance_chips"
     }
   ],
   "atlas_columns": 5

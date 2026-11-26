@@ -13,6 +13,13 @@ return {
       }},
     },
     Joker = {
+      j_cp_california_gurls = {name = "California Gurls", text = {
+        "ハンドをプレイした時、",
+        "{C:green}#3#分の#2#{}の確率でチップ{C:chips}+#1#{}",
+        "ラウンド終了時、",
+        "{C:green}#5#分の#4#{}の確率で退去",
+        "{C:inactive,s:0.6}ｶﾘﾌｫ",
+      }},
       j_cp_hazama = {name = "硲道夫", text = {
         "プレイしたカードのランク合計が",
         "{C:attention}#2#{}なら倍率{X:mult,C:white}X#1#{}",
@@ -124,6 +131,7 @@ return {
     labels = {cp_chun_chun_seal = "Chun-Chunシール"},
     v_dictionary = {a_cp_growth = "成長！X#1#"},
     dictionary = {
+      k_cp_departed = "退去！",
       k_cp_chun_chun = "Chun-Chun!",
       k_cp_wild = "Makeup!",
       k_cp_suit_relief = "スート制限解除",
