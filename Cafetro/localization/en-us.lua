@@ -12,6 +12,11 @@ return {
       }},
     },
     Joker = {
+      j_cp_hazama = {name = "Michio Hazama", text = {
+        "{X:mult,C:white} X#1# {} Mult if played",
+        "card ranks total {C:attention}#2#{}",
+        "{C:inactive}(A=1, J=11, Q=12, K=13)",
+      }},
       j_cp_koron = {name = "Koron Chris", text = {
         "Each scored card with a {C:attention}Seal{}",
         "gives {C:chips}+#1#{} Chips",

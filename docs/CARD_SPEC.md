@@ -3,7 +3,7 @@
 現行の数値は `Cafetro/config.lua` に集約する。v1.1.0では依頼に基づき神谷とサタンを上方調整。比較資料と判断理由は `BALANCE_NOTES.md` を参照。
 
 ## 共通定義
-- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` / `embossing` / `sunsun` / `goldpeople` / `amehiko` / `sora` / `koron` の16種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
+- 追加するカードは `kamiya` / `shinonome` / `aslan` / `makio` / `saki` / `satan` / `cake_set` / `chocolate_spacial` / `plain_cakeroll` / `three_one_five` / `embossing` / `sunsun` / `goldpeople` / `amehiko` / `sora` / `koron` / `hazama` の17種。表示名 `Cafetro!`、内部MOD ID `CafeParade`。内部IDの完全形はSteamoddedのprefix規則に従って衝突しないものにする。
 - 「Café Paradeメンバー」は **神谷・東雲・アスラン・巻緒・咲の5種のみ**。サタンは6枚目だがメンバー数には数えない。異なるメンバーを数えるときは種類ごとに最大1、同名2枚を所持しても1人。
 - 「所持している」はジョーカー領域に存在する有効（非debuff）のカードを意味する。Blueprint / Brainstormによる能力コピーは所持人数を増やさない。デッキにカードがあってもジョーカー領域になければ対象外。
 - 「得点したカード」はスコア計算に参加したカード。捨て札、得点に不参加の手札、手札に残るスチールカード等は対象外。

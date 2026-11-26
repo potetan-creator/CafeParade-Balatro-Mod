@@ -19,4 +19,5 @@ return {
     amehiko = {rarity = 3, cost = 8, base = 1, per_negative = 0.25},
     sora = {rarity = 2, cost = 6, round_limit = 9, seal_mult = 5},
     koron = {rarity = 2, cost = 6, chips = 35},
+    hazama = {rarity = 3, cost = 8, rank_total = 35, xmult = 2},
 }

@@ -73,7 +73,7 @@ eq(defs.satan.atlas,'jokers','Satan retains the common base atlas')
 eq(defs.satan.pos.x,0); eq(defs.satan.pos.y,1)
 eq(defs.three_one_five.rarity,3); eq(defs.three_one_five.cost,8)
 eq(defs.three_one_five.blueprint_compat,true)
-for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko','sora','koron'}) do
+for i,id in ipairs({'kamiya','shinonome','aslan','makio','saki','satan','cake_set','chocolate_spacial','plain_cakeroll','three_one_five','embossing','sunsun','goldpeople','amehiko','sora','koron','hazama'}) do
     eq(defs[id].pos.x,(i-1)%5,'registration column')
     eq(defs[id].pos.y,math.floor((i-1)/5),'registration row')
 end
@@ -104,6 +104,46 @@ local function calc(id,card,ctx)
     if card.debuff then return end -- engine dispatch guard
     return defs[id]:calculate(card,ctx)
 end
+eq(defs.hazama.rarity,3); eq(defs.hazama.cost,8); eq(defs.hazama.blueprint_compat,true)
+local hazama=joker('hazama')
+local function hazama_score(hand, extra)
+    local context={joker_main=true,full_hand=hand}
+    for k,v in pairs(extra or {}) do context[k]=v end
+    return calc('hazama',hazama,context)
+end
+local king,queen,ten=play(13),play(12),play(10)
+king.base={nominal=10}; queen.base={nominal=10}
+local ranks35={king,queen,ten}
+eq(hazama_score(ranks35,{scoring_hand={king}}).xmult,2,'non-scoring Q and 10 count')
+eq(hazama_score({play(8),play(9),ten,play(8)}).xmult,2,'four-card sum')
+eq(hazama_score({play(5),play(6),play(7),play(8),play(9)}).xmult,2,'five-card sum')
+eq(hazama_score({play(14),king,queen,play(9)}).xmult,2,'Ace counts as one')
+eq(hazama_score({play(14),play(2),play(3)}),nil,'Ace, two and three do not qualify')
+eq(hazama_score({play(14),play(11),ten}),nil,'Ace rank ID 14 must not make a false 35')
+local jack=play(11)
+eq(hazama_score({king,jack,clone(jack)}).xmult,2,'each physical copy of the Jack counts')
+local rankless=play(7)
+rankless.stone=true
+function rankless:get_id() error('rankless cards must be skipped before reading the rank ID') end
+eq(hazama_score({king,queen,ten,rankless}).xmult,2,'Stone Card adds zero')
+eq(hazama_score({king,queen,ten,rankless,rankless,rankless}),nil,'six played cards exceed the limit')
+eq(hazama_score({}),nil); eq(hazama_score(nil),nil); eq(hazama_score({king}),nil)
+eq(hazama_score({king,queen,play(9)},{scoring_hand=ranks35}),nil,'34 fails, regardless of the scoring list')
+eq(hazama_score({king,queen,play(11)}),nil,'36 fails')
+local changing=play(9)
+eq(hazama_score({king,queen,changing}),nil)
+changing.rank=10
+eq(hazama_score({king,queen,changing}).xmult,2,'rank changes use the current value')
+for _,copy in ipairs({'j_blueprint','j_brainstorm'}) do
+    eq(hazama_score(ranks35,{blueprint=1,blueprint_card={config={center={key=copy}}}}).xmult,2,copy)
+end
+eq(hazama_score(ranks35,{joker_main=false,individual=true}),nil,'only normal Joker scoring applies XMult')
+local custom_rank=play(53); custom_rank.base={value='mod_fifteen'}
+SMODS.Ranks={mod_fifteen={id=53,shorthand='15',nominal=10}}
+eq(hazama_score({custom_rank,ten,play(10)}).xmult,2,'numeric custom rank uses rank value, not runtime ID or chips')
+SMODS.Ranks.mod_fifteen.shorthand='Crown'
+eq(hazama_score({king,queen,ten,custom_rank}),nil,'custom rank with no numeric value is not treated as zero')
+SMODS.Ranks=nil
 -- Koron uses the standard Card:get_seal result for each scoring pass.
 eq(defs.koron.rarity,2); eq(defs.koron.cost,6); eq(defs.koron.blueprint_compat,true)
 local koron=joker('koron')

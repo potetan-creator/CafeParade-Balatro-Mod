@@ -24,7 +24,7 @@ local joker_ids = {
     'kamiya', 'shinonome', 'aslan', 'makio', 'saki', 'satan',
     'cake_set', 'chocolate_spacial', 'plain_cakeroll', 'three_one_five',
     'embossing', 'sunsun', 'goldpeople', 'amehiko', 'sora',
-    'koron',
+    'koron', 'hazama',
 }
 for i, id in ipairs(joker_ids) do
     local def = load('jokers/' .. id .. '.lua')(cp)

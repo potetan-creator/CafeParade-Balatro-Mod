@@ -210,6 +210,19 @@
         "y": 3
       },
       "role": "seal_chips"
+    },
+    {
+      "id": "hazama",
+      "display_name_ja": "硲道夫",
+      "name_short": "HAZAMA",
+      "color_hex": "#B58ACE",
+      "rarity": "Rare",
+      "cost": 8,
+      "atlas_pos": {
+        "x": 1,
+        "y": 3
+      },
+      "role": "rank_total_xmult"
     }
   ],
   "atlas_columns": 5

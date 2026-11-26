@@ -16,6 +16,8 @@ MOD Creator / Art: Potetan
 
 ### v1.2.0の変更
 
+- 硲道夫（レア）を追加。プレイしたカードのランク合計が35なら倍率×2。
+
 - 古論クリス（アンコモン）を追加。シール付きカードが得点になるたび、チップ+35。
 
 - 北村想楽とChun-Chunシールを追加。シールの得点時は倍率+5で、雨彦がネガティブ相当として数えます。
@@ -55,13 +57,13 @@ MOD Creator / Art: Potetan
   見た目を切り替えられる形で再実装しています。
 - **特別なチャレンジ6つ＋動作確認用2つ**
   CafeParadeの5人が活躍する、個性に合わせたお題を収録しています。
-- **新ジョーカー16枚**
+- **新ジョーカー17枚**
   - CafeParadeの5人をモチーフとしたジョーカー：5枚
   - レジェンダリージョーカー「サタン」：1枚
   - メンバーを活かすためのサポートジョーカー：3枚
   - アイドルマスターSideM×FiFS展をモチーフとしたジョーカー：1枚
   - エンボスジョーカー・スンスン・金人間：各1枚
-  - 葛之葉雨彦・北村想楽・古論クリス：各1枚
+  - 葛之葉雨彦・北村想楽・古論クリス・硲道夫：各1枚
 
 ### 制作について
 
@@ -137,6 +139,8 @@ It adds new content inspired by **Café Parade**, an idol unit from
 
 ### Changes in v1.2.0
 
+- Added Michio Hazama (Rare). X2 Mult if played card ranks total 35.
+
 - Added Koron Chris (Uncommon). Each scored card with a Seal gives +35 Chips.
 
 - Added Sora Kitamura and his Chun-Chun Seal. It gives +5 Mult when scored and counts as Negative for Amehiko.
@@ -177,13 +181,13 @@ It adds new content inspired by **Café Parade**, an idol unit from
   the in-game Customize Deck menu so you can switch between card designs.
 - **6 Special Challenges + 2 Test Challenges**
   Challenges designed to let all five members of Café Parade shine.
-- **16 New Jokers**
+- **17 New Jokers**
   - 5 Jokers inspired by the five members of Café Parade
   - 1 Legendary Joker featuring Satan
   - 3 support Jokers designed to complement the members
   - 1 Joker inspired by THE IDOLM@STER SideM × FiFS Exhibition
   - Embossing Joker, SUNSUN and Goldpeople: 1 each
-  - Amehiko Kuzunoha, Sora Kitamura and Koron Chris: 1 each
+  - Amehiko Kuzunoha, Sora Kitamura, Koron Chris and Michio Hazama: 1 each
 
 ### Development Notes
 

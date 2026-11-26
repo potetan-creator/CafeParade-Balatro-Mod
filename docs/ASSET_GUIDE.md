@@ -17,7 +17,7 @@ python tools/build_atlas.py --filter lanczos
 
 ## 5列のアトラス
 
-カード数に応じて段数を増やします。現在は16枚・5列×4段で、1xが355×380、2xが710×760。1セルは71×95／142×190です。
+カード数に応じて段数を増やします。現在は17枚・5列×4段で、1xが355×380、2xが710×760。1セルは71×95／142×190です。
 
 |ID|x|y|
 |---|---:|---:|
@@ -37,6 +37,7 @@ python tools/build_atlas.py --filter lanczos
 |amehiko|3|2|
 |sora|4|2|
 |koron|0|3|
+|hazama|1|3|
 
 画像の順序・列数は `art/COLOR_PALETTE.json`、ゲームでの登録は `Cafetro/main.lua` にあります。追加時は両方をそろえ、テストで全座標と全画素を確認します。
 
@@ -63,3 +64,5 @@ python tools/build_atlas.py --filter lanczos
 シール原稿は `art/source/chun_chun.png`。71×95の透過キャンバス全体を維持し、`cafeparade_chun_chun.png` を1x／2xに生成します。想楽の原稿は `art/source/sora.png` です。
 
 古論クリスの仮画像は `art/source/koron.png`。この原稿を差し替えて `tools/build_atlas.py` を実行すると、同じアトラス座標に新しい画像が入ります。
+
+硲道夫の仮画像は `art/source/hazama.png`。原稿を差し替えてアトラスを再生成すると、座標 `(1, 3)` に反映されます。

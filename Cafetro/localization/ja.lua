@@ -13,6 +13,11 @@ return {
       }},
     },
     Joker = {
+      j_cp_hazama = {name = "硲道夫", text = {
+        "プレイしたカードのランク合計が",
+        "{C:attention}#2#{}なら倍率{X:mult,C:white}X#1#{}",
+        "{C:inactive}（A=1、J=11、Q=12、K=13）",
+      }},
       j_cp_koron = {name = "古論クリス", text = {
         "{C:attention}シール付きカード{}が",
         "得点になるたび、チップ{C:chips}+#1#{}",
